@@ -3,7 +3,7 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: magazine.h,v 1.12 2004/07/08 10:46:44 schmitzj Exp $
+ * $Id: magazine.h,v 1.15 2004/11/30 19:31:48 schmitzj Exp $
  *
  */
 
@@ -14,6 +14,8 @@
 #include <time.h>
 #include "gfxtools.h"
 #include "config.h"
+#include "timer.h"
+#include "search.h"
 
 void mzlog(int level, const char *fmt, ...);
 #define TL_YSTART 	48
@@ -50,8 +52,9 @@ class magazine : public cOsdObject
 	cOsdBase *osd;
 #endif
 
-	class cMenuEvent *me;
+	class tvOcMenuEvent *me;
 	class cMenuEditTimer *met;
+	class cSearchMenu *mes;
 	
 	anyFont *f1,*f2,*f3,*f4;
 
@@ -94,13 +97,20 @@ class magazine : public cOsdObject
 	int EDIT_curChannel;
 	int EDIT_curEVI;
 	
+	bool timeline_tested;
+	bool timeline_found_conflict;
+	
 #if VDRVERSNUM >= 10300
-	const class cEvent *getNext(const cSchedule *s,const cEvent *e);
-	const class cEvent *getPrev(const cSchedule *s,const cEvent *e);
+public:
+	static const class cEvent *getNext(const cSchedule *s,const cEvent *e);
+	static const class cEvent *getPrev(const cSchedule *s,const cEvent *e);
+private:
 	cEvent **ev4ch(int);
 #else
-	const class cEventInfo *getNext(const cSchedule *s,const cEventInfo *e);
-	const class cEventInfo *getPrev(const cSchedule *s,const cEventInfo *e);
+public:
+	static const class cEventInfo *getNext(const cSchedule *s,const cEventInfo *e);
+	static const class cEventInfo *getPrev(const cSchedule *s,const cEventInfo *e);
+private:
 	cEventInfo **ev4ch(int);
 #endif
 	void searchcEvt();
@@ -128,41 +138,18 @@ class magazine : public cOsdObject
 
 	void gotoUsertime(int u);
 	void showHelp(void);
+
+#if VDRVERSNUM >= 10300
+	void autoTimer(const class cEvent *EventInfo);
+#else
+	void autoTimer(const class cEventInfo *EventInfo);
+#endif
+
 public:
 	magazine(class cPlugin *);
 	virtual ~magazine();
 	virtual void Show(void);
 	virtual eOSState ProcessKey(eKeys Key);
 };
-
-class cMenuEvent : public cOsdMenu {
-private:
-#if VDRVERSNUM >= 10300
-  const class cEvent *eventInfo;
-#else
-  const class cEventInfo *eventInfo;
-#endif
-public:
-#if VDRVERSNUM >= 10300
-  cMenuEvent(const class cEvent *EventInfo, bool CanSwitch = false);
-#else
-  cMenuEvent(const class cEventInfo *EventInfo, bool CanSwitch = false);
-#endif
-  cMenuEvent(bool Now);
-  virtual eOSState ProcessKey(eKeys Key);
-};
-class cMenuEditTimer : public cOsdMenu {
-private:
-  cTimer *timer;
-  cTimer data;
-  int channel;
-  bool addIfConfirmed;
-  class cMenuEditDateItem *firstday;
-  void SetFirstDayItem(void);
-public:
-  cMenuEditTimer(cTimer *Timer, bool New = false);
-  virtual ~cMenuEditTimer();
-  virtual eOSState ProcessKey(eKeys Key);
-  };
 
 #endif

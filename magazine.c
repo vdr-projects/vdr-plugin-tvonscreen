@@ -3,7 +3,7 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: magazine.c,v 1.26 2004/07/27 20:51:51 schmitzj Exp $
+ * $Id: magazine.c,v 1.33 2005/01/02 12:19:32 schmitzj Exp $
  *
  */
 
@@ -76,7 +76,11 @@ magazine::magazine(class cPlugin *p)
 	f4=NULL;
 	me=NULL;
 	met=NULL;
+	mes=NULL;
 	
+	timeline_tested=false;
+	timeline_found_conflict=false;
+
 	// Create and sort entries for menu items
 	// --------------------------------------
 
@@ -148,6 +152,11 @@ magazine::~magazine(void)
 		delete met;
 		met=NULL;
 	}
+	if (mes)
+	{
+		delete mes;
+		mes=NULL;
+	}
 
 	delete [] fullHours_tmp3;
 	delete [] fullHours_tmp2;
@@ -201,7 +210,11 @@ void magazine::printLogo(const cSchedule *s,int p)
 #else
 		channel = Channels.GetByChannelID(s->GetChannelID(), true);
 #endif
+#if VDRVERSNUM >= 10315
+		txt=channel->ShortName(true);
+#else
 		txt=channel->Name();
+#endif
 		// logo: 64x48px
 
 		const char *ConfigDirectory=cPlugin::ConfigDirectory("../logos");
@@ -296,7 +309,11 @@ void magazine::printHead(const cSchedule *s,int p)
 			{
 				col=clrCyan;
 			}
+#if VDRVERSNUM >= 10315
+			txt=channel->ShortName(true);
+#else
 			txt=channel->Name();
+#endif
 
 			if (!tvonscreenCfg.XLfonts || f3->LargeWidth(txt)>=184-wmin)
 #if VDRVERSNUM >= 10307
@@ -554,6 +571,36 @@ void magazine::showSched(const cSchedule *s,cEventInfo **ev,tWindowHandle sched)
 #else
 		f2->Text(f1->Width("00:0"),j*f1->Height(),184-f1->Width("00:0"),evnum-j,txt,col,clrBackground,sched);
 #endif
+	}
+	if (!EDIT_curEvent)
+	{
+		if (!timeline_tested)
+		{
+			timeline_tested=true;
+			cPlugin *p = cPluginManager::GetPlugin("timeline");
+			if (p)
+			{
+				char *args[]={"timeline_command_interface","conflicts"};
+				timeline_found_conflict=p->ProcessArgs(1,args);
+			}
+		}
+		if (timeline_found_conflict)
+		{
+#if VDRVERSNUM >= 10307
+			osd->DrawRectangle(Areas[area].x1,Areas[area].y2-f2->Height()-6,Areas[area].x1+184,Areas[area].y2+1,clrWhite);
+			osd->DrawRectangle(Areas[area].x1,Areas[area].y2-f2->Height()-4,Areas[area].x1+184,Areas[area].y2+1,clrYellow);
+#else
+			osd->Fill(0,384-f2->Height()-6,184,384,clrWhite,sched);
+			osd->Fill(0,384-f2->Height()-4,184,384,clrYellow,sched);
+#endif
+			const char *txt=tr("Timer conflict!");
+			int x=(184-f2->Width(txt))/2;
+#if VDRVERSNUM >= 10307
+			f2->Text(x+Areas[area].x1,Areas[area].y2-f2->Height()-4,txt,clrBackground,clrYellow);
+#else
+			f2->Text(x,384-f2->Height()-4,txt,clrBackground,clrYellow,sched);
+#endif
+		}
 	}
 }
 void magazine::showScheds()
@@ -995,6 +1042,7 @@ void magazine::showHelp()
 		"arrows\n\tmove selected schedule",
 		"record\n\tcreate timer",
 		"ok\n\tshow details",
+		"|\n(c) 2004 Jürgen Schmitz\n\thttp://www.js-home.org/vdr",
 		NULL
 	};
 #if VDRVERSNUM >= 10307
@@ -1032,7 +1080,10 @@ void magazine::showHelp()
 			int y=i*usef->Height();
 			if (helptext[j]==NULL)
 				break;
-			txt=tr(helptext[j]);
+			if (helptext[j][0]=='|')
+				txt=helptext[j]+1;
+			else
+				txt=tr(helptext[j]);
 
 			if (i+usef->TextHeight(width,txt)>=lines)
 				break;
@@ -1063,6 +1114,33 @@ void magazine::showHelp()
 	osd->Flush();
 }
 
+#if VDRVERSNUM >= 10300
+void magazine::autoTimer(const class cEvent *cev)
+#else
+void magazine::autoTimer(const class cEventInfo *cev)
+#endif
+{
+	FILE *f;
+	if ((f=fopen(tvonscreenCfg.vdradminfile,"a")))
+	{
+		const char *title;
+		int chan;
+
+#if VDRVERSNUM >= 10300
+		title=cev->Title();
+		cChannel *cc=Channels.GetByChannelID(cev->ChannelID());
+		chan=cc->Number();
+#else
+		title=cev->GetTitle();
+		cChannel *cc=Channels.GetByChannelID(cev->GetChannelID());
+		chan=cc->Number();
+#endif
+
+		fprintf(f,"1:%s:1:::1:40:7:%d:\n",title,chan);
+		fclose(f);
+	}
+}
+
 #include "fontosd/fontosd-arial18.c"
 #include "fontosd/fontosd-verdana16.c"
 #include "fontosd/fontosd-tahoma16.c"
@@ -1081,6 +1159,11 @@ void magazine::Show(void)
 	{
 		delete met;
 		met=NULL;
+	}
+	if (mes)
+	{
+		delete mes;
+		mes=NULL;
 	}
 
 #if VDRVERSNUM >= 10307
@@ -1144,13 +1227,13 @@ void magazine::Show(void)
 #endif
 
 #if VDRVERSNUM >= 10300
-		ev1=new (cEvent*)[evnum];
-		ev2=new (cEvent*)[evnum];
-		ev3=new (cEvent*)[evnum];
+		ev1=new cEvent*[evnum];
+		ev2=new cEvent*[evnum];
+		ev3=new cEvent*[evnum];
 #else
-		ev1=new (cEventInfo*)[evnum];
-		ev2=new (cEventInfo*)[evnum];
-		ev3=new (cEventInfo*)[evnum];
+		ev1=new cEventInfo*[evnum];
+		ev2=new cEventInfo*[evnum];
+		ev3=new cEventInfo*[evnum];
 #endif
 		fullHours=new int[evnum];
 		fullHours_tmp1=new int[evnum];
@@ -1212,7 +1295,7 @@ eOSState magazine::ProcessKey(eKeys Key)
 			if (!osd)
 				Show();
 		}
-		else if (state == osUnknown)
+		else if (state == osUnknown || state == osContinue)
 		{
 			switch (Key & ~k_Repeat)
 			{
@@ -1223,7 +1306,7 @@ eOSState magazine::ProcessKey(eKeys Key)
 					if (!osd)
 						Show();
 					break;
-				case kBlue: // Umschalten
+				case kBlue: // Umschalten - obsolete!
 					{
 #if VDRVERSNUM >= 10300
 						cEvent **ev=ev4ch(EDIT_curChannel);
@@ -1237,6 +1320,44 @@ eOSState magazine::ProcessKey(eKeys Key)
 							delete me;
 							me=NULL;
 					        return osEnd;
+						}
+					}
+					break;
+				case kGreen: // Suchen
+					{
+//						mzlog(10," Search");
+						delete me;
+						me=NULL;
+#if VDRVERSNUM >= 10300
+						cEvent **ev=ev4ch(EDIT_curChannel);
+#else
+						cEventInfo **ev=ev4ch(EDIT_curChannel);
+#endif
+						mes=new cSearchMenu(ev[EDIT_curEVI]);
+						state=osContinue;
+					}
+					break;
+				case kYellow: // add AutoTimer
+					{
+//						mzlog(10," AutoTimer");
+						if (tvonscreenCfg.vdradminfile)
+						{
+							me->helpLine(false);
+							state=osContinue;
+
+#if VDRVERSNUM >= 10300
+							cEvent **ev=ev4ch(EDIT_curChannel);
+#else
+							cEventInfo **ev=ev4ch(EDIT_curChannel);
+#endif
+							autoTimer(ev[EDIT_curEVI]);
+							me->printMsg(tr("Added AutoTimer to vdradmin."));
+						}
+						else
+						{
+							me->printMsg(tr("Startoption 'vdradminfile' not set!"));
+							me->helpLine(false);
+							state=osContinue;
 						}
 					}
 					break;
@@ -1286,6 +1407,75 @@ eOSState magazine::ProcessKey(eKeys Key)
 					met=NULL;
 					if (!osd)
 						Show();
+					break;
+			}
+		}
+	}
+	else if (mes)
+	{
+		state=mes->ProcessKey(Key);
+		if (state==osBack)
+		{
+			state=osContinue;
+			delete mes;
+			mes=NULL;
+			if (!osd)
+				Show();
+		}
+		else if (state == osUnknown)
+		{
+			switch (Key & ~k_Repeat)
+			{
+				case kOk:
+				case kGreen:
+					{
+#if VDRVERSNUM >= 10300
+						const cEvent *ev=mes->currentSelected();
+#else
+						const cEventInfo *ev=mes->currentSelected();
+#endif
+						if (ev)
+						{
+							delete mes;
+							mes=NULL;
+							me=new tvOcMenuEvent(ev);
+							me->Display();
+						}
+					}
+					state=osContinue;
+					break;
+				case kYellow:
+					mes->searchIn(schedArray,schedArrayNum);
+					state=osContinue;
+					break;
+            	case kBack:
+				case kBlue:
+					delete mes;
+					mes=NULL;
+					if (!osd)
+						Show();
+					break;
+				case kRed:
+#if VDRVERSNUM >= 10300
+					const cEvent *ev=mes->currentSelected();
+#else
+					const cEventInfo *ev=mes->currentSelected();
+#endif
+					if (ev)
+					{
+						delete mes;
+						mes=NULL;
+						cTimer *timer = new cTimer(ev);
+						cTimer *t = Timers.GetTimer(timer);
+						if (t)
+						{
+							delete timer;
+							timer = t;
+						}
+						met=new cMenuEditTimer(timer, !t);
+						met->Display();
+					}
+					state=osContinue;
 					break;
 			}
 		}
@@ -1438,7 +1628,7 @@ eOSState magazine::ProcessKey(eKeys Key)
 #else
 							cEventInfo **ev=ev4ch(EDIT_curChannel);
 #endif
-							me=new cMenuEvent(ev[EDIT_curEVI], true);
+							me=new tvOcMenuEvent(ev[EDIT_curEVI]);
 							me->Display();
 							curmode=SHOW;
 							EDIT_curEvent=0;

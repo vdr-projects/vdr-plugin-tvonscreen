@@ -3,7 +3,7 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: config.c,v 1.8 2004/07/08 17:06:45 schmitzj Exp $
+ * $Id: config.c,v 1.11 2005/01/02 12:19:32 schmitzj Exp $
  *
  */
 
@@ -46,13 +46,17 @@ tvonscreenConfig::tvonscreenConfig(void)
 	usertime2=1800;
 	usertime3=2015;
 	thenshownextday=true;
+	showsearchinitiator=true;
 	
-	logos=NULL;	
+	logos=NULL;
+	vdradminfile=NULL;
 }
 tvonscreenConfig::~tvonscreenConfig()
 {
 	if (logos)
 		free(logos);
+	if (vdradminfile)
+		free(vdradminfile);
 }
 
 bool tvonscreenConfig::SetupParse(const char *Name, const char *Value)
@@ -67,6 +71,7 @@ bool tvonscreenConfig::SetupParse(const char *Name, const char *Value)
 	else if (strcmp(Name,"usertime2")==0) usertime2 = atoi(Value);
 	else if (strcmp(Name,"usertime3")==0) usertime3 = atoi(Value);
 	else if (strcmp(Name,"thenshownextday")==0) thenshownextday = atoi(Value);
+	else if (strcmp(Name,"showsearchinitiator")==0) showsearchinitiator = atoi(Value);
 	else 
 		return false;
 
@@ -78,19 +83,20 @@ bool tvonscreenConfig::SetupParse(const char *Name, const char *Value)
 const char *tvonscreenConfig::CommandLineHelp(void)
 {
   // Return a string that describes all known command line options.
-	return "  -l PathToLogos\n  --logos=PathToLogos\n";
+	return "  -l PathToLogos\n  --logos=PathToLogos\n  -v vdradmind.at\n  --vdradminfile=vdradmind.at\n";
 }
 
 bool tvonscreenConfig::ProcessArgs(int argc, char *argv[])
 { 
 	static struct option long_options[] = {
 		{ "logos",       required_argument, NULL, 'l' },
+		{ "vdradminfile",required_argument, NULL, 'v' },
 		{ NULL }
 	};
 
 	bool retval=true;
 	int c;
-	while ((c = getopt_long(argc, argv, "l:", long_options, NULL)) != -1)
+	while ((c = getopt_long(argc, argv, "l:v:", long_options, NULL)) != -1)
 	{
 		switch (c)
 		{
@@ -101,6 +107,15 @@ bool tvonscreenConfig::ProcessArgs(int argc, char *argv[])
 					logos=NULL;
 				}
 				logos = strdup(optarg);
+				retval=true;
+				break;
+			case 'v':
+				if (vdradminfile)
+				{
+					free(vdradminfile);
+					vdradminfile=NULL;
+				}
+				vdradminfile = strdup(optarg);
 				retval=true;
 				break;
 			default:  
@@ -141,6 +156,10 @@ tvonscreenConfigPage::tvonscreenConfigPage(void) : cMenuSetupPage()
 	Add(new cMenuEditBoolItem(tr("jump to next day point if ago"),
 			&m_NewConfig.thenshownextday));
 
+	Add(new cMenuEditBoolItem(tr("Show search item itself"),
+			&m_NewConfig.showsearchinitiator));
+
+
 }
 
 tvonscreenConfigPage::~tvonscreenConfigPage()
@@ -151,7 +170,7 @@ void tvonscreenConfigPage::Store(void)
 {
 	SetupStore("showLogos", m_NewConfig.showLogos);
 	SetupStore("XLfonts", m_NewConfig.XLfonts);
-	SetupStore("noInfoLine", m_NewConfig.XLfonts);
+	SetupStore("noInfoLine", m_NewConfig.noInfoLine);
 	SetupStore("showChannels", m_NewConfig.showChannels);
 	SetupStore("bwlogos", m_NewConfig.bwlogos);
 	SetupStore("colorworkaround", m_NewConfig.colorworkaround);
@@ -159,6 +178,7 @@ void tvonscreenConfigPage::Store(void)
 	SetupStore("usertime2", m_NewConfig.usertime2);
 	SetupStore("usertime3", m_NewConfig.usertime3);
 	SetupStore("thenshownextday", m_NewConfig.thenshownextday);
+	SetupStore("showsearchinitiator", m_NewConfig.showsearchinitiator);
 
 	tvonscreenCfg = m_NewConfig;
 }

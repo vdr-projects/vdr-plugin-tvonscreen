@@ -13,14 +13,18 @@ Description:
 This plugins shows the EPG data in the typical way a TV magazine
 does. The channels are shown from left to right, 3 on one screen.
 
-You can scroll though the channels and the time and create a timer.
+You can scroll though the channels and the time, create timers,
+show details, search for events and add vdradmin auto timers.
 
 Command line options:
 
 -l <path to logos>   optional path for the XPM channel logos,
                      if not given, <configDir>/logos is used
 
-TV-Onscreen has two different modes:
+-v <vdradminfile>    path and filename to vdradmin at file
+                     (called vdradmind.at)
+
+TV-OnScreen has two different modes:
 
  - the show mode which only shows the EPG and allows scrolling
    in "big" steps
@@ -53,20 +57,45 @@ Cursor left/right      move to the schedule in the channel left/right
 Rec                    creates a timer from the current schedule
                        (opens the timer screen)
 Ok                     shows details of the current schedule
-                       (which allows switching the channel or create a timer)
+                       (which allows creating a timer, auto timer or search)
 
 
+The details view (after pressing Ok):
 
+This shows the details of a seleteced schedule as you might know it from
+vdr. However, the color function keys have other meanings:
+
+Back                   returns to the show mode screen
+Red                    goes to the timer screen
+Record                 goes to the timer screen
+Green                  search for the current schedule title, opens the search screen
+Yellow                 adds this schedule title to vdradmin's auto timer
+
+
+The search screen (after pressing green):
+
+This screen shows a list of any occurence of the previously selected schedule on
+the channel.
+
+Back                   returns to the show mode screen
+Blue                   returns to the show mode screen
+Red                    goes to the timer screen
+Record                 goes to the timer screen
+Green                  shows the details of the hilighted schedule
+Yellow                 searches again but this time in all channels
 
 
 Requirements:
 
-On 1.2.6 ElchiAIO patches (or similar) with additional colors must be
+On vdr 1.2.6 ElchiAIO patches (or similar) with additional colors must be
 installed.
+
+Optional: Timeline plugin.
+
 
 Important notes:
 
-On 1.2.6 the channel logos should be displayed in black/white! This setup option
+On vdr 1.2.6 the channel logos should be displayed in black/white! This setup option
 will be set every time vdr starts.
 
 Press key "1" to open the help page.
@@ -75,3 +104,12 @@ Press key "1" to open the help page.
 TODO:
 
 Wait for no bug reports and go to version 1.0.
+
+
+Thanks
+
+to Rolf Ahrenberg for 1.3.x fixes, finnish translations and tests,
+to Dominique Simon for testing on 1.3.x,
+to Guide Fiala reporting a OSD problem (not yet fixed in TVos),
+to Larc Volkhardt for first 1.3 patch,
+to Michael Plagge for the logo idea and his patch for TVos 0.5

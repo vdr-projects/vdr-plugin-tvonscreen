@@ -3,7 +3,7 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: i18n.c,v 1.11 2004/07/27 20:51:51 schmitzj Exp $
+ * $Id: i18n.c,v 1.15 2004/11/30 20:08:24 schmitzj Exp $
  *
  */
 
@@ -30,6 +30,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -53,6 +59,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -76,6 +88,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -99,6 +117,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -122,9 +146,46 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
+  { "Timer conflict!", // English
+    "Timer Konflikt!", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    " ", // suomi (empty space)
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
+#endif
+#endif
+  },
+
+// Prefs
   { "show channel logos", // English
     "zeige Kanal-Logos", // Deutsch
     "", // Slovenski
@@ -145,6 +206,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -168,6 +235,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -191,6 +264,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -214,6 +293,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -237,6 +322,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -260,6 +351,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -283,6 +380,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -306,6 +409,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -329,6 +438,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -352,6 +467,41 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
+#endif
+#endif
+  },
+  { "Show search item itself", // English
+    "Zeige auch Suchbegriff", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Näytä hakuehto", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -377,6 +527,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -400,6 +556,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -423,6 +585,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -446,6 +614,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -469,6 +643,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -492,6 +672,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -515,6 +701,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -538,6 +730,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -561,6 +759,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -584,6 +788,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -607,6 +817,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -630,6 +846,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -653,6 +875,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -676,6 +904,12 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },
@@ -699,6 +933,336 @@ const tI18nPhrase tvoPhrases[] = {
     ""  // ÀãááÚØÙ (Russian)
 #if VDRVERSNUM >= 10307
     "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
+#endif
+#endif
+  },
+// End Help
+
+// Details
+  { "Record", // English
+    "Aufnehmen", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Tallenna", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
+#endif
+#endif
+  },
+  { "Search", // English
+    "Suchen", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Etsi", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
+#endif
+#endif
+  },
+  { "AutoTimer", // English
+    "AutoTimer", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "AutoTimer", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
+#endif
+#endif
+  },
+  { "Added AutoTimer to vdradmin.", // English
+    "AutoTimer in vdradmin aufgenommen.", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "AutoTimer lisätty VDRAdminiin.", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
+#endif
+#endif
+  },
+  { "Startoption 'vdradminfile' not set!", // English
+    "Startoption 'vdradminfile' nicht gesetzt!", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Käynnistysoptio 'vdradminfile' puuttuu!", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
+#endif
+#endif
+  },
+
+// Search
+  { "Search for", // English
+    "Suche nach", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Etsitään termiä", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
+#endif
+#endif
+  },
+  { "Searching...", // English
+    "Suchen...", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Etsitään...", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
+#endif
+#endif
+  },
+  { "Nothing found!", // English
+    "Nichts gefunden!", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "", // suomi
+    "Ei löydetty!", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
+#endif
+#endif
+  },
+  { "Back", // English
+    "Zurück", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Takaisin", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
+#endif
+#endif
+  },
+  { "Details", // English
+    "Details", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Lisätiedot", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
+#endif
+#endif
+  },
+  { "in all", // English
+    "in allen", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Etsi kaikki", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#if VDRVERSNUM >= 10313
+    "", // Eesti
+#if VDRVERSNUM >= 10316
+    "", // Dansk
+#endif
+#endif
 #endif
 #endif
   },

@@ -3,7 +3,7 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: config.h,v 1.5 2004/07/08 10:46:44 schmitzj Exp $
+ * $Id: config.h,v 1.7 2004/11/23 14:21:24 schmitzj Exp $
  *
  */
 
@@ -34,8 +34,10 @@ public:
 	int usertime2;
 	int usertime3;
 	int thenshownextday;
+	int showsearchinitiator;
 
 	char *logos;
+	char *vdradminfile;
 };
 
 extern tvonscreenConfig tvonscreenCfg;

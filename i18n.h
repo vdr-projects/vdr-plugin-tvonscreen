@@ -3,7 +3,7 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: i18n.h,v 1.1 2004/03/03 00:22:47 schmitzj Exp $
+ * $Id: i18n.h,v 1.2 2004/11/23 21:42:55 schmitzj Exp $
  *
  */
 
@@ -11,6 +11,7 @@
 #define _I18N__H
 
 #include <vdr/i18n.h>
+#include <vdr/config.h> // for VDRVERSNUM define only
 
 extern const tI18nPhrase tvoPhrases[];
 
