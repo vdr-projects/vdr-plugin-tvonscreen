@@ -3,7 +3,7 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: magazine.h,v 1.7 2004/03/23 14:08:25 schmitzj Exp $
+ * $Id: magazine.h,v 1.12 2004/07/08 10:46:44 schmitzj Exp $
  *
  */
 
@@ -12,24 +12,55 @@
 
 #include <vdr/plugin.h>
 #include <time.h>
-#include "anyfont.h"
+#include "gfxtools.h"
+#include "config.h"
 
 void mzlog(int level, const char *fmt, ...);
+#define TL_YSTART 	48
+// else
+//#define TL_YSTART	24
+
+#if VDRVERSNUM >= 10307
+
+// #define MULTINAMES
+
+typedef enum {
+#ifdef MULTINAMES
+	NAME1_AREA = 0,
+	NAME2_AREA,
+	NAME3_AREA,
+#else
+	NAMES_AREA = 0,
+#endif
+	TIMELINE_AREA,
+	SCHED1_AREA,
+	SCHED2_AREA,
+	SCHED3_AREA,
+	CONTROL_AREA,
+	NUMBER_OF_AREAS,
+} tMagazineArea;
+#endif
 
 class magazine : public cOsdObject
 {
 	cPlugin *parent;
+#if VDRVERSNUM >= 10307
+	cOsd *osd;
+#else
 	cOsdBase *osd;
+#endif
 
 	class cMenuEvent *me;
 	class cMenuEditTimer *met;
 	
 	anyFont *f1,*f2,*f3,*f4;
 
+#if VDRVERSNUM < 10307
 	tWindowHandle timeline;
 	tWindowHandle names;
 	tWindowHandle sched1,sched2,sched3;
 	tWindowHandle control;
+#endif
 
 #if VDRVERSNUM >= 10300
 	cSchedulesLock _schedulesLock;
@@ -52,6 +83,9 @@ class magazine : public cOsdObject
 	class cEventInfo **ev3;
 #endif
 	int *fullHours;
+	int *fullHours_tmp1;
+	int *fullHours_tmp2;
+	int *fullHours_tmp3;
 
 	enum modes {SHOW,EDIT};
 	enum modes curmode;
@@ -71,13 +105,16 @@ class magazine : public cOsdObject
 #endif
 	void searchcEvt();
 
-//	void printHead(const cSchedule *s,tWindowHandle sched);
+	void printLogo(const cSchedule *s,int p);
 	void printHead(const cSchedule *s,int p);
 	void showKeys(void);
 	void showTimeline(void);
-	void showHeads(void);
+	void showHeads(bool onlyBG=false);
 	void showScheds(void);
-#if VDRVERSNUM >= 10300
+#if VDRVERSNUM >= 10307
+	void showSched(const cSchedule *s,cEvent **ev, tMagazineArea area);
+	void calcSched(const cSchedule *s,cEvent **ev);
+#elif VDRVERSNUM >= 10300
 	void showSched(const cSchedule *s,cEvent **ev,tWindowHandle sched);
 	void calcSched(const cSchedule *s,cEvent **ev);
 #else
@@ -86,6 +123,11 @@ class magazine : public cOsdObject
 #endif
 	void calcScheds(void);
 
+	void output(void);
+	void outputLR(void);
+
+	void gotoUsertime(int u);
+	void showHelp(void);
 public:
 	magazine(class cPlugin *);
 	virtual ~magazine();

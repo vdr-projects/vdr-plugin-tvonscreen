@@ -3,60 +3,705 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: i18n.c,v 1.2 2004/03/03 00:22:47 schmitzj Exp $
+ * $Id: i18n.c,v 1.11 2004/07/27 20:51:51 schmitzj Exp $
  *
  */
 
 #include "i18n.h"
 
 const tI18nPhrase tvoPhrases[] = {
-  { "TV-Onscreen",
-    "TV-Onscreen",
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
+  { "TV-OnScreen", // English
+    "TV-OnScreen", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "TV-ohjelmat", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
   },
-  { "o'clock",
-    "Uhr",
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
+  { "Shows the EPG info in form of a typical TV magazine", // English
+    "", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "TV-ohjelmatiedot (OSD)", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
   },
-  { "%d-%m",
-    "%d.%m.",
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
-    "",// TODO
+  { "o'clock", // English
+    "Uhr", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    " ", // suomi (empty space)
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
   },
+  { "%d-%m", // English
+    "%d.%m.", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "%d.%m.", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "Press 1 for help", // English
+    "Für Hilfe die 1 drücken", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Paina '1' nähdäksesi opasteen", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "show channel logos", // English
+    "zeige Kanal-Logos", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Näytä kanavien logot", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "use XL fonts", // English
+    "benutze XL Schrift", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Käytä XL-kirjasinta", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "hide info line", // English
+    "verstecke Info Zeile", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Piilota inforivi", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "show channel names", // English
+    "zeige Kanal-Namen", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Näytä kanavien nimet", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "show logos in black&white", // English
+    "zeige Kanal-Logos in Schwarz/Weiß", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Näytä logot mustavalkoisina", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "enable color problem work around", // English
+    "Farbproblem Umgehung aktivieren", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Saksalainen värikorjaus", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "user point in time 1 (Key 4)", // English
+    "Anwenderzeitpunkt 1 (Taste 4)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Ajankohta #1 (näppäin '4')", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "user point in time 2 (Key 5)", // English
+    "Anwenderzeitpunkt 2 (Taste 5)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Ajankohta #2 (näppäin '5')", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "user point in time 3 (Key 6)", // English
+    "Anwenderzeitpunkt 3 (Taste 6)", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Ajankohta #3 (näppäin '6')", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "jump to next day point if ago", // English
+    "Gehe zum nächsten Tag wenn vorbei", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "Siirry tarvittaessa seur. päivään", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+
+// Help
+  { "NORMAL MODE:", // English
+    "NORMALER MODUS:", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "NORMAALITILA:\n", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "arrows\n\tmove view", // English
+    "Pfeile\n\tAnsicht bewegen", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "'Nuolinäppäimet'\n\tohjaa näkymää", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "back\n\tclose TV OnScreen", // English
+    "back\n\tschließe TV OnScreen", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "'Takaisin'\n\tsulje laajennos", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "red/blue\n\t-/+ one day", // English
+    "rot/blau\n\t-/+ ein Tag", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "'Punainen'/'Sininen'\n\tyksi päivä eteen/taaksepäin", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "green/yellow\n\tone page left/right", // English
+    "grün/gelb\n\teine Seite links/rechts", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "'Vihreä'/'Keltainen'\n\tseuraava/edellinen sivu", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "7/9\n\tone page left/right", // English
+    "7/9\n\teine Seite links/rechts", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "'7'/'9'\n\tseuraava/edellinen sivu", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "8\n\tgoto current channel", // English
+    "8\n\tgehe zum aktuellen Kanal", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "'8'\n\tsiirry nykyiselle kanavalle", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "0\n\tgoto now", // English
+    "0\n\tgehe zur aktuellen Zeit", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "'0'\n\tsiirry nykyhetkeen", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "4/5/6\n\tgoto configured time", // English
+    "4/5/6\n\tgehe zu eingestellten Zeitpunkten", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "'4'/'5'/'6'\n\tsiirry määriteltyyn ajankohtaan", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "ok\n\tswitch to edit mode\n", // English
+    "ok\n\taktiviere Editier-Modus\n", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "'OK'\n\tvaihda muokkaustilaan\n", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "EDIT MODE:", // English
+    "EDITIER MODUS:", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "MUOKKAUSTILA:\n", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "back\n\tback to normal mode", // English
+    "back\n\tzurück zum normalen Modus", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "'Takaisin'\n\tvaihda normaalitilaan", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "arrows\n\tmove selected schedule", // English
+    "Pfeile\n\tSendung auswählen", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "'Nuolinäppäimet'\n\tvalitse ohjelma", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "record\n\tcreate timer", // English
+    "record\n\terzeuge Timer", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "'Tallenna'\n\tluo ajastin", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+  { "ok\n\tshow details", // English
+    "ok\n\tzeige Sendungsdetails", // Deutsch
+    "", // Slovenski
+    "", // Italiano
+    "", // Nederlands
+    "", // Português
+    "", // Français
+    "", // Norsk
+    "'OK'\n\tnäytä lisätiedot", // suomi
+    "", // Polski
+    "", // Español
+    "", // ÅëëçíéêÜ
+    "", // Svenska
+    "", // Romaneste
+    "", // Magyar
+    "", // Català
+#if VDRVERSNUM >= 10302
+    ""  // ÀãááÚØÙ (Russian)
+#if VDRVERSNUM >= 10307
+    "", // Hrvatski (Croatian)
+#endif
+#endif
+  },
+
   { NULL }
   };

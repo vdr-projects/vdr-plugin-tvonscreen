@@ -15,6 +15,10 @@ does. The channels are shown from left to right, 3 on one screen.
 
 You can scroll though the channels and the time and create a timer.
 
+Command line options:
+
+-l <path to logos>   optional path for the XPM channel logos,
+                     if not given, <configDir>/logos is used
 
 TV-Onscreen has two different modes:
 
@@ -28,6 +32,7 @@ This is quite intuitive when you use it!
 
 The keys in show mode (when startet):
 
+1                      show help
 Cursor up/down	       scroll the time
 Cursor left/right      scroll the channels
 Red/Blue               scroll the time by 1 day (blue=+1 day)
@@ -37,6 +42,7 @@ Green/Yellow           scroll the channels by 1 page (-/+ 3 channels)
 0                      go to the current time
 Back                   leave
 Ok                     go to edit mode
+4/5/6                  jump to user specified point in time
 
 
 The keys in edit mode (after pressing Ok):
@@ -55,9 +61,15 @@ Ok                     shows details of the current schedule
 
 Requirements:
 
-ElchiAIO patches (or similar) with additional colors must be
+On 1.2.6 ElchiAIO patches (or similar) with additional colors must be
 installed.
 
+Important notes:
+
+On 1.2.6 the channel logos should be displayed in black/white! This setup option
+will be set every time vdr starts.
+
+Press key "1" to open the help page.
 
 
 TODO:

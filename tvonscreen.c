@@ -3,15 +3,16 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: tvonscreen.c,v 1.7 2004/03/23 09:28:47 schmitzj Exp $
+ * $Id: tvonscreen.c,v 1.11 2004/07/08 10:46:44 schmitzj Exp $
  *
  */
 
 #include <vdr/plugin.h>
 #include "magazine.h"
+#include "config.h"
 #include "i18n.h"
 
-static const char *VERSION        = "0.5.1";
+static const char *VERSION        = "0.6.0";
 static const char *DESCRIPTION    = "Shows the EPG info in form of a typical TV magazine";
 static const char *MAINMENUENTRY  = "TV-OnScreen";
 
@@ -22,7 +23,7 @@ public:
   cPluginTvOnscreen(void);
   virtual ~cPluginTvOnscreen();
   virtual const char *Version(void) { return VERSION; }
-  virtual const char *Description(void) { return DESCRIPTION; }
+  virtual const char *Description(void) { return tr(DESCRIPTION); }
   virtual const char *CommandLineHelp(void);
   virtual bool ProcessArgs(int argc, char *argv[]);
   virtual bool Initialize(void);
@@ -49,13 +50,12 @@ cPluginTvOnscreen::~cPluginTvOnscreen()
 const char *cPluginTvOnscreen::CommandLineHelp(void)
 {
   // Return a string that describes all known command line options.
-  return NULL;
+	return tvonscreenCfg.CommandLineHelp();
 }
 
 bool cPluginTvOnscreen::ProcessArgs(int argc, char *argv[])
 {
-  // Implement command line argument processing here if applicable.
-  return true;
+	return tvonscreenCfg.ProcessArgs(argc,argv);
 }
 
 bool cPluginTvOnscreen::Initialize(void)
@@ -86,23 +86,13 @@ cOsdObject *cPluginTvOnscreen::MainMenuAction(void)
 cMenuSetupPage *cPluginTvOnscreen::SetupMenu(void)
 {
   // Return a setup menu in case the plugin supports one.
-  return NULL;
+  return new tvonscreenConfigPage();
 }
 
 bool cPluginTvOnscreen::SetupParse(const char *Name, const char *Value)
 {
   // Parse your own setup parameters and store their values.
-/*  if      (!strcasecmp(Name, "TimeMorning"))           config.TimeMorning = atoi(Value);
-  else if (!strcasecmp(Name, "TimeAfternoon"))         config.TimeAfternoon = atoi(Value);
-  else if (!strcasecmp(Name, "TimeEvening"))           config.TimeEvening = atoi(Value);
-  else if (!strcasecmp(Name, "NameUser"))              strn0cpy(config.NameUser, Value, MaxFileName);
-  else if (!strcasecmp(Name, "TimeUser"))              config.TimeUser = atoi(Value);
-  else if (!strcasecmp(Name, "ShowTimers"))            config.ShowTimers = (eShowTimers)atoi(Value);
-
-  else
-     return false;
-*/
-  return true;
+	return tvonscreenCfg.SetupParse(Name,Value);
 }
 
 VDRPLUGINCREATOR(cPluginTvOnscreen); // Don't touch this!
