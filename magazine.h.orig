@@ -3,7 +3,7 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: magazine.h,v 1.7 2004/03/23 14:08:25 schmitzj Exp $
+ * $Id: magazine.h,v 1.5 2004/03/23 09:26:46 schmitzj Exp $
  *
  */
 
@@ -31,26 +31,16 @@ class magazine : public cOsdObject
 	tWindowHandle sched1,sched2,sched3;
 	tWindowHandle control;
 
-#if VDRVERSNUM >= 10300
-	cSchedulesLock _schedulesLock;
-#else
 	cMutexLock _mutexLock;
-#endif
 	const cSchedule** schedArray;
 	int schedArrayNum;
 	int currentFirst;
 	time_t currentFirstTime;
 
 	int evnum;
-#if VDRVERSNUM >= 10300
-	class cEvent **ev1;
-	class cEvent **ev2;
-	class cEvent **ev3;
-#else
 	class cEventInfo **ev1;
 	class cEventInfo **ev2;
 	class cEventInfo **ev3;
-#endif
 	int *fullHours;
 
 	enum modes {SHOW,EDIT};
@@ -60,15 +50,9 @@ class magazine : public cOsdObject
 	int EDIT_curChannel;
 	int EDIT_curEVI;
 	
-#if VDRVERSNUM >= 10300
-	const class cEvent *getNext(const cSchedule *s,const cEvent *e);
-	const class cEvent *getPrev(const cSchedule *s,const cEvent *e);
-	cEvent **ev4ch(int);
-#else
 	const class cEventInfo *getNext(const cSchedule *s,const cEventInfo *e);
 	const class cEventInfo *getPrev(const cSchedule *s,const cEventInfo *e);
 	cEventInfo **ev4ch(int);
-#endif
 	void searchcEvt();
 
 //	void printHead(const cSchedule *s,tWindowHandle sched);
@@ -77,13 +61,8 @@ class magazine : public cOsdObject
 	void showTimeline(void);
 	void showHeads(void);
 	void showScheds(void);
-#if VDRVERSNUM >= 10300
-	void showSched(const cSchedule *s,cEvent **ev,tWindowHandle sched);
-	void calcSched(const cSchedule *s,cEvent **ev);
-#else
 	void showSched(const cSchedule *s,cEventInfo **ev,tWindowHandle sched);
 	void calcSched(const cSchedule *s,cEventInfo **ev);
-#endif
 	void calcScheds(void);
 
 public:
@@ -95,17 +74,9 @@ public:
 
 class cMenuEvent : public cOsdMenu {
 private:
-#if VDRVERSNUM >= 10300
-  const class cEvent *eventInfo;
-#else
   const class cEventInfo *eventInfo;
-#endif
 public:
-#if VDRVERSNUM >= 10300
-  cMenuEvent(const class cEvent *EventInfo, bool CanSwitch = false);
-#else
   cMenuEvent(const class cEventInfo *EventInfo, bool CanSwitch = false);
-#endif
   cMenuEvent(bool Now);
   virtual eOSState ProcessKey(eKeys Key);
 };

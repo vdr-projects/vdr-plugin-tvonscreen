@@ -3,7 +3,7 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: tvonscreen.c,v 1.5 2004/03/05 12:17:31 schmitzj Exp $
+ * $Id: tvonscreen.c,v 1.7 2004/03/23 09:28:47 schmitzj Exp $
  *
  */
 
@@ -11,7 +11,7 @@
 #include "magazine.h"
 #include "i18n.h"
 
-static const char *VERSION        = "0.5.0";
+static const char *VERSION        = "0.5.1";
 static const char *DESCRIPTION    = "Shows the EPG info in form of a typical TV magazine";
 static const char *MAINMENUENTRY  = "TV-OnScreen";
 
