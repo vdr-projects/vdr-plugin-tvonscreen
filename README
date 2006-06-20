@@ -19,7 +19,7 @@ show details, search for events and add vdradmin auto timers.
 Command line options:
 
 -l <path to logos>   optional path for the XPM channel logos,
-                     if not given, <configDir>/logos is used
+                     if not given, <configDir>/plugins/logos is used
 
 -v <vdradminfile>    path and filename to vdradmin at file
                      (called vdradmind.at)
@@ -100,6 +100,10 @@ will be set every time vdr starts.
 
 Press key "1" to open the help page.
 
+This plugin does not support XPM images that use color names instead
+of hex codes. To convert your XPMs to hex color code format, try: 
+
+      xpmtoppm some.xpm | ppmtoxpm -hexonly > other.xpm 
 
 TODO:
 
@@ -113,3 +117,4 @@ to Dominique Simon for testing on 1.3.x,
 to Guide Fiala reporting a OSD problem (not yet fixed in TVos),
 to Larc Volkhardt for first 1.3 patch,
 to Michael Plagge for the logo idea and his patch for TVos 0.5
+to Ville Skyttä for reporting the XPM color names problem

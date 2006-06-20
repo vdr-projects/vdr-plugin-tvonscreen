@@ -3,7 +3,7 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: gfxtools.c,v 1.7 2004/07/08 10:46:44 schmitzj Exp $
+ * $Id: gfxtools.c,v 1.8 2006/06/18 13:59:36 schmitzj Exp $
  *
  */
 
@@ -15,6 +15,7 @@ bool DrawXpm(const char *FileName,areaT *drawable,int x,int y,winhandleT winhand
 { // Bases on vdr cBitmap::LoadXpm but made more readable
   // and added x/y support
 	bool Result = false;
+	cReadLine ReadLine;
 	FILE *f = fopen(FileName, "r");
 	if (f)
 	{
@@ -24,7 +25,7 @@ bool DrawXpm(const char *FileName,areaT *drawable,int x,int y,winhandleT winhand
 		int index = 0;
 		char *s;
 
-		while ((s = readline(f)) != NULL) 
+		while ((s = ReadLine.Read(f)) != NULL) 
 		{
 			s = skipspace(s);
 			if (!isXpm)

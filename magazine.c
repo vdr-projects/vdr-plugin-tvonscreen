@@ -3,14 +3,13 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: magazine.c,v 1.33 2005/01/02 12:19:32 schmitzj Exp $
+ * $Id: magazine.c,v 1.34 2006/06/18 13:59:36 schmitzj Exp $
  *
  */
 
 #include "magazine.h"
 #include "TVonscreen.h"
 
-#if VDRVERSNUM >= 10307
 #define clrGrey       0xFF5F5F5F
 #define clrBackground clrGray50 // this should be tied somehow into current theme
 
@@ -30,26 +29,16 @@ static tArea Areas[NUMBER_OF_AREAS] =
 	{ 50,         384+TL_YSTART+8, 50 + 8+45+188*2+184-101 - 1, 384+TL_YSTART+8 + 20 - 1, 2 }, // CONTROL_AREA
 };
 
-#endif
-
 static int CompareSchedules(const void *p1, const void *p2) {
 
   int c1nr = 9999; // there should be no one with more than 9999 channels
   int c2nr = 9999;
   
-#if VDRVERSNUM >= 10300
   cChannel* c1 = Channels.GetByChannelID((*(const cSchedule**)p1)->ChannelID(), true);
-#else
-  cChannel* c1 = Channels.GetByChannelID((*(const cSchedule**)p1)->GetChannelID(), true);
-#endif
   if (c1)
     c1nr = c1->Number();
 
-#if VDRVERSNUM >= 10300
   cChannel* c2 = Channels.GetByChannelID((*(const cSchedule**)p2)->ChannelID(), true);
-#else
-  cChannel* c2 = Channels.GetByChannelID((*(const cSchedule**)p2)->GetChannelID(), true);
-#endif
   if (c2)
     c2nr = c2->Number();
 
@@ -60,12 +49,7 @@ static int CompareSchedules(const void *p1, const void *p2) {
 magazine::magazine(class cPlugin *p)
 {
 	parent=p;
-	
-#if VDRVERSNUM >= 10300
 	const cSchedules* Schedules = cSchedules::Schedules(_schedulesLock);
-#else
-	const cSchedules* Schedules = cSIProcessor::Schedules(_mutexLock);
-#endif
 
 	curmode=SHOW;
 	EDIT_curEvent=0;
@@ -96,11 +80,7 @@ magazine::magazine(class cPlugin *p)
 		{ // if there exist an event -> add to array
 			// check if we can get a channel NAME ( XXX )
 			// I thougt that this must always work , but doesn't 
-#if VDRVERSNUM >= 10300
 			cChannel *c = Channels.GetByChannelID(Schedule->ChannelID(), true);
-#else
-			cChannel *c = Channels.GetByChannelID(Schedule->GetChannelID(), true);
-#endif
 			if (c)
 			{
 				schedArray[num] = Schedule;
@@ -116,11 +96,7 @@ magazine::magazine(class cPlugin *p)
 	int currentChannel = Channels.GetByNumber(cDevice::CurrentChannel())->Number();
 	for(int i=0;i<schedArrayNum;i++)
 	{
-#if VDRVERSNUM >= 10300
 		cChannel *channel = Channels.GetByChannelID(schedArray[i]->ChannelID(), true);
-#else
-		cChannel *channel = Channels.GetByChannelID(schedArray[i]->GetChannelID(), true);
-#endif
 		if (channel->Number()==currentChannel)
 		{
 			currentFirst=i-1;
@@ -181,7 +157,6 @@ void magazine::printLogo(const cSchedule *s,int p)
 	int x=184*p+p*4;
 	int currentChannel;
 	
-#if VDRVERSNUM >= 10300
 #ifdef MULTINAMES
 	int a=0;
 	switch (p)
@@ -201,32 +176,19 @@ void magazine::printLogo(const cSchedule *s,int p)
 #else
 	int a=NAMES_AREA;
 #endif
-#endif
 	if (s!=NULL)
 	{
 		currentChannel = Channels.GetByNumber(cDevice::CurrentChannel())->Number();
-#if VDRVERSNUM >= 10300
 		channel = Channels.GetByChannelID(s->ChannelID(), true);
-#else
-		channel = Channels.GetByChannelID(s->GetChannelID(), true);
-#endif
-#if VDRVERSNUM >= 10315
 		txt=channel->ShortName(true);
-#else
-		txt=channel->Name();
-#endif
 		// logo: 64x48px
 
-		const char *ConfigDirectory=cPlugin::ConfigDirectory("../logos");
+		const char *ConfigDirectory=cPlugin::ConfigDirectory("logos");
 		if (tvonscreenCfg.logos)
 			ConfigDirectory=tvonscreenCfg.logos;
 		char *fname=new char[strlen(ConfigDirectory) + 1 + strlen(txt) + strlen(".xpm") + 1];
 		sprintf(fname,"%s/%s.xpm",ConfigDirectory,txt);
-#if VDRVERSNUM >= 10300
 		DrawXpm(fname,osd,x+Areas[a].x1,Areas[a].y1,0,tvonscreenCfg.bwlogos);
-#else
-		DrawXpm(fname,osd,x,0,names,tvonscreenCfg.bwlogos);
-#endif
 	}
 }
 void magazine::printHead(const cSchedule *s,int p)
@@ -240,7 +202,6 @@ void magazine::printHead(const cSchedule *s,int p)
 	if (tvonscreenCfg.showLogos)
 		wmin=64;
 	
-#if VDRVERSNUM >= 10307
 #ifdef MULTINAMES
 	int a;
 	switch (p)
@@ -278,55 +239,25 @@ void magazine::printHead(const cSchedule *s,int p)
 	if (tvonscreenCfg.showChannels || !tvonscreenCfg.showLogos)
 #endif
 		osd->DrawRectangle(x+Areas[a].x1,yoff+Areas[a].y1,x+Areas[a].x1+182,Areas[a].y1+20+yoff,clrBlue);
-#else
-#if TL_YSTART == 48
-	osd->Fill(x,0,x+182,20+28,clrGrey,names);
-	osd->Fill(x+2,2,x+182-2,20+28,clrTransparent,names);
-	if (p==2) DrawXpm(TVonscreen,osd,x+182-110,0,names);
-	yoff=28;
-	if (tvonscreenCfg.showChannels || !tvonscreenCfg.showLogos)
-#endif
-	osd->Fill(x,0+yoff,x+182,20+yoff,clrBlue,names);
 
-#endif
 	if (tvonscreenCfg.showChannels || !tvonscreenCfg.showLogos)
 	{
 		if (s!=NULL)
 		{
-#if VDRVERSNUM >= 10307
 			tColor col=clrWhite;
-#else
-			enum eDvbColor col=clrWhite;
-#endif
 		
 			currentChannel = Channels.GetByNumber(cDevice::CurrentChannel())->Number();
-#if VDRVERSNUM >= 10300
 			channel = Channels.GetByChannelID(s->ChannelID(), true);
-#else
-			channel = Channels.GetByChannelID(s->GetChannelID(), true);
-#endif
 			if (currentChannel==channel->Number())
 			{
 				col=clrCyan;
 			}
-#if VDRVERSNUM >= 10315
 			txt=channel->ShortName(true);
-#else
-			txt=channel->Name();
-#endif
 
 			if (!tvonscreenCfg.XLfonts || f3->LargeWidth(txt)>=184-wmin)
-#if VDRVERSNUM >= 10307
 				f3->Text(wmin+x+Areas[a].x1+(184-wmin-f3->Width(txt))/2,Areas[a].y1+yoff-1,txt,col,clrBlue);
-#else
-				f3->Text(wmin+x+(184-wmin-f3->Width(txt))/2,-1+yoff,txt,col,clrBlue,names);
-#endif
 			else
-#if VDRVERSNUM >= 10307
 				f3->LargeText(wmin+x+Areas[a].x1+(184-wmin-f3->LargeWidth(txt))/2,Areas[a].y1+yoff-1,txt,col,clrBlue);
-#else
-				f3->LargeText(wmin+x+(184-wmin-f3->LargeWidth(txt))/2,-1+yoff,txt,col,clrBlue,names);
-#endif
 		}
 	}
 }
@@ -355,11 +286,7 @@ void magazine::showHeads(bool onlyBG)
 void magazine::showKeys(void)
 {
 	char txt[100];
-#if VDRVERSNUM >= 10307
 	osd->DrawRectangle(Areas[CONTROL_AREA].x1, Areas[CONTROL_AREA].y1, Areas[CONTROL_AREA].x2+1, Areas[CONTROL_AREA].y2+1, clrTransparent);
-#else
-	osd->Clear(control);
-#endif
 	if (tvonscreenCfg.noInfoLine)
 		return;
 
@@ -368,21 +295,13 @@ void magazine::showKeys(void)
 	{
 		sprintf(txt,"%s",tr("Press 1 for help"));
 	}
-#if VDRVERSNUM >= 10307
 	f4->Text(Areas[CONTROL_AREA].x1+(8+45+188*2+184-101-f4->Width(txt))/2,Areas[CONTROL_AREA].y1,txt,clrWhite,clrBackground);
-#else
-	f4->Text((8+45+188*2+184-100-f4->Width(txt))/2,-1,txt,clrWhite,clrBackground,control);
-#endif
 }
 void magazine::showTimeline(void)
 {
 	int lh=-1;
 	int lhc=0;
-#if VDRVERSNUM >= 10307
 	tColor hgr[]={clrBlue,clrBlack};
-#else
-	enum eDvbColor hgr[]={clrBlue,clrBlack};
-#endif
 	char dtxt[50];
 	time_t t1;
 	struct tm tm_r1;
@@ -390,11 +309,7 @@ void magazine::showTimeline(void)
 	t1=currentFirstTime;
 	localtime_r(&t1,&tm_r1);
 
-#if VDRVERSNUM >= 10307
 	osd->DrawRectangle(0+Areas[TIMELINE_AREA].x1,0+Areas[TIMELINE_AREA].y1,48,400+TL_YSTART,clrBlack);
-#else
-	osd->Fill(0,0,48,400+TL_YSTART,clrBlack,timeline);
-#endif
 	for(int i=0;i<evnum;i++)
 	{
 		int y=i*f1->Height()+TL_YSTART;
@@ -403,37 +318,19 @@ void magazine::showTimeline(void)
 			lh=fullHours[i];
 			lhc=lh&1;
 		}
-#if VDRVERSNUM >= 10307
 		osd->DrawRectangle(0+Areas[TIMELINE_AREA].x1,y+Areas[TIMELINE_AREA].y1,48,y+f1->Height(),hgr[lhc]);
-#else
-		osd->Fill(0,y,48,y+f1->Height(),hgr[lhc],timeline);
-#endif
 	}
 
 #if TL_YSTART == 24
 	strftime(dtxt,sizeof(dtxt),tr("%d-%m"),&tm_r1);
-#if VDRVERSNUM >= 10307
 	f3->Text((48-f3->Width(dtxt))/2+Areas[TIMELINE_AREA].x1,0+Areas[TIMELINE_AREA].y1,dtxt,clrWhite,clrBlack);
 #else
-	f3->Text((48-f3->Width(dtxt))/2,0,dtxt,clrWhite,clrBlack,timeline);
-#endif
-#else
 	strcpy(dtxt,WeekDayName(tm_r1.tm_wday));
-#if VDRVERSNUM >= 10307
 	osd->DrawRectangle(0+Areas[TIMELINE_AREA].x1,0+Areas[TIMELINE_AREA].y1,Areas[TIMELINE_AREA].x1+48,Areas[TIMELINE_AREA].y1+f3->Height()*2,clrWhite);
 	osd->DrawRectangle(2+Areas[TIMELINE_AREA].x1,2+Areas[TIMELINE_AREA].y1,Areas[TIMELINE_AREA].x1+48-2,Areas[TIMELINE_AREA].y1+f3->Height(),clrBlack);
 	f3->Text((48-f3->Width(dtxt))/2+Areas[TIMELINE_AREA].x1,0+Areas[TIMELINE_AREA].y1,dtxt,clrWhite,clrBlack);
-#else
-	osd->Fill(0,0,48,f3->Height()*2,clrWhite,timeline);
-	osd->Fill(2,2,48-2,f3->Height(),clrBlack,timeline);
-	f3->Text((48-f3->Width(dtxt))/2,0,dtxt,clrWhite,clrBlack,timeline);
-#endif
 	strftime(dtxt,sizeof(dtxt),tr("%d-%m"),&tm_r1);
-#if VDRVERSNUM >= 10307
 	f3->Text((48-f3->Width(dtxt))/2+Areas[TIMELINE_AREA].x1,0+Areas[TIMELINE_AREA].y1+f3->Height(),dtxt,clrBlack,clrWhite);
-#else
-	f3->Text((48-f3->Width(dtxt))/2,0+f3->Height(),dtxt,clrBlack,clrWhite,timeline);
-#endif
 #endif
 	for(int i=0;i<evnum;i++)
 	{
@@ -443,52 +340,29 @@ void magazine::showTimeline(void)
 			char txt[50];
 			sprintf(txt,"%02d",fullHours[i]);
 			lh=fullHours[i];
-#if VDRVERSNUM >= 10307
 			f1->Text((48-f1->Width(txt))/2+Areas[TIMELINE_AREA].x1,y+Areas[TIMELINE_AREA].y1,txt,clrWhite,clrBlack);
-#else
-			f1->Text((48-f1->Width(txt))/2,y,txt,clrWhite,clrBlack,timeline);
-#endif
 			if (i+1<evnum && (fullHours[i+1]==lh || fullHours[i+1]==-1))
 			{
 				strcpy(txt,tr("o'clock"));
-#if VDRVERSNUM >= 10307
 				f2->Text((48-f2->Width(txt))/2+Areas[TIMELINE_AREA].x1,y+f1->Height()+Areas[TIMELINE_AREA].y1,txt,clrWhite,clrBlack);
-#else
-				f2->Text((48-f2->Width(txt))/2,y+f1->Height(),txt,clrWhite,clrBlack,timeline);
-#endif
 			}
 		}
 	}
 }
-#if VDRVERSNUM >= 10307
 void magazine::showSched(const cSchedule *s,cEvent **ev,tMagazineArea area)
-#elif VDRVERSNUM >= 10300
-void magazine::showSched(const cSchedule *s,cEvent **ev,tWindowHandle sched)
-#else
-void magazine::showSched(const cSchedule *s,cEventInfo **ev,tWindowHandle sched)
-#endif
 {
-#if VDRVERSNUM >= 10300
 	cEvent *oldev=NULL,*cev=NULL;
-#else
-	cEventInfo *oldev=NULL,*cev=NULL;
-#endif
 
 	int j=0;
-	const char *txt,*timetxt;
+	const char *txt;
+	cString timetxt;
 	int lh=-1;
 	int lhc=0;
-#if VDRVERSNUM >= 10307
+
 	tColor hgr[]={clrGrey,clrBackground};
 	tColor col=clrWhite;
 
 	osd->DrawRectangle(Areas[area].x1, Areas[area].y1, Areas[area].x2+1, Areas[area].y2+1, clrGray50);
-#else
-	enum eDvbColor hgr[]={clrGrey,clrBackground};
-	enum eDvbColor col=clrWhite;
-
-	osd->Clear(sched);
-#endif
 
 	for(int i=0;i<evnum;i++)
 	{
@@ -498,11 +372,7 @@ void magazine::showSched(const cSchedule *s,cEventInfo **ev,tWindowHandle sched)
 			lh=fullHours[i];
 			lhc=lh&1;
 		}
-#if VDRVERSNUM >= 10307
 		osd->DrawRectangle(Areas[area].x1,Areas[area].y1+y,Areas[area].x1+184,Areas[area].y1+y+f1->Height(),hgr[lhc]);
-#else
-		osd->Fill(0,y,184,y+f1->Height(),hgr[lhc],sched);
-#endif
 	}
 	for(int i=0;i<evnum;i++)
 	{
@@ -514,63 +384,34 @@ void magazine::showSched(const cSchedule *s,cEventInfo **ev,tWindowHandle sched)
 			{
 				if (oldev)
 				{
-#if VDRVERSNUM >= 10300
 					txt=oldev->ShortText();
-#else
-					txt=oldev->GetSubtitle();
-#endif
 					int cc=f2->TextHeight(184-f1->Width("00:0"),txt);
 					if (cc<=i-j)
 					{
-#if VDRVERSNUM >= 10307
 						f2->Text(f1->Width("00:0")+Areas[area].x1,(j)*f1->Height()+Areas[area].y1,184-f1->Width("00:0"),i-j,txt,col,clrBackground);
-#else
-						f2->Text(f1->Width("00:0"),(j)*f1->Height()/*+24*/,184-f1->Width("00:0"),i-j,txt,col,clrBackground,sched);
-#endif
 					}
 				}
 				col=clrWhite;
-#if VDRVERSNUM >= 10300
 				if (EDIT_curEvent==cev->EventID())
-#else
-				if (EDIT_curEvent==cev->GetEventID())
-#endif
 				{
 					col=clrYellow;
 					EDIT_curEVI=i;
 				}
 				timetxt=cev->GetTimeString();
-#if VDRVERSNUM >= 10300
 				txt=cev->Title();
-#else
-				txt=cev->GetTitle();
-#endif
-#if VDRVERSNUM >= 10307
 				if (i+f1->TextHeight(f1->Width("00:00 ")+Areas[area].x1,txt)>=evnum)
 					break;
 				f1->Text(Areas[area].x1,y+Areas[area].y1,timetxt,col,clrBackground);
 				j=i+f1->Text(f1->Width("00:00 ")+Areas[area].x1,y+Areas[area].y1,184-f1->Width("00:00 "),20,txt,col,clrBackground);
-#else
-				f1->Text(0,y,timetxt,col,clrBackground,sched);
-				j=i+f1->Text(f1->Width("00:00 "),y,184-f1->Width("00:00 "),20,txt,col,clrBackground,sched);
-#endif
 				oldev=cev;
 			}
 		}
 	}
 	if (oldev)
 	{
-#if VDRVERSNUM >= 10300
 		txt=oldev->ShortText();
-#else
-		txt=oldev->GetSubtitle();
-#endif
-#if VDRVERSNUM >= 10307
 		if (j+f2->TextHeight(f1->Width("00:00")+Areas[area].x1,txt)>=evnum)
 			f2->Text(f1->Width("00:0")+Areas[area].x1,j*f1->Height()+Areas[area].y1,184-f1->Width("00:0"),evnum-j,txt,col,clrBackground);
-#else
-		f2->Text(f1->Width("00:0"),j*f1->Height(),184-f1->Width("00:0"),evnum-j,txt,col,clrBackground,sched);
-#endif
 	}
 	if (!EDIT_curEvent)
 	{
@@ -586,20 +427,11 @@ void magazine::showSched(const cSchedule *s,cEventInfo **ev,tWindowHandle sched)
 		}
 		if (timeline_found_conflict)
 		{
-#if VDRVERSNUM >= 10307
 			osd->DrawRectangle(Areas[area].x1,Areas[area].y2-f2->Height()-6,Areas[area].x1+184,Areas[area].y2+1,clrWhite);
 			osd->DrawRectangle(Areas[area].x1,Areas[area].y2-f2->Height()-4,Areas[area].x1+184,Areas[area].y2+1,clrYellow);
-#else
-			osd->Fill(0,384-f2->Height()-6,184,384,clrWhite,sched);
-			osd->Fill(0,384-f2->Height()-4,184,384,clrYellow,sched);
-#endif
 			const char *txt=tr("Timer conflict!");
 			int x=(184-f2->Width(txt))/2;
-#if VDRVERSNUM >= 10307
 			f2->Text(x+Areas[area].x1,Areas[area].y2-f2->Height()-4,txt,clrBackground,clrYellow);
-#else
-			f2->Text(x,384-f2->Height()-4,txt,clrBackground,clrYellow,sched);
-#endif
 		}
 	}
 }
@@ -611,66 +443,32 @@ void magazine::showScheds()
 
 	if (s1!=NULL)
 	{
-#if VDRVERSNUM >= 10307
 		showSched(s1,ev1,SCHED1_AREA);
-#else
-		showSched(s1,ev1,sched1);
-#endif
 	}
 
 	if (s2!=NULL)
 	{
-#if VDRVERSNUM >= 10307
 		showSched(s2,ev2,SCHED2_AREA);
-#else
-		showSched(s2,ev2,sched2);
-#endif
 	}
 
 	if (s3!=NULL)
 	{
-#if VDRVERSNUM >= 10307
 		showSched(s3,ev3,SCHED3_AREA);
-#else
-		showSched(s3,ev3,sched3);
-#endif
 	}
 }
-#if VDRVERSNUM >= 10300
 const cEvent *magazine::getNext(const cSchedule *s,const cEvent *e)
-#else
-const cEventInfo *magazine::getNext(const cSchedule *s,const cEventInfo *e)
-#endif
 {
-#if VDRVERSNUM >= 10300
 	const cEvent *pe = NULL;
 	time_t ref = e->StartTime();
-#else
-	const cEventInfo *pe = NULL;
-	time_t ref = e->GetTime();
-#endif
 
 	time_t delta = INT_MAX;
-#if VDRVERSNUM >= 10306
+
 	for (int i=0;i< (s->Events())->Count();i++)
 	{
 		const cEvent *p = (s->Events())->Get(i);
-#else
-	for (int i=0;i<s->NumEvents();i++)
-	{
-#if VDRVERSNUM >= 10300
-		const cEvent *p = s->GetEventNumber(i);
-#else
-		const cEventInfo *p = s->GetEventNumber(i);
-#endif // VDRVERSNUM >= 10300
-#endif // VDRVERSNUM >= 10306
 		if (p!=e)
 		{
-#if VDRVERSNUM >= 10300
 			time_t dt = p->StartTime() - ref;
-#else
-			time_t dt = p->GetTime() - ref;
-#endif
 			if (dt > 0 && dt < delta)
 			{
 				delta = dt;
@@ -680,45 +478,20 @@ const cEventInfo *magazine::getNext(const cSchedule *s,const cEventInfo *e)
 	}
 	return pe;
 }
-#if VDRVERSNUM >= 10300
 const cEvent *magazine::getPrev(const cSchedule *s,const cEvent *e)
-#else
-const cEventInfo *magazine::getPrev(const cSchedule *s,const cEventInfo *e)
-#endif
 {
-#if VDRVERSNUM >= 10300
 	const cEvent *pe = NULL;
 	time_t ref = e->StartTime();
-#else
-	const cEventInfo *pe = NULL;
-	time_t ref = e->GetTime();
-#endif
 	time_t delta = INT_MAX;
 
 
-#if VDRVERSNUM >= 10306
 	for (int i=0;i< (s->Events())->Count();i++)
-#else
-	for (int i=0;i<s->NumEvents();i++)
-#endif
 	{
-#if VDRVERSNUM >= 10306
 		const cEvent *p = (s->Events())->Get(i);
-#else
-#if VDRVERSNUM >= 10300
-		const cEvent *p = s->GetEventNumber(i);
-#else
-		const cEventInfo *p = s->GetEventNumber(i);
-#endif // VDRVERSNUM >= 10300
-#endif // VDRVERSNUM >= 10306
 
 		if (p!=e)
 		{
-#if VDRVERSNUM >= 10300
 			time_t dt = ref - p->StartTime();
-#else
-			time_t dt = ref - p->GetTime();
-#endif
 			if (dt > 0 && dt < delta)
 			{
 				delta = dt;
@@ -728,19 +501,10 @@ const cEventInfo *magazine::getPrev(const cSchedule *s,const cEventInfo *e)
 	}
 	return pe;
 }
-#if VDRVERSNUM >= 10300
 void magazine::calcSched(const cSchedule *s,cEvent **ev)
-#else
-void magazine::calcSched(const cSchedule *s,cEventInfo **ev)
-#endif
 {
-#if VDRVERSNUM >= 10300
 	const cEvent *cev=NULL;
 	const cEvent *cev2=NULL;
-#else
-	const cEventInfo *cev=NULL;
-	const cEventInfo *cev2=NULL;
-#endif
 	int cc=0;
 
 	for(int i=0;i<evnum;i++)
@@ -752,13 +516,8 @@ void magazine::calcSched(const cSchedule *s,cEventInfo **ev)
 			cev2=NULL;
 			if (cev)
 			{
-#if VDRVERSNUM >= 10300
 				cc=f1->TextHeight(184-f1->Width("00:00 "),cev->Title());
 				time_t t=cev->StartTime();
-#else
-				cc=f1->TextHeight(184-f1->Width("00:00 "),cev->GetTitle());
-				time_t t=cev->GetTime();
-#endif
 				struct tm tm_r;
 				localtime_r(&t,&tm_r);
 				fullHours[i]=tm_r.tm_hour; //mzlog(0," fH[%d]=%d '%s'",i,tm_r.tm_hour,cev->Title());
@@ -770,23 +529,14 @@ void magazine::calcSched(const cSchedule *s,cEventInfo **ev)
 				cev2=getNext(s,cev);
 			if (cev2 && cc--<=1)
 			{
-#if VDRVERSNUM >= 10300
 				int z=(cev2->StartTime()-currentFirstTime)*6/60/60;
-#else
-				int z=(cev2->GetTime()-currentFirstTime)*6/60/60;
-#endif
 				if (z<i)
 				{
 					cev=cev2;
 					cev2=NULL;
 
-#if VDRVERSNUM >= 10300
 					cc=f1->TextHeight(184-f1->Width("00:00 "),cev->Title());
 					time_t t=cev->StartTime();
-#else
-					cc=f1->TextHeight(184-f1->Width("00:00 "),cev->GetTitle());
-					time_t t=cev->GetTime();
-#endif
 
 					struct tm tm_r;
 					localtime_r(&t,&tm_r);
@@ -794,11 +544,7 @@ void magazine::calcSched(const cSchedule *s,cEventInfo **ev)
 				}
 			}
 		}
-#if VDRVERSNUM >= 10300
 		ev[i]=(cEvent *)cev;
-#else
-		ev[i]=(cEventInfo *)cev;
-#endif
 	}
 }
 void magazine::calcScheds()
@@ -867,7 +613,6 @@ void magazine::calcScheds()
 }
 void magazine::output(void)
 {
-#if VDRVERSNUM >= 10307
 /*	for (int i=0; i < (int)(sizeof(Areas)/sizeof(tArea)); i++)
 	{
 		cBitmap *b=osd->GetBitmap(i);
@@ -901,24 +646,6 @@ void magazine::output(void)
 		b->Colors(col);
 		mzlog(5," 1. NumColors(%d):%d",i,col);
 	} */
-#else
-	if (tvonscreenCfg.colorworkaround)
-	{
-		osd->Clear(names);
-		// This is an ugly work around for color problems with DVB driver or hardware or vdr handling, who knows
-		osd->AddColor(clrTransparent,names);
-		osd->AddColor(clrBlue,names);
-		osd->AddColor(clrWhite,names);
-		osd->AddColor(clrGrey,names);
-		osd->AddColor((eDvbColor)0xffff0000,names);
-		osd->AddColor(clrCyan,names);
-		for(int i=6;i<128;i++)
-		{
-			osd->AddColor((eDvbColor)(0x01000000|i),names);
-		}
-		// End work around
-	}
-#endif
 	
 	showHeads();
 	showKeys();
@@ -926,7 +653,6 @@ void magazine::output(void)
 	showScheds();
 	showTimeline();
 
-#if VDRVERSNUM >= 10307
 /*	for (int i=0; i < (int)(sizeof(Areas)/sizeof(tArea)); i++)
 	{
 		cBitmap *b=osd->GetBitmap(i);
@@ -941,13 +667,11 @@ void magazine::output(void)
 			}
 		}
 	} */
-#endif
 
 	osd->Flush();
 }
 void magazine::outputLR(void)
 {
-#if VDRVERSNUM >= 10307
 /*	for (int i=0; i < (int)(sizeof(Areas)/sizeof(tArea)); i++)
 	{
 		cBitmap *b=osd->GetBitmap(i);
@@ -974,24 +698,6 @@ void magazine::outputLR(void)
 			// End work around
 		}
 	}
-#else
-	if (tvonscreenCfg.colorworkaround)
-	{
-		osd->Clear(names);
-		// This is an ugly work around for color problems with DVB driver or hardware or vdr handling, who knows
-		osd->AddColor(clrTransparent,names);
-		osd->AddColor(clrBlue,names);
-		osd->AddColor(clrWhite,names);
-		osd->AddColor(clrGrey,names);
-		osd->AddColor((eDvbColor)0xffff0000,names);
-		osd->AddColor(clrCyan,names);
-		for(int i=6;i<128;i++)
-		{
-			osd->AddColor((eDvbColor)(0x01000000|i),names);
-		}
-		// End work around
-	}
-#endif
 
 	showHeads();
 	calcScheds();
@@ -1045,7 +751,7 @@ void magazine::showHelp()
 		"|\n(c) 2004 Jürgen Schmitz\n\thttp://www.js-home.org/vdr",
 		NULL
 	};
-#if VDRVERSNUM >= 10307
+
 	int area=SCHED1_AREA;
 
 	osd->DrawRectangle(Areas[SCHED1_AREA].x1, Areas[SCHED1_AREA].y1+1, Areas[SCHED1_AREA].x2+1, Areas[SCHED1_AREA].y2+1, clrGrey);
@@ -1057,19 +763,6 @@ void magazine::showHelp()
 	osd->DrawRectangle(Areas[SCHED3_AREA].x1+2, Areas[SCHED3_AREA].y1, Areas[SCHED3_AREA].x2+1-3, Areas[SCHED3_AREA].y2+1-3, clrGray50);
 
 	osd->DrawRectangle(0+Areas[TIMELINE_AREA].x1,0+Areas[TIMELINE_AREA].y1+TL_YSTART,Areas[TIMELINE_AREA].x1+48,Areas[TIMELINE_AREA].y1+400+TL_YSTART,clrBlack);
-#else
-	tWindowHandle sched=sched1;
-
-	osd->Fill(0,0,184,384,clrGrey,sched1);
-	osd->Fill(0,0,184,384,clrGrey,sched2);
-	osd->Fill(0,0,184,384,clrGrey,sched3);
-
-	osd->Fill(2,2,184-3,384-3,clrBackground,sched1);
-	osd->Fill(2,2,184-3,384-3,clrBackground,sched2);
-	osd->Fill(2,2,184-3,384-3,clrBackground,sched3);
-
-	osd->Fill(0,0+TL_YSTART,48,400+TL_YSTART,clrBlack,timeline);
-#endif
 	showHeads(true);
 //	osd->Flush();
 
@@ -1087,38 +780,22 @@ void magazine::showHelp()
 
 			if (i+usef->TextHeight(width,txt)>=lines)
 				break;
-#if VDRVERSNUM >= 10307
+
 			i+=usef->Text(Areas[area].x1+4,y+Areas[area].y1,width-8,lines-i,txt,clrWhite,clrBackground);
-#else
-			i+=usef->Text(4,y,width-8,lines-i,txt,clrWhite,clrBackground,sched);
-#endif
 			j++;
 		}
-#if VDRVERSNUM >= 10307
 		if (area==SCHED1_AREA)
 			area=SCHED2_AREA;
 		else if (area==SCHED2_AREA)
 			area=SCHED3_AREA;
 		else if (area==SCHED3_AREA)
 			break;
-#else
-		if (sched==sched1)
-			sched=sched2;
-		else if (sched==sched2)
-			sched=sched3;
-		else if (sched==sched3)
-			break;
-#endif
 	}
 	while (helptext[j]);
 	osd->Flush();
 }
 
-#if VDRVERSNUM >= 10300
 void magazine::autoTimer(const class cEvent *cev)
-#else
-void magazine::autoTimer(const class cEventInfo *cev)
-#endif
 {
 	FILE *f;
 	if ((f=fopen(tvonscreenCfg.vdradminfile,"a")))
@@ -1126,15 +803,9 @@ void magazine::autoTimer(const class cEventInfo *cev)
 		const char *title;
 		int chan;
 
-#if VDRVERSNUM >= 10300
 		title=cev->Title();
 		cChannel *cc=Channels.GetByChannelID(cev->ChannelID());
 		chan=cc->Number();
-#else
-		title=cev->GetTitle();
-		cChannel *cc=Channels.GetByChannelID(cev->GetChannelID());
-		chan=cc->Number();
-#endif
 
 		fprintf(f,"1:%s:1:::1:40:7:%d:\n",title,chan);
 		fclose(f);
@@ -1166,13 +837,8 @@ void magazine::Show(void)
 		mes=NULL;
 	}
 
-#if VDRVERSNUM >= 10307
 	osd = cOsdProvider::NewOsd(((Setup.OSDWidth - 612) / 2) + Setup.OSDLeft, ((Setup.OSDHeight - 436) / 2) + Setup.OSDTop);
 	if (osd && !osd->SetAreas(Areas, sizeof(Areas)/sizeof(tArea)))
-#else
-	osd = cOsd::OpenRaw(50, 60);
-  	if (osd)
-#endif
 	{
 		delete [] fullHours;
 		delete [] ev1;
@@ -1188,7 +854,6 @@ void magazine::Show(void)
 		f2=new anyFont(osd,(cFont::tPixelData *)fontosd_verdana16,FONTOSD_VERDANA16,1);	// Extra-Info
 		f3=new anyFont(osd,(cFont::tPixelData *)fontosd_tahoma16,FONTOSD_TAHOMA16,1);	// Sender
 		f4=new anyFont(osd,(cFont::tPixelData *)fontosd_newroman16,FONTOSD_NEWROMAN16);	// Tasten
-#if VDRVERSNUM >= 10307
 		for (int i=0; i < (int)(sizeof(Areas)/sizeof(tArea)); i++)
 		{
 //			cBitmap *b=osd->GetBitmap(i);
@@ -1197,44 +862,11 @@ void magazine::Show(void)
 			osd->DrawRectangle(Areas[i].x1, Areas[i].y1, Areas[i].x2+1, Areas[i].y2+1, clrGray50);
 		}
 		evnum=(Areas[SCHED1_AREA].y2-Areas[SCHED1_AREA].y1)/f1->Height();
-#else
-		names=osd->Create(8+45, 0, 188*2+184, 48/*20*/, 4, false, false);
-		timeline=osd->Create(0, 0, 8+40, 384+TL_YSTART, 2, false, false);
-		sched1=osd->Create(8+45, TL_YSTART, 184, 384, 2, true, false);
-		sched2=osd->Create(8+45+188, TL_YSTART, 184, 384, 2, true, false);
-		sched3=osd->Create(8+45+188*2, TL_YSTART, 184, 384, 2, true, false);
-		control=osd->Create(50, 384+TL_YSTART+8, 8+45+188*2+184-101, 20, 1, true, false);
 
-		osd->AddColor(clrTransparent,names);
-		osd->AddColor(clrBackground,sched1);
-		osd->AddColor(clrBackground,sched2);
-		osd->AddColor(clrBackground,sched3);
-		osd->AddColor(clrWhite,timeline);
-		osd->AddColor(clrWhite,sched1);
-		osd->AddColor(clrWhite,sched2);
-		osd->AddColor(clrWhite,sched3);
-		osd->AddColor(clrWhite,names);
-		osd->AddColor(clrBlack,timeline);
-		osd->AddColor(clrBlue,timeline);
-		osd->AddColor(clrBlue,names);
-		osd->AddColor(clrYellow,names);
-		osd->AddColor(clrGrey,sched1);
-		osd->AddColor(clrGrey,sched2);
-		osd->AddColor(clrGrey,sched3);
-		osd->AddColor(clrGrey,names);
-		osd->Clear();
-		evnum=(384)/f1->Height();
-#endif
-
-#if VDRVERSNUM >= 10300
 		ev1=new cEvent*[evnum];
 		ev2=new cEvent*[evnum];
 		ev3=new cEvent*[evnum];
-#else
-		ev1=new cEventInfo*[evnum];
-		ev2=new cEventInfo*[evnum];
-		ev3=new cEventInfo*[evnum];
-#endif
+
 		fullHours=new int[evnum];
 		fullHours_tmp1=new int[evnum];
 		fullHours_tmp2=new int[evnum];
@@ -1243,15 +875,9 @@ void magazine::Show(void)
 		output();
 	}
 }
-#if VDRVERSNUM >= 10300
 cEvent **magazine::ev4ch(int p)
 {
 	cEvent **ev=NULL;
-#else
-cEventInfo **magazine::ev4ch(int p)
-{
-	cEventInfo **ev=NULL;
-#endif
 	if (p==currentFirst)
 		ev=ev1;
 	else if (p==currentFirst+1)
@@ -1262,20 +888,12 @@ cEventInfo **magazine::ev4ch(int p)
 }
 void magazine::searchcEvt(void)
 {
-#if VDRVERSNUM >= 10300
 	cEvent **ev=ev4ch(EDIT_curChannel);
-#else
-	cEventInfo **ev=ev4ch(EDIT_curChannel);
-#endif
 	for(int i=EDIT_curEVI;i>=0;i--)
 	{
 		if (ev[i])
 		{
-#if VDRVERSNUM >= 10300
 			EDIT_curEvent=ev[i]->EventID();
-#else
-			EDIT_curEvent=ev[i]->GetEventID();
-#endif
 			break;
 		}
 	}
@@ -1308,13 +926,8 @@ eOSState magazine::ProcessKey(eKeys Key)
 					break;
 				case kBlue: // Umschalten - obsolete!
 					{
-#if VDRVERSNUM >= 10300
 						cEvent **ev=ev4ch(EDIT_curChannel);
 						cChannel *channel = Channels.GetByChannelID(ev[EDIT_curEVI]->ChannelID(), true);
-#else
-						cEventInfo **ev=ev4ch(EDIT_curChannel);
-						cChannel *channel = Channels.GetByChannelID(ev[EDIT_curEVI]->GetChannelID(), true);
-#endif
     					if (channel && cDevice::PrimaryDevice()->SwitchChannel(channel, true))
 						{
 							delete me;
@@ -1328,11 +941,7 @@ eOSState magazine::ProcessKey(eKeys Key)
 //						mzlog(10," Search");
 						delete me;
 						me=NULL;
-#if VDRVERSNUM >= 10300
 						cEvent **ev=ev4ch(EDIT_curChannel);
-#else
-						cEventInfo **ev=ev4ch(EDIT_curChannel);
-#endif
 						mes=new cSearchMenu(ev[EDIT_curEVI]);
 						state=osContinue;
 					}
@@ -1345,11 +954,7 @@ eOSState magazine::ProcessKey(eKeys Key)
 							me->helpLine(false);
 							state=osContinue;
 
-#if VDRVERSNUM >= 10300
 							cEvent **ev=ev4ch(EDIT_curChannel);
-#else
-							cEventInfo **ev=ev4ch(EDIT_curChannel);
-#endif
 							autoTimer(ev[EDIT_curEVI]);
 							me->printMsg(tr("Added AutoTimer to vdradmin."));
 						}
@@ -1366,11 +971,7 @@ eOSState magazine::ProcessKey(eKeys Key)
 					{
 						delete me;
 						me=NULL;
-#if VDRVERSNUM >= 10300
 						cEvent **ev=ev4ch(EDIT_curChannel);
-#else
-						cEventInfo **ev=ev4ch(EDIT_curChannel);
-#endif
 						cTimer *timer = new cTimer(ev[EDIT_curEVI]);
 						cTimer *t = Timers.GetTimer(timer);
 						if (t)
@@ -1429,11 +1030,7 @@ eOSState magazine::ProcessKey(eKeys Key)
 				case kOk:
 				case kGreen:
 					{
-#if VDRVERSNUM >= 10300
 						const cEvent *ev=mes->currentSelected();
-#else
-						const cEventInfo *ev=mes->currentSelected();
-#endif
 						if (ev)
 						{
 							delete mes;
@@ -1456,11 +1053,7 @@ eOSState magazine::ProcessKey(eKeys Key)
 						Show();
 					break;
 				case kRed:
-#if VDRVERSNUM >= 10300
 					const cEvent *ev=mes->currentSelected();
-#else
-					const cEventInfo *ev=mes->currentSelected();
-#endif
 					if (ev)
 					{
 						delete mes;
@@ -1499,11 +1092,7 @@ eOSState magazine::ProcessKey(eKeys Key)
 							{
 								if (ev1[i])
 								{
-#if VDRVERSNUM >= 10300
 									EDIT_curEvent=ev1[i]->EventID();
-#else
-									EDIT_curEvent=ev1[i]->GetEventID();
-#endif
 									break;
 								}
 							}
@@ -1563,11 +1152,7 @@ eOSState magazine::ProcessKey(eKeys Key)
 							int currentChannel = Channels.GetByNumber(cDevice::CurrentChannel())->Number();
 							for(int i=0;i<schedArrayNum;i++)
 							{
-#if VDRVERSNUM >= 10300
 								cChannel *channel = Channels.GetByChannelID(schedArray[i]->ChannelID(), true);
-#else
-								cChannel *channel = Channels.GetByChannelID(schedArray[i]->GetChannelID(), true);
-#endif
 								if (channel->Number()==currentChannel)
 								{
 									currentFirst=i-1;
@@ -1623,11 +1208,7 @@ eOSState magazine::ProcessKey(eKeys Key)
 						{
 							delete osd;
 							osd=NULL;
-#if VDRVERSNUM >= 10300
 							cEvent **ev=ev4ch(EDIT_curChannel);
-#else
-							cEventInfo **ev=ev4ch(EDIT_curChannel);
-#endif
 							me=new tvOcMenuEvent(ev[EDIT_curEVI]);
 							me->Display();
 							curmode=SHOW;
@@ -1668,13 +1249,8 @@ eOSState magazine::ProcessKey(eKeys Key)
 						break;
 					case kUp:
 						{
-#if VDRVERSNUM >= 10300
 							cEvent **ev=ev4ch(EDIT_curChannel);
 							const cEvent *e=getPrev(schedArray[EDIT_curChannel],ev[EDIT_curEVI]);
-#else
-							cEventInfo **ev=ev4ch(EDIT_curChannel);
-							const cEventInfo *e=getPrev(schedArray[EDIT_curChannel],ev[EDIT_curEVI]);
-#endif
 
 							if (e)
 							{
@@ -1684,18 +1260,10 @@ eOSState magazine::ProcessKey(eKeys Key)
 									found=0;
 									for(int i=0;i<evnum;i++)
 									{
-#if VDRVERSNUM >= 10300
 										if (ev[i] && ev[i]->EventID()==e->EventID())
-#else
-										if (ev[i] && ev[i]->GetEventID()==e->GetEventID())
-#endif
 										{
 											found=1;
-#if VDRVERSNUM >= 10300
 											EDIT_curEvent=e->EventID();
-#else
-											EDIT_curEvent=e->GetEventID();
-#endif
 										}
 									}
 									if (!found)
@@ -1716,21 +1284,12 @@ eOSState magazine::ProcessKey(eKeys Key)
 						break; 
 					case kDown:
 						{
-#if VDRVERSNUM >= 10300
 							cEvent **ev=ev4ch(EDIT_curChannel);
 							const cEvent *e=getNext(schedArray[EDIT_curChannel],ev[EDIT_curEVI]);
-#else
-							cEventInfo **ev=ev4ch(EDIT_curChannel);
-							const cEventInfo *e=getNext(schedArray[EDIT_curChannel],ev[EDIT_curEVI]);
-#endif
 
 							if (e)
 							{
-#if VDRVERSNUM >= 10300
 								EDIT_curEvent=e->EventID();
-#else
-								EDIT_curEvent=e->GetEventID();
-#endif
 								int found,cc=0;
 								do
 								{
@@ -1738,11 +1297,7 @@ eOSState magazine::ProcessKey(eKeys Key)
 									cc++;
 									for(int i=0;i<evnum;i++)
 									{
-#if VDRVERSNUM >= 10300
 										if (ev[i] && ev[i]->EventID()==EDIT_curEvent)
-#else
-										if (ev[i] && ev[i]->GetEventID()==EDIT_curEvent)
-#endif
 										{
 											found=1;
 										}
@@ -1790,11 +1345,7 @@ eOSState magazine::ProcessKey(eKeys Key)
 					{
 						delete osd;
 						osd=NULL;
-#if VDRVERSNUM >= 10300
 						cEvent **ev=ev4ch(EDIT_curChannel);
-#else
-						cEventInfo **ev=ev4ch(EDIT_curChannel);
-#endif
 						cTimer *timer = new cTimer(ev[EDIT_curEVI]);
 						cTimer *t = Timers.GetTimer(timer);
 						if (t)

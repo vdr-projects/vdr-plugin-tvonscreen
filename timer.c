@@ -3,19 +3,13 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: timer.c,v 1.2 2004/11/23 14:21:24 schmitzj Exp $
+ * $Id: timer.c,v 1.3 2006/06/18 13:59:36 schmitzj Exp $
  *
  */
 
 #include "magazine.h"
 
-tvOcMenuEvent::
-#if VDRVERSNUM >= 10300
-  tvOcMenuEvent(const class cEvent *EventInfo)
-#else
-  tvOcMenuEvent(const class cEventInfo *EventInfo)
-#endif
- : cMenuEvent(EventInfo,false)
+tvOcMenuEvent::tvOcMenuEvent(const class cEvent *EventInfo) : cMenuEvent(EventInfo,false)
 {
 	helpLine();
 }
