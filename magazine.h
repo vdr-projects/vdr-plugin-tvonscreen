@@ -70,7 +70,7 @@ class magazine : public cOsdObject
 	enum modes {SHOW,EDIT};
 	enum modes curmode;
 
-	unsigned short EDIT_curEvent;
+	int EDIT_curEvent;
 	int EDIT_curChannel;
 	int EDIT_curEVI;
 	

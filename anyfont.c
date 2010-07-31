@@ -10,20 +10,36 @@
 #include "anyfont.h"
 #include "magazine.h"
 
-#if VDRVERSNUM >= 10307
+#if VDRVERSNUM >= 10503
+anyFont::anyFont(cOsd *_osd,int fheight,int transparent)
+#elif VDRVERSNUM >= 10307
 anyFont::anyFont(cOsd *_osd,const cFont::tPixelData *fd,int fheight,int transparent)
 #else
 anyFont::anyFont(cOsdBase *_osd,const cFont::tPixelData *fd,int fheight,int transparent)
 #endif
 {
 	osd=_osd;
+#if VDRVERSNUM >= 10503
+#if VDRVERSNUM >= 10504
+	Font = cFont::CreateFont(Setup.FontOsd, fheight);
+#else
+	Font = new cFreetypeFont(*AddDirectory(FONTDIR, Setup.FontOsd, fheight);
+#endif
+	if (!Font || !Font->Height())
+		Font = cFont::GetFont(fontSml);
+#else
 	FontData=fd;
 	FontHeight=fheight;
+#endif
 	trans=transparent;
 }
 int anyFont::Height(void)
 {
+#if VDRVERSNUM >= 10503
+	return Font->Height();
+#else
 	return FontHeight-2-2;
+#endif
 }
 int anyFont::Width(const char *txt) 
 {
@@ -39,21 +55,29 @@ int anyFont::LargeWidth(const char *txt)
 }
 int anyFont::Width(char c) 
 {
+#if VDRVERSNUM >= 10503
+	return Font->Width(c);
+#else
 	if ((int)FontData[(((unsigned char)c)-32)*(FontHeight)]>100)
 	{
 		mzlog(1," big letter error %c: %d",c,(int)FontData[(((unsigned char)c)-32)*(FontHeight)]);
 		return 100;
 	}
 	return (int)FontData[(((unsigned char)c)-32)*(FontHeight)];
+#endif
 }
 int anyFont::LargeWidth(char c) 
 {
+#if VDRVERSNUM >= 10503
+	return Font->Width(c);
+#else
 	if ((int)FontData[(((unsigned char)c)-32)*(FontHeight)]>100)
 	{
 		mzlog(1," big letter error %c: %d",c,(int)FontData[(((unsigned char)c)-32)*(FontHeight)]);
 		return 100;
 	}
 	return (int)FontData[(((unsigned char)c)-32)*(FontHeight)]*2;
+#endif
 }
 #if VDRVERSNUM >= 10307
 int anyFont::Text(int x, int y, const char *txt, tColor fg, tColor bg)
@@ -61,6 +85,10 @@ int anyFont::Text(int x, int y, const char *txt, tColor fg, tColor bg)
 int anyFont::Text(int x, int y, const char *txt, eDvbColor fg, eDvbColor bg, tWindowHandle wh) 
 #endif
 {
+#if VDRVERSNUM >= 10503
+	osd->DrawText(x, y, txt, fg, trans ? clrTransparent : bg, Font);
+	return x += Font->Width(txt);
+#else
 	unsigned int pxl;
 	int row,col;
 
@@ -85,6 +113,7 @@ int anyFont::Text(int x, int y, const char *txt, eDvbColor fg, eDvbColor bg, tWi
 		x += Width(*txt++);
 	}
 	return x;
+#endif
 }
 #if VDRVERSNUM >= 10307
 int anyFont::LargeText(int x, int y, const char *txt, tColor fg, tColor bg)
@@ -92,6 +121,10 @@ int anyFont::LargeText(int x, int y, const char *txt, tColor fg, tColor bg)
 int anyFont::LargeText(int x, int y, const char *txt, eDvbColor fg, eDvbColor bg, tWindowHandle wh) 
 #endif
 {
+#if VDRVERSNUM >= 10503
+	osd->DrawText(x, y, txt, fg, trans ? clrTransparent : bg, Font);
+	return x + Font->Width(txt);
+#else
 	unsigned int pxl;
 	int row,col;
 
@@ -116,6 +149,7 @@ int anyFont::LargeText(int x, int y, const char *txt, eDvbColor fg, eDvbColor bg
 		x += LargeWidth(*txt++);
 	}
 	return x;
+#endif
 }
 #if VDRVERSNUM >= 10307
 int anyFont::Text(int x, int y, int w, int h, const char *txt, tColor fg, tColor bg)

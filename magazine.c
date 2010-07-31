@@ -458,6 +458,9 @@ void magazine::showScheds()
 }
 const cEvent *magazine::getNext(const cSchedule *s,const cEvent *e)
 {
+	if (e == NULL)
+		return NULL;
+
 	const cEvent *pe = NULL;
 	time_t ref = e->StartTime();
 
@@ -480,6 +483,9 @@ const cEvent *magazine::getNext(const cSchedule *s,const cEvent *e)
 }
 const cEvent *magazine::getPrev(const cSchedule *s,const cEvent *e)
 {
+	if (e == NULL)
+		return NULL;
+
 	const cEvent *pe = NULL;
 	time_t ref = e->StartTime();
 	time_t delta = INT_MAX;
@@ -812,10 +818,12 @@ void magazine::autoTimer(const class cEvent *cev)
 	}
 }
 
+#if VDRVERSNUM < 10503
 #include "fontosd/fontosd-arial18.c"
 #include "fontosd/fontosd-verdana16.c"
 #include "fontosd/fontosd-tahoma16.c"
 #include "fontosd/fontosd-timesNewRoman16.c"
+#endif
 
 void magazine::Show(void)
 {
@@ -850,10 +858,17 @@ void magazine::Show(void)
 		delete f3;
 		delete f4;
 
+#if VDRVERSNUM >= 10503
+		f1=new anyFont(osd,18,1);		// Sendung
+		f2=new anyFont(osd,16,1);	// Extra-Info
+		f3=new anyFont(osd,20,1);	// Sender
+		f4=new anyFont(osd,16);	// Tasten
+#else
 		f1=new anyFont(osd,(cFont::tPixelData *)fontosd_arial18,FONTOSD_ARIAL18,1);		// Sendung
 		f2=new anyFont(osd,(cFont::tPixelData *)fontosd_verdana16,FONTOSD_VERDANA16,1);	// Extra-Info
 		f3=new anyFont(osd,(cFont::tPixelData *)fontosd_tahoma16,FONTOSD_TAHOMA16,1);	// Sender
 		f4=new anyFont(osd,(cFont::tPixelData *)fontosd_newroman16,FONTOSD_NEWROMAN16);	// Tasten
+#endif
 		for (int i=0; i < (int)(sizeof(Areas)/sizeof(tArea)); i++)
 		{
 //			cBitmap *b=osd->GetBitmap(i);
@@ -1077,9 +1092,9 @@ eOSState magazine::ProcessKey(eKeys Key)
 	{
 		state = cOsdObject::ProcessKey(Key);
 	
-		if (state == osUnknown)
+		if (state == osUnknown && schedArrayNum>currentFirst)
 		{
-			if (curmode==SHOW && schedArrayNum>currentFirst)
+			if (curmode==SHOW)
 			{
 				switch (Key & ~k_Repeat)
 				{
@@ -1111,6 +1126,8 @@ eOSState magazine::ProcessKey(eKeys Key)
 						currentFirst++;
 						if (currentFirst>schedArrayNum-3)
 							currentFirst=schedArrayNum-3;
+						if (currentFirst<0)
+							currentFirst=0;
 						output();
 						break;
 					case kUp:
@@ -1145,6 +1162,8 @@ eOSState magazine::ProcessKey(eKeys Key)
 						currentFirst+=3;
 						if (currentFirst>schedArrayNum-3)
 							currentFirst=schedArrayNum-3;
+						if (currentFirst<0)
+							currentFirst=0;
 						output();
 						break;
 					case k8: // zum aktuellen Sender
@@ -1206,14 +1225,17 @@ eOSState magazine::ProcessKey(eKeys Key)
 				{
 					case kOk:
 						{
-							delete osd;
-							osd=NULL;
 							cEvent **ev=ev4ch(EDIT_curChannel);
-							me=new tvOcMenuEvent(ev[EDIT_curEVI]);
-							me->Display();
-							curmode=SHOW;
-							EDIT_curEvent=0;
-							return osContinue;
+							if (ev[EDIT_curEVI] != NULL)
+							{
+								delete osd;
+								osd=NULL;
+								me=new tvOcMenuEvent(ev[EDIT_curEVI]);
+								me->Display();
+								curmode=SHOW;
+								EDIT_curEvent=0;
+								return osContinue;
+							}
 						}
 						break;
             		case kBack:
@@ -1238,11 +1260,15 @@ eOSState magazine::ProcessKey(eKeys Key)
 							EDIT_curChannel++;
 						if (EDIT_curChannel>schedArrayNum-1)
 							EDIT_curChannel=schedArrayNum-1;
+						if (EDIT_curChannel<0)
+							EDIT_curChannel=0;
 						if (EDIT_curChannel>currentFirst+2)
 						{
 							currentFirst++;
 							if (currentFirst>schedArrayNum-3)
 								currentFirst=schedArrayNum-3;
+							if (currentFirst<0)
+								currentFirst=0;
 							EDIT_curChannel=currentFirst+2;
 						}
 						outputLR();
@@ -1343,17 +1369,20 @@ eOSState magazine::ProcessKey(eKeys Key)
 						break;			*/
 				case kRecord:
 					{
-						delete osd;
-						osd=NULL;
 						cEvent **ev=ev4ch(EDIT_curChannel);
-						cTimer *timer = new cTimer(ev[EDIT_curEVI]);
-						cTimer *t = Timers.GetTimer(timer);
-						if (t)
+						if (ev[EDIT_curEVI] != NULL)
 						{
-							delete timer;
-							timer = t;
+							delete osd;
+							osd=NULL;
+							cTimer *timer = new cTimer(ev[EDIT_curEVI]);
+							cTimer *t = Timers.GetTimer(timer);
+							if (t)
+							{
+								delete timer;
+								timer = t;
+							}
+							met=new cMenuEditTimer(timer, !t);
 						}
-						met=new cMenuEditTimer(timer, !t);
 					}
 					break;
 					default:

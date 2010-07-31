@@ -19,11 +19,17 @@ class anyFont
 #else
 	cOsdBase *osd;
 #endif
+#if VDRVERSNUM >= 10503
+	const cFont *Font;
+#else
 	const cFont::tPixelData *FontData;
 	int FontHeight;
+#endif
 	int trans;
 public:
-#if VDRVERSNUM >= 10307
+#if VDRVERSNUM >= 10503
+	anyFont(cOsd *o,int fheight,int transparent=0);
+#elif VDRVERSNUM >= 10307
 	anyFont(cOsd *o,const cFont::tPixelData *fd,int fheight,int transparent=0);
 #else
 	anyFont(cOsdBase *o,const cFont::tPixelData *fd,int fheight,int transparent=0);
