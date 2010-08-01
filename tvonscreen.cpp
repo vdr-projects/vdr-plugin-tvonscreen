@@ -13,8 +13,8 @@
 #include "i18n.h"
 
 static const char *VERSION        = "1.0.141";
-static const char *DESCRIPTION    = "Shows the EPG info in form of a typical TV magazine";
-static const char *MAINMENUENTRY  = "TV-OnScreen";
+static const char *DESCRIPTION    = trNOOP("Shows the EPG info in form of a typical TV magazine");
+static const char *MAINMENUENTRY  = trNOOP("TV-OnScreen");
 
 class cPluginTvOnscreen : public cPlugin {
 private:
