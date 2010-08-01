@@ -61,7 +61,9 @@ bool cPluginTvOnscreen::ProcessArgs(int argc, char *argv[])
 bool cPluginTvOnscreen::Initialize(void)
 {
   // Initialize any background activities the plugin shall perform.
+#if (APIVERSNUM < 10507)
 	RegisterI18n(tvoPhrases);
+#endif
   	return true;
 }
 

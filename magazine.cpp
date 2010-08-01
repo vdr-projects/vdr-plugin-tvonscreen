@@ -93,19 +93,22 @@ magazine::magazine(class cPlugin *p)
 	qsort(schedArray, num, sizeof(cSchedule*), CompareSchedules);
 	currentFirst=0;
 
-	int currentChannel = Channels.GetByNumber(cDevice::CurrentChannel())->Number();
-	for(int i=0;i<schedArrayNum;i++)
+	cChannel *cchannel=Channels.GetByNumber(cDevice::CurrentChannel());
+	if (cchannel) 
 	{
-		cChannel *channel = Channels.GetByChannelID(schedArray[i]->ChannelID(), true);
-		if (channel->Number()==currentChannel)
+		int currentChannel = cchannel->Number();
+		for(int i=0;i<schedArrayNum;i++)
 		{
-			currentFirst=i-1;
-			if (currentFirst<0)
-				currentFirst=0;
-			break;
+			cChannel *channel = Channels.GetByChannelID(schedArray[i]->ChannelID(), true);
+			if (channel->Number()==currentChannel)
+			{
+				currentFirst=i-1;
+				if (currentFirst<0)
+					currentFirst=0;
+				break;
+			}
 		}
 	}
-
 	ev1=NULL;
 	ev2=NULL;
 	ev3=NULL;
