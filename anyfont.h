@@ -15,42 +15,42 @@
 class anyFont
 {
 #if VDRVERSNUM >= 10307
-	cOsd *osd;
+    cOsd *osd;
 #else
-	cOsdBase *osd;
+    cOsdBase *osd;
 #endif
 #if VDRVERSNUM >= 10503
-	const cFont *Font;
+    const cFont *Font;
 #else
-	const cFont::tPixelData *FontData;
-	int FontHeight;
+    const cFont::tPixelData *FontData;
+    int FontHeight;
 #endif
-	int trans;
+    int trans;
 public:
 #if VDRVERSNUM >= 10503
-	anyFont(cOsd *o,int fheight,int transparent=0);
+    anyFont(cOsd *o,int fheight,int transparent=0);
 #elif VDRVERSNUM >= 10307
-	anyFont(cOsd *o,const cFont::tPixelData *fd,int fheight,int transparent=0);
+    anyFont(cOsd *o,const cFont::tPixelData *fd,int fheight,int transparent=0);
 #else
-	anyFont(cOsdBase *o,const cFont::tPixelData *fd,int fheight,int transparent=0);
+    anyFont(cOsdBase *o,const cFont::tPixelData *fd,int fheight,int transparent=0);
 #endif
-	int Height(void);
-	int Width(const char *txt);
-	int LargeWidth(const char *txt);
-	int Width(char c);
-	int LargeWidth(char c);
+    int Height(void);
+    int Width(const char *txt);
+    int LargeWidth(const char *txt);
+    int Width(char c);
+    int LargeWidth(char c);
 #if VDRVERSNUM >= 10307
-	int Text(int x, int y, const char *txt, tColor fg, tColor bg);
-	int LargeText(int x, int y, const char *txt, tColor fg, tColor bg);
+    int Text(int x, int y, const char *txt, tColor fg, tColor bg);
+    int LargeText(int x, int y, const char *txt, tColor fg, tColor bg);
 
-	int Text(int x, int y, int w, int h, const char *txt, tColor fg, tColor bg);
+    int Text(int x, int y, int w, int h, const char *txt, tColor fg, tColor bg);
 #else
-	int Text(int x, int y, const char *txt, eDvbColor fg, eDvbColor bg, tWindowHandle wh);
-	int LargeText(int x, int y, const char *txt, eDvbColor fg, eDvbColor bg, tWindowHandle wh);
+    int Text(int x, int y, const char *txt, eDvbColor fg, eDvbColor bg, tWindowHandle wh);
+    int LargeText(int x, int y, const char *txt, eDvbColor fg, eDvbColor bg, tWindowHandle wh);
 
-	int Text(int x, int y, int w, int h, const char *txt, eDvbColor fg, eDvbColor bg, tWindowHandle wh);
+    int Text(int x, int y, int w, int h, const char *txt, eDvbColor fg, eDvbColor bg, tWindowHandle wh);
 #endif
-	int TextHeight(int w, const char *txt);
+    int TextHeight(int w, const char *txt);
 };
 
 #endif

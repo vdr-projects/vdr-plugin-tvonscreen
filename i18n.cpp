@@ -9,1263 +9,1264 @@
 
 #include "i18n.h"
 
-const tI18nPhrase tvoPhrases[] = {
-  { "TV-OnScreen", // English
-    "TV-OnScreen", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "TV-ohjelmat", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+const tI18nPhrase tvoPhrases[] =
+{
+    { "TV-OnScreen", // English
+        "TV-OnScreen", // Deutsch
+        "", // Slovenski
+        "", // Italiano
+        "", // Nederlands
+        "", // Portuguï¿½s
+        "", // Franï¿½ais
+        "", // Norsk
+        "TV-ohjelmat", // suomi
+        "", // Polski
+        "", // Espaï¿½ol
+        "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        "", // Svenska
+        "", // Romaneste
+        "", // Magyar
+        "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+        ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+        "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+        "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+        "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "Shows the EPG info in form of a typical TV magazine", // English
-    "", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "TV-ohjelmatiedot (OSD)", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "Shows the EPG info in form of a typical TV magazine", // English
+      "", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "TV-ohjelmatiedot (OSD)", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "o'clock", // English
-    "Uhr", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    " ", // suomi (empty space)
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "o'clock", // English
+      "Uhr", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      " ", // suomi (empty space)
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "%d-%m", // English
-    "%d.%m.", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "%d.%m.", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "%d-%m", // English
+      "%d.%m.", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "%d.%m.", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "Press 1 for help", // English
-    "Für Hilfe die 1 drücken", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Paina '1' nähdäksesi opasteen", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "Press 1 for help", // English
+      "Fï¿½r Hilfe die 1 drï¿½cken", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Paina '1' nï¿½hdï¿½ksesi opasteen", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "Timer conflict!", // English
-    "Timer Konflikt!", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    " ", // suomi (empty space)
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "Timer conflict!", // English
+      "Timer Konflikt!", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      " ", // suomi (empty space)
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
+    },
 
 // Prefs
-  { "show channel logos", // English
-    "zeige Kanal-Logos", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Näytä kanavien logot", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    { "show channel logos", // English
+      "zeige Kanal-Logos", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Nï¿½ytï¿½ kanavien logot", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "use XL fonts", // English
-    "benutze XL Schrift", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Käytä XL-kirjasinta", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "use XL fonts", // English
+      "benutze XL Schrift", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Kï¿½ytï¿½ XL-kirjasinta", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "hide info line", // English
-    "verstecke Info Zeile", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Piilota inforivi", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "hide info line", // English
+      "verstecke Info Zeile", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Piilota inforivi", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "show channel names", // English
-    "zeige Kanal-Namen", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Näytä kanavien nimet", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "show channel names", // English
+      "zeige Kanal-Namen", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Nï¿½ytï¿½ kanavien nimet", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "show logos in black&white", // English
-    "zeige Kanal-Logos in Schwarz/Weiß", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Näytä logot mustavalkoisina", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "show logos in black&white", // English
+      "zeige Kanal-Logos in Schwarz/Weiï¿½", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Nï¿½ytï¿½ logot mustavalkoisina", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "enable color problem work around", // English
-    "Farbproblem Umgehung aktivieren", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Saksalainen värikorjaus", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "enable color problem work around", // English
+      "Farbproblem Umgehung aktivieren", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Saksalainen vï¿½rikorjaus", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "user point in time 1 (Key 4)", // English
-    "Anwenderzeitpunkt 1 (Taste 4)", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Ajankohta #1 (näppäin '4')", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "user point in time 1 (Key 4)", // English
+      "Anwenderzeitpunkt 1 (Taste 4)", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Ajankohta #1 (nï¿½ppï¿½in '4')", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "user point in time 2 (Key 5)", // English
-    "Anwenderzeitpunkt 2 (Taste 5)", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Ajankohta #2 (näppäin '5')", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "user point in time 2 (Key 5)", // English
+      "Anwenderzeitpunkt 2 (Taste 5)", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Ajankohta #2 (nï¿½ppï¿½in '5')", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "user point in time 3 (Key 6)", // English
-    "Anwenderzeitpunkt 3 (Taste 6)", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Ajankohta #3 (näppäin '6')", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "user point in time 3 (Key 6)", // English
+      "Anwenderzeitpunkt 3 (Taste 6)", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Ajankohta #3 (nï¿½ppï¿½in '6')", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "jump to next day point if ago", // English
-    "Gehe zum nächsten Tag wenn vorbei", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Siirry tarvittaessa seur. päivään", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "jump to next day point if ago", // English
+      "Gehe zum nï¿½chsten Tag wenn vorbei", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Siirry tarvittaessa seur. pï¿½ivï¿½ï¿½n", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "Show search item itself", // English
-    "Zeige auch Suchbegriff", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Näytä hakuehto", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "Show search item itself", // English
+      "Zeige auch Suchbegriff", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Nï¿½ytï¿½ hakuehto", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
+    },
 
 // Help
-  { "NORMAL MODE:", // English
-    "NORMALER MODUS:", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "NORMAALITILA:\n", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    { "NORMAL MODE:", // English
+      "NORMALER MODUS:", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "NORMAALITILA:\n", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "arrows\n\tmove view", // English
-    "Pfeile\n\tAnsicht bewegen", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "'Nuolinäppäimet'\n\tohjaa näkymää", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "arrows\n\tmove view", // English
+      "Pfeile\n\tAnsicht bewegen", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "'Nuolinï¿½ppï¿½imet'\n\tohjaa nï¿½kymï¿½ï¿½", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "back\n\tclose TV OnScreen", // English
-    "back\n\tschließe TV OnScreen", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "'Takaisin'\n\tsulje laajennos", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "back\n\tclose TV OnScreen", // English
+      "back\n\tschlieï¿½e TV OnScreen", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "'Takaisin'\n\tsulje laajennos", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "red/blue\n\t-/+ one day", // English
-    "rot/blau\n\t-/+ ein Tag", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "'Punainen'/'Sininen'\n\tyksi päivä eteen/taaksepäin", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "red/blue\n\t-/+ one day", // English
+      "rot/blau\n\t-/+ ein Tag", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "'Punainen'/'Sininen'\n\tyksi pï¿½ivï¿½ eteen/taaksepï¿½in", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "green/yellow\n\tone page left/right", // English
-    "grün/gelb\n\teine Seite links/rechts", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "'Vihreä'/'Keltainen'\n\tseuraava/edellinen sivu", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "green/yellow\n\tone page left/right", // English
+      "grï¿½n/gelb\n\teine Seite links/rechts", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "'Vihreï¿½'/'Keltainen'\n\tseuraava/edellinen sivu", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "7/9\n\tone page left/right", // English
-    "7/9\n\teine Seite links/rechts", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "'7'/'9'\n\tseuraava/edellinen sivu", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "7/9\n\tone page left/right", // English
+      "7/9\n\teine Seite links/rechts", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "'7'/'9'\n\tseuraava/edellinen sivu", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "8\n\tgoto current channel", // English
-    "8\n\tgehe zum aktuellen Kanal", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "'8'\n\tsiirry nykyiselle kanavalle", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "8\n\tgoto current channel", // English
+      "8\n\tgehe zum aktuellen Kanal", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "'8'\n\tsiirry nykyiselle kanavalle", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "0\n\tgoto now", // English
-    "0\n\tgehe zur aktuellen Zeit", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "'0'\n\tsiirry nykyhetkeen", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "0\n\tgoto now", // English
+      "0\n\tgehe zur aktuellen Zeit", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "'0'\n\tsiirry nykyhetkeen", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "4/5/6\n\tgoto configured time", // English
-    "4/5/6\n\tgehe zu eingestellten Zeitpunkten", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "'4'/'5'/'6'\n\tsiirry määriteltyyn ajankohtaan", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "4/5/6\n\tgoto configured time", // English
+      "4/5/6\n\tgehe zu eingestellten Zeitpunkten", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "'4'/'5'/'6'\n\tsiirry mï¿½ï¿½riteltyyn ajankohtaan", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "ok\n\tswitch to edit mode\n", // English
-    "ok\n\taktiviere Editier-Modus\n", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "'OK'\n\tvaihda muokkaustilaan\n", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "ok\n\tswitch to edit mode\n", // English
+      "ok\n\taktiviere Editier-Modus\n", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "'OK'\n\tvaihda muokkaustilaan\n", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "EDIT MODE:", // English
-    "EDITIER MODUS:", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "MUOKKAUSTILA:\n", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "EDIT MODE:", // English
+      "EDITIER MODUS:", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "MUOKKAUSTILA:\n", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "back\n\tback to normal mode", // English
-    "back\n\tzurück zum normalen Modus", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "'Takaisin'\n\tvaihda normaalitilaan", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "back\n\tback to normal mode", // English
+      "back\n\tzurï¿½ck zum normalen Modus", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "'Takaisin'\n\tvaihda normaalitilaan", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "arrows\n\tmove selected schedule", // English
-    "Pfeile\n\tSendung auswählen", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "'Nuolinäppäimet'\n\tvalitse ohjelma", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "arrows\n\tmove selected schedule", // English
+      "Pfeile\n\tSendung auswï¿½hlen", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "'Nuolinï¿½ppï¿½imet'\n\tvalitse ohjelma", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "record\n\tcreate timer", // English
-    "record\n\terzeuge Timer", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "'Tallenna'\n\tluo ajastin", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "record\n\tcreate timer", // English
+      "record\n\terzeuge Timer", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "'Tallenna'\n\tluo ajastin", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "ok\n\tshow details", // English
-    "ok\n\tzeige Sendungsdetails", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "'OK'\n\tnäytä lisätiedot", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "ok\n\tshow details", // English
+      "ok\n\tzeige Sendungsdetails", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "'OK'\n\tnï¿½ytï¿½ lisï¿½tiedot", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
+    },
 // End Help
 
 // Details
-  { "Record", // English
-    "Aufnehmen", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Tallenna", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    { "Record", // English
+      "Aufnehmen", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Tallenna", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "Search", // English
-    "Suchen", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Etsi", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "Search", // English
+      "Suchen", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Etsi", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "AutoTimer", // English
-    "AutoTimer", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "AutoTimer", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "AutoTimer", // English
+      "AutoTimer", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "AutoTimer", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "Added AutoTimer to vdradmin.", // English
-    "AutoTimer in vdradmin aufgenommen.", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "AutoTimer lisätty VDRAdminiin.", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "Added AutoTimer to vdradmin.", // English
+      "AutoTimer in vdradmin aufgenommen.", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "AutoTimer lisï¿½tty VDRAdminiin.", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "Startoption 'vdradminfile' not set!", // English
-    "Startoption 'vdradminfile' nicht gesetzt!", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Käynnistysoptio 'vdradminfile' puuttuu!", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "Startoption 'vdradminfile' not set!", // English
+      "Startoption 'vdradminfile' nicht gesetzt!", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Kï¿½ynnistysoptio 'vdradminfile' puuttuu!", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
+    },
 
 // Search
-  { "Search for", // English
-    "Suche nach", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Etsitään termiä", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    { "Search for", // English
+      "Suche nach", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Etsitï¿½ï¿½n termiï¿½", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "Searching...", // English
-    "Suchen...", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Etsitään...", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "Searching...", // English
+      "Suchen...", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Etsitï¿½ï¿½n...", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "Nothing found!", // English
-    "Nichts gefunden!", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "", // suomi
-    "Ei löydetty!", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "Nothing found!", // English
+      "Nichts gefunden!", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "", // suomi
+      "Ei lï¿½ydetty!", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "Back", // English
-    "Zurück", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Takaisin", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "Back", // English
+      "Zurï¿½ck", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Takaisin", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "Details", // English
-    "Details", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Lisätiedot", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "Details", // English
+      "Details", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Lisï¿½tiedot", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
-  { "in all", // English
-    "in allen", // Deutsch
-    "", // Slovenski
-    "", // Italiano
-    "", // Nederlands
-    "", // Português
-    "", // Français
-    "", // Norsk
-    "Etsi kaikki", // suomi
-    "", // Polski
-    "", // Español
-    "", // ÅëëçíéêÜ
-    "", // Svenska
-    "", // Romaneste
-    "", // Magyar
-    "", // Català
+    },
+    { "in all", // English
+      "in allen", // Deutsch
+      "", // Slovenski
+      "", // Italiano
+      "", // Nederlands
+      "", // Portuguï¿½s
+      "", // Franï¿½ais
+      "", // Norsk
+      "Etsi kaikki", // suomi
+      "", // Polski
+      "", // Espaï¿½ol
+      "", // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+      "", // Svenska
+      "", // Romaneste
+      "", // Magyar
+      "", // Catalï¿½
 #if VDRVERSNUM >= 10302
-    ""  // ÀãááÚØÙ (Russian)
+      ""  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (Russian)
 #if VDRVERSNUM >= 10307
-    "", // Hrvatski (Croatian)
+      "", // Hrvatski (Croatian)
 #if VDRVERSNUM >= 10313
-    "", // Eesti
+      "", // Eesti
 #if VDRVERSNUM >= 10316
-    "", // Dansk
+      "", // Dansk
 #endif
 #endif
 #endif
 #endif
-  },
+    },
 
-  { NULL }
-  };
+    { NULL }
+};

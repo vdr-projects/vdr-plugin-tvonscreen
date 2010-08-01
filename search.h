@@ -17,32 +17,32 @@
 
 class EventItem : public cOsdItem
 {
-	const class cEvent *myev;
+    const class cEvent *myev;
 
 public:
-	EventItem(const class cEvent *ev);
+    EventItem(const class cEvent *ev);
 
-	const class cEvent *Event(void)
-	{
-		return myev;
-	};
+    const class cEvent *Event(void)
+    {
+        return myev;
+    };
 };
 
 // -----------------------------------------------------------------------------
 
 class cSearchMenu : public cOsdMenu
 {
-	cSchedulesLock _schedulesLock;
+    cSchedulesLock _schedulesLock;
 
-	const class cEvent *myev;
+    const class cEvent *myev;
 
-	int search(const cSchedule *s,const class cEvent *ev);
+    int search(const cSchedule *s,const class cEvent *ev);
 
 public:
-	cSearchMenu(const class cEvent *EventInfo);
-	const class cEvent *currentSelected(void);
+    cSearchMenu(const class cEvent *EventInfo);
+    const class cEvent *currentSelected(void);
 
-	void searchIn(const cSchedule** schedArray,int schedArrayNum);
+    void searchIn(const cSchedule** schedArray,int schedArrayNum);
 };
 
 #endif

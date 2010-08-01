@@ -19,9 +19,9 @@
 class tvOcMenuEvent : public cMenuEvent
 {
 public:
-	tvOcMenuEvent(const class cEvent *EventInfo);
-	void printMsg(const char *);
-	void helpLine(bool full=true);
+    tvOcMenuEvent(const class cEvent *EventInfo);
+    void printMsg(const char *);
+    void helpLine(bool full=true);
 };
 
 

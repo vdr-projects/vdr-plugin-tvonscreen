@@ -11,14 +11,14 @@
 
 tvOcMenuEvent::tvOcMenuEvent(const class cEvent *EventInfo) : cMenuEvent(EventInfo,false)
 {
-	helpLine();
+    helpLine();
 }
 
 void tvOcMenuEvent::printMsg(const char *s)
 {
-	SetStatus(s);
+    SetStatus(s);
 }
 void tvOcMenuEvent::helpLine(bool full)
 {
-	SetHelp(tr("Record"), tr("Search"), full?tr("AutoTimer"):NULL, NULL);
+    SetHelp(tr("Record"), tr("Search"), full?tr("AutoTimer"):NULL, NULL);
 }
