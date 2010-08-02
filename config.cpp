@@ -12,6 +12,8 @@
 #include <unistd.h>
 #include <vdr/menuitems.h>
 
+extern int getTL_YSTART();
+
 tvonscreenConfig tvonscreenCfg;
 
 tvonscreenConfig::tvonscreenConfig(void)
@@ -29,15 +31,8 @@ tvonscreenConfig::tvonscreenConfig(void)
     thenshownextday=true;
     showsearchinitiator=true;
 
-    logos=NULL;
-    vdradminfile=NULL;
-}
-tvonscreenConfig::~tvonscreenConfig()
-{
-    if (logos)
-        free(logos);
-    if (vdradminfile)
-        free(vdradminfile);
+    memset(logos,0,sizeof(logos));
+    memset(vdradminfile,0,sizeof(vdradminfile));
 }
 
 bool tvonscreenConfig::SetupParse(const char *Name, const char *Value)
@@ -81,21 +76,13 @@ bool tvonscreenConfig::ProcessArgs(int argc, char *argv[])
         switch (c)
         {
         case 'l':
-            if (logos)
-            {
-                free(logos);
-                logos=NULL;
-            }
-            logos = strdup(optarg);
+            strncpy(logos,optarg,sizeof(logos)-1);
+            logos[sizeof(logos)-1]=0;
             retval=true;
             break;
         case 'v':
-            if (vdradminfile)
-            {
-                free(vdradminfile);
-                vdradminfile=NULL;
-            }
-            vdradminfile = strdup(optarg);
+            strncpy(vdradminfile,optarg,sizeof(vdradminfile)-1);
+            vdradminfile[sizeof(vdradminfile)-1]=0;
             retval=true;
             break;
         default:
@@ -110,17 +97,17 @@ bool tvonscreenConfig::ProcessArgs(int argc, char *argv[])
 tvonscreenConfigPage::tvonscreenConfigPage(void) : cMenuSetupPage()
 {
     m_NewConfig = tvonscreenCfg;
-
-#if TL_YSTART == 48
-    Add(new cMenuEditBoolItem(tr("show channel logos"),
-                              &m_NewConfig.showLogos));
-    Add(new cMenuEditBoolItem(tr("show channel names"),
-                              &m_NewConfig.showChannels));
-    Add(new cMenuEditBoolItem(tr("show logos in black&white"),
-                              &m_NewConfig.bwlogos));
-    Add(new cMenuEditBoolItem(tr("enable color problem work around"),
-                              &m_NewConfig.colorworkaround));
-#endif
+    if (getTL_YSTART()>24)
+    {
+        Add(new cMenuEditBoolItem(tr("show channel logos"),
+                                  &m_NewConfig.showLogos));
+        Add(new cMenuEditBoolItem(tr("show channel names"),
+                                  &m_NewConfig.showChannels));
+        Add(new cMenuEditBoolItem(tr("show logos in black&white"),
+                                  &m_NewConfig.bwlogos));
+        Add(new cMenuEditBoolItem(tr("enable color problem work around"),
+                                  &m_NewConfig.colorworkaround));
+    }
     Add(new cMenuEditBoolItem(tr("use XL fonts"),
                               &m_NewConfig.XLfonts));
     Add(new cMenuEditBoolItem(tr("hide info line"),

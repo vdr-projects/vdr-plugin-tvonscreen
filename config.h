@@ -16,7 +16,6 @@ class tvonscreenConfig
 public:
 
     tvonscreenConfig(void);
-    ~tvonscreenConfig();
     bool SetupParse(const char *Name, const char *Value);
     bool ProcessArgs(int argc, char *argv[]);
     const char *CommandLineHelp(void);
@@ -33,8 +32,8 @@ public:
     int thenshownextday;
     int showsearchinitiator;
 
-    char *logos;
-    char *vdradminfile;
+    char logos[PATH_MAX];
+    char vdradminfile[PATH_MAX];
 };
 
 extern tvonscreenConfig tvonscreenCfg;

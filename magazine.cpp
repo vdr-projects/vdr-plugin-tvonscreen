@@ -1009,11 +1009,11 @@ void magazine::Show(void)
         delete f4;
         delete f5;
 
-        f1=new anyFont(osd,(round(12*Width) / 720),1);	// Sendung
-        f2=new anyFont(osd,(round(11*Width) / 720),1);	// Extra-Info
-        f3=new anyFont(osd,(round(12*Width) / 720),1);	// Sender
-        f4=new anyFont(osd,(round(11*Width) / 720));	// Tasten
-        f5=new anyFont(osd,(round(11*Width) / 720));	// Datum
+        f1=new anyFont(osd,(round(12*Width) / Height),1);	// Sendung
+        f2=new anyFont(osd,(round(11*Width) / Height),1);	// Extra-Info
+        f3=new anyFont(osd,(round(12*Width) / Height),1);	// Sender
+        f4=new anyFont(osd,(round(11*Width) / Height));	// Tasten
+        f5=new anyFont(osd,(round(11*Width) / Height));	// Datum
 
         for (int i=0; i < (int)(sizeof(Areas)/sizeof(tArea)); i++)
         {
