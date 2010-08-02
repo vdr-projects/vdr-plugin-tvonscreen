@@ -3,8 +3,6 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: config.c,v 1.11 2005/01/02 12:19:32 schmitzj Exp $
- *
  */
 
 #include "config.h"
@@ -16,31 +14,13 @@
 
 tvonscreenConfig tvonscreenCfg;
 
-#if VDRVERSNUM < 10307
-class cMenuEditTimeItem : public cMenuEditItem
-{
-protected:
-    int *value;
-    int hh, mm;
-    int pos;
-    virtual void Set(void);
-public:
-    cMenuEditTimeItem(const char *Name, int *Value);
-    virtual eOSState ProcessKey(eKeys Key);
-};
-#endif
-
 tvonscreenConfig::tvonscreenConfig(void)
 {
     showLogos=false;
     XLfonts=true;
     noInfoLine=false;
     showChannels=true;
-#if VDRVERSNUM >= 10307
     bwlogos=false;
-#else
-    bwlogos=true;
-#endif
     colorworkaround=true;
 
     usertime1=1200;
@@ -76,9 +56,6 @@ bool tvonscreenConfig::SetupParse(const char *Name, const char *Value)
     else
         return false;
 
-#if VDRVERSNUM < 10307
-    bwlogos=true;
-#endif
     return true;
 }
 const char *tvonscreenConfig::CommandLineHelp(void)
@@ -94,7 +71,7 @@ bool tvonscreenConfig::ProcessArgs(int argc, char *argv[])
         { "logos",       required_argument, NULL, 'l'
         },
         { "vdradminfile",required_argument, NULL, 'v' },
-        { NULL }
+        { NULL, 0, NULL, 0 }
     };
 
     bool retval=true;

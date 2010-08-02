@@ -3,8 +3,6 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: config.h,v 1.7 2004/11/23 14:21:24 schmitzj Exp $
- *
  */
 
 #ifndef TVONSCREEN_CONFIG_H
@@ -23,7 +21,6 @@ public:
     bool ProcessArgs(int argc, char *argv[]);
     const char *CommandLineHelp(void);
 
-//  char showChannels[];
     int showLogos;
     int XLfonts;
     int noInfoLine;

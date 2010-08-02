@@ -3,8 +3,6 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: tvonscreen.c,v 1.15 2006/06/18 13:59:36 schmitzj Exp $
- *
  */
 
 #include <vdr/plugin.h>
@@ -12,7 +10,7 @@
 #include "config.h"
 #include "i18n.h"
 
-static const char *VERSION        = "1.0.141";
+static const char *VERSION        = "1.1.141";
 static const char *DESCRIPTION    = trNOOP("Shows the EPG info in form of a typical TV magazine");
 static const char *MAINMENUENTRY  = trNOOP("TV-OnScreen");
 

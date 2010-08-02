@@ -3,8 +3,6 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: gfxtools.c,v 1.8 2006/06/18 13:59:36 schmitzj Exp $
- *
  */
 
 #include <vdr/plugin.h>
@@ -99,11 +97,8 @@ bool DrawXpm(char *Xpm[], areaT *drawable,int x0,int y0,winhandleT winhand,bool 
     }
 
     int NoneColorIndex = MAXNUMCOLORS;
-#if VDRVERSNUM >= 10307
     tColor cols[n];
-#else
-    eDvbColor cols[n];
-#endif
+
     for (int i = 0; i < n; i++)
     {
         const char *s = *++p;
@@ -132,16 +127,15 @@ bool DrawXpm(char *Xpm[], areaT *drawable,int x0,int y0,winhandleT winhand,bool 
         unsigned int col=strtoul(++s, NULL, 16);
         if (blackwhite)
         {
-            int bwcol=(int)(0.299*(double)((col & 0xff0000) >> 16) + 0.587*(double)((col & 0xff00) >> 8) + 0.114*(double)(col & 0xff));
+            int bwcol=(int)(0.299*(double)((col & 0xff0000) >> 16) +
+                            0.587*(double)((col & 0xff00) >> 8) + 0.114*(double)(col & 0xff));
             if (bwcol>0xff) bwcol=0xff;
             bwcol&=(0xff-31);
             col=(bwcol<<16) | (bwcol<<8)| (bwcol);
         }
-#if VDRVERSNUM >= 10307
+
         cols[i] = col | 0xFF000000;
-#else
-        cols[i] = (eDvbColor)(((col & 0xff) << 16) | (col & 0xff00) | ((col & 0xff0000) >> 16) | 0xFF000000);
-#endif
+
     }
     for (int y = 0; y < h; y++)
     {
@@ -159,12 +153,7 @@ bool DrawXpm(char *Xpm[], areaT *drawable,int x0,int y0,winhandleT winhand,bool 
                 {
                     if (i != NoneColorIndex)
                     {
-#if VDRVERSNUM >= 10307
                         drawable->DrawPixel(x0+x,y0+y, cols[i]);
-#else
-//						drawable->AddColor(cols[i],winhand);
-                        drawable->Fill(x0+x,y0+y,x0+x,y0+y,cols[i],winhand);
-#endif
                     }
                     break;
                 }

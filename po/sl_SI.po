@@ -1,7 +1,8 @@
 # VDR plugin language source file.
 # Copyright (C) 2007 Klaus Schmidinger <kls@cadsoft.de>
 # This file is distributed under the same license as the VDR package.
-# Klaus Schmidinger <kls@cadsoft.de>, 2000
+# Miha Setina <mihasetina@softhome.net>, 2000
+# Matjaz Thaler <matjaz.thaler@guest.arnes.si>, 2003
 #
 msgid ""
 msgstr ""
@@ -9,190 +10,164 @@ msgstr ""
 "Report-Msgid-Bugs-To: <see README>\n"
 "POT-Creation-Date: 2010-08-02 15:03+0200\n"
 "PO-Revision-Date: 2008-12-22 18:10+0000\n"
-"Last-Translator: Klaus Schmidinger <kls@cadsoft.de>\n"
+"Last-Translator: Matjaz Thaler <matjaz.thaler@guest.arnes.si>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "show channel logos"
-msgstr "zeige Kanal-Logos"
+msgstr ""
 
 msgid "show channel names"
-msgstr "zeige Kanal-Namen"
+msgstr ""
 
 msgid "show logos in black&white"
-msgstr "zeige Kanal-Logos in Schwarz/Weiß"
+msgstr ""
 
 msgid "enable color problem work around"
-msgstr "Farbproblem Umgehung aktivieren"
+msgstr ""
 
 msgid "use XL fonts"
-msgstr "benutze XL Schrift"
+msgstr ""
 
 msgid "hide info line"
-msgstr "verstecke Info Zeile"
+msgstr ""
 
 msgid "user point in time 1 (Key 4)"
-msgstr "Anwenderzeitpunkt 1 (Taste 4)"
+msgstr ""
 
 msgid "user point in time 2 (Key 5)"
-msgstr "Anwenderzeitpunkt 2 (Taste 5)"
+msgstr ""
 
 msgid "user point in time 3 (Key 6)"
-msgstr "Anwenderzeitpunkt 3 (Taste 6)"
+msgstr ""
 
 msgid "jump to next day point if ago"
-msgstr "Gehe zum nächsten Tag wenn vorbei"
+msgstr ""
 
 msgid "Show search item itself"
-msgstr "Zeige auch Suchbegriff"
+msgstr ""
 
 msgid "Press 1 for help"
-msgstr "Für Hilfe die 1 drücken"
+msgstr ""
 
 #, c-format
 msgid "%d-%m"
-msgstr "%d.%m."
+msgstr ""
 
 msgid "o'clock"
-msgstr "Uhr"
+msgstr ""
 
 msgid "Timer conflict!"
-msgstr "Timer Konflikt!"
+msgstr ""
 
 msgid "NORMAL MODE:"
-msgstr "NORMALER MODUS:"
+msgstr ""
 
 msgid ""
 "arrows\n"
 "\tmove view"
 msgstr ""
-"Pfeile\n"
-"\tAnsicht bewegen"
 
 msgid ""
 "back\n"
 "\tclose TV OnScreen"
 msgstr ""
-"back\n"
-"\tschließe TV OnScreen"
 
 msgid ""
 "red/blue\n"
 "\t-/+ one day"
 msgstr ""
-"rot/blau\n"
-"\t-/+ ein Tag"
 
 msgid ""
 "green/yellow\n"
 "\tone page left/right"
 msgstr ""
-"grün/gelb\n"
-"\teine Seite links/rechts"
 
 msgid ""
 "7/9\n"
 "\tone page left/right"
 msgstr ""
-"7/9\n"
-"\teine Seite links/rechts"
 
 msgid ""
 "8\n"
 "\tgoto current channel"
 msgstr ""
-"8\n"
-"\tgehe zum aktuellen Kanal"
 
 msgid ""
 "0\n"
 "\tgoto now"
 msgstr ""
-"0\n"
-"\tgehe zur aktuellen Zeit"
 
 msgid ""
 "4/5/6\n"
 "\tgoto configured time"
 msgstr ""
-"4/5/6\n"
-"\tgehe zu eingestellten Zeitpunkten"
 
 msgid ""
 "ok\n"
 "\tswitch to edit mode\n"
 msgstr ""
-"ok\n"
-"\taktiviere Editier-Modus\n"
 
 msgid "EDIT MODE:"
-msgstr "EDITIER MODUS:"
+msgstr ""
 
 msgid ""
 "back\n"
 "\tback to normal mode"
 msgstr ""
-"back\n"
-"\tzurück zum normalen Modus"
 
 msgid ""
 "arrows\n"
 "\tmove selected schedule"
 msgstr ""
-"Pfeile\n"
-"\tSendung auswählen"
 
 msgid ""
 "record\n"
 "\tcreate timer"
 msgstr ""
-"record\n"
-"\terzeuge Timer"
 
 msgid ""
 "ok\n"
 "\tshow details"
 msgstr ""
-"ok\n"
-"\tzeige Sendungsdetails"
 
 msgid "Added AutoTimer to vdradmin."
-msgstr "AutoTimer in vdradmin aufgenommen."
+msgstr ""
 
 msgid "Startoption 'vdradminfile' not set!"
-msgstr "Startoption 'vdradminfile' nicht gesetzt!"
+msgstr ""
 
 msgid "Search"
-msgstr "Suchen"
+msgstr ""
 
 msgid "Search for"
-msgstr "Suche nach"
+msgstr ""
 
 msgid "Searching..."
-msgstr "Suchen..."
+msgstr ""
 
 msgid "Record"
-msgstr "Aufnehmen"
+msgstr ""
 
 msgid "Details"
-msgstr "Details"
+msgstr ""
 
 msgid "in all"
-msgstr "in allen"
+msgstr ""
 
 msgid "Back"
-msgstr "Zurück"
+msgstr ""
 
 msgid "Nothing found!"
-msgstr "Nichts gefunden!"
+msgstr ""
 
 msgid "AutoTimer"
-msgstr "AutoTimer"
+msgstr ""
 
 msgid "Shows the EPG info in form of a typical TV magazine"
-msgstr "Zeigt EPG als TV-Magazin"
+msgstr ""
 
 msgid "TV-OnScreen"
-msgstr "TV Magazin"
+msgstr ""

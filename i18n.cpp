@@ -3,8 +3,6 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: i18n.c,v 1.15 2004/11/30 20:08:24 schmitzj Exp $
- *
  */
 
 #include "i18n.h"
@@ -27,18 +25,10 @@ const tI18nPhrase tvoPhrases[] =
         "", // Romaneste
         "", // Magyar
         "", // Catal�
-#if VDRVERSNUM >= 10302
         ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
         "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
         "", // Eesti
-#if VDRVERSNUM >= 10316
         "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "Shows the EPG info in form of a typical TV magazine", // English
       "", // Deutsch
@@ -56,18 +46,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "o'clock", // English
       "Uhr", // Deutsch
@@ -85,18 +67,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "%d-%m", // English
       "%d.%m.", // Deutsch
@@ -114,18 +88,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "Press 1 for help", // English
       "F�r Hilfe die 1 dr�cken", // Deutsch
@@ -143,18 +109,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "Timer conflict!", // English
       "Timer Konflikt!", // Deutsch
@@ -172,20 +130,11 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
-
 // Prefs
     { "show channel logos", // English
       "zeige Kanal-Logos", // Deutsch
@@ -203,18 +152,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "use XL fonts", // English
       "benutze XL Schrift", // Deutsch
@@ -232,18 +173,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "hide info line", // English
       "verstecke Info Zeile", // Deutsch
@@ -261,18 +194,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "show channel names", // English
       "zeige Kanal-Namen", // Deutsch
@@ -290,18 +215,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "show logos in black&white", // English
       "zeige Kanal-Logos in Schwarz/Wei�", // Deutsch
@@ -319,18 +236,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "enable color problem work around", // English
       "Farbproblem Umgehung aktivieren", // Deutsch
@@ -348,18 +257,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "user point in time 1 (Key 4)", // English
       "Anwenderzeitpunkt 1 (Taste 4)", // Deutsch
@@ -377,18 +278,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "user point in time 2 (Key 5)", // English
       "Anwenderzeitpunkt 2 (Taste 5)", // Deutsch
@@ -406,18 +299,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "user point in time 3 (Key 6)", // English
       "Anwenderzeitpunkt 3 (Taste 6)", // Deutsch
@@ -435,18 +320,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "jump to next day point if ago", // English
       "Gehe zum n�chsten Tag wenn vorbei", // Deutsch
@@ -464,18 +341,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "Show search item itself", // English
       "Zeige auch Suchbegriff", // Deutsch
@@ -493,18 +362,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
 
 // Help
@@ -524,18 +385,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "arrows\n\tmove view", // English
       "Pfeile\n\tAnsicht bewegen", // Deutsch
@@ -553,18 +406,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "back\n\tclose TV OnScreen", // English
       "back\n\tschlie�e TV OnScreen", // Deutsch
@@ -582,18 +427,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "red/blue\n\t-/+ one day", // English
       "rot/blau\n\t-/+ ein Tag", // Deutsch
@@ -611,18 +448,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "green/yellow\n\tone page left/right", // English
       "gr�n/gelb\n\teine Seite links/rechts", // Deutsch
@@ -640,18 +469,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "7/9\n\tone page left/right", // English
       "7/9\n\teine Seite links/rechts", // Deutsch
@@ -669,18 +490,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "8\n\tgoto current channel", // English
       "8\n\tgehe zum aktuellen Kanal", // Deutsch
@@ -698,18 +511,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "0\n\tgoto now", // English
       "0\n\tgehe zur aktuellen Zeit", // Deutsch
@@ -727,18 +532,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "4/5/6\n\tgoto configured time", // English
       "4/5/6\n\tgehe zu eingestellten Zeitpunkten", // Deutsch
@@ -756,18 +553,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "ok\n\tswitch to edit mode\n", // English
       "ok\n\taktiviere Editier-Modus\n", // Deutsch
@@ -785,18 +574,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "EDIT MODE:", // English
       "EDITIER MODUS:", // Deutsch
@@ -814,18 +595,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "back\n\tback to normal mode", // English
       "back\n\tzur�ck zum normalen Modus", // Deutsch
@@ -843,18 +616,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "arrows\n\tmove selected schedule", // English
       "Pfeile\n\tSendung ausw�hlen", // Deutsch
@@ -872,18 +637,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "record\n\tcreate timer", // English
       "record\n\terzeuge Timer", // Deutsch
@@ -901,18 +658,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "ok\n\tshow details", // English
       "ok\n\tzeige Sendungsdetails", // Deutsch
@@ -930,18 +679,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
 // End Help
 
@@ -962,18 +703,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "Search", // English
       "Suchen", // Deutsch
@@ -991,18 +724,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "AutoTimer", // English
       "AutoTimer", // Deutsch
@@ -1020,18 +745,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "Added AutoTimer to vdradmin.", // English
       "AutoTimer in vdradmin aufgenommen.", // Deutsch
@@ -1049,18 +766,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "Startoption 'vdradminfile' not set!", // English
       "Startoption 'vdradminfile' nicht gesetzt!", // Deutsch
@@ -1078,18 +787,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
 
 // Search
@@ -1109,18 +810,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "Searching...", // English
       "Suchen...", // Deutsch
@@ -1138,18 +831,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "Nothing found!", // English
       "Nichts gefunden!", // Deutsch
@@ -1167,18 +852,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "Back", // English
       "Zur�ck", // Deutsch
@@ -1196,18 +873,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "Details", // English
       "Details", // Deutsch
@@ -1225,18 +894,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
     { "in all", // English
       "in allen", // Deutsch
@@ -1254,18 +915,10 @@ const tI18nPhrase tvoPhrases[] =
       "", // Romaneste
       "", // Magyar
       "", // Catal�
-#if VDRVERSNUM >= 10302
       ""  // ������� (Russian)
-#if VDRVERSNUM >= 10307
       "", // Hrvatski (Croatian)
-#if VDRVERSNUM >= 10313
       "", // Eesti
-#if VDRVERSNUM >= 10316
       "", // Dansk
-#endif
-#endif
-#endif
-#endif
     },
 
     { NULL }

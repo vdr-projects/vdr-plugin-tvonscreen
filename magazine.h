@@ -3,8 +3,6 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: magazine.h,v 1.16 2006/06/18 13:59:36 schmitzj Exp $
- *
  */
 
 #ifndef MAGAZINE_H
@@ -19,11 +17,6 @@
 #include "search.h"
 
 void mzlog(int level, const char *fmt, ...);
-#define TL_YSTART 	48
-// else
-//#define TL_YSTART	24
-
-// #define MULTINAMES
 
 typedef enum
 {
@@ -51,7 +44,7 @@ class magazine : public cOsdObject
     class cMenuEditTimer *met;
     class cSearchMenu *mes;
 
-    anyFont *f1,*f2,*f3,*f4;
+    anyFont *f1,*f2,*f3,*f4,*f5;
 
     cSchedulesLock _schedulesLock;
     const cSchedule** schedArray;
@@ -71,12 +64,16 @@ class magazine : public cOsdObject
     enum modes {SHOW,EDIT};
     enum modes curmode;
 
-    int EDIT_curEvent;
+    unsigned short EDIT_curEvent;
     int EDIT_curChannel;
     int EDIT_curEVI;
 
     bool timeline_tested;
     bool timeline_found_conflict;
+
+    int Width;
+    int Height;
+    double Aspect;
 
 public:
     static const class cEvent *getNext(const cSchedule *s,const cEvent *e);
@@ -91,7 +88,7 @@ private:
     void showTimeline(void);
     void showHeads(bool onlyBG=false);
     void showScheds(void);
-    void showSched(const cSchedule *s,cEvent **ev, tMagazineArea area);
+    void showSched(cEvent **ev, tMagazineArea area);
     void calcSched(const cSchedule *s,cEvent **ev);
     void calcScheds(void);
 

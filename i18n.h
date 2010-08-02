@@ -3,8 +3,6 @@
  *
  * See the README file for copyright information and how to reach the author.
  *
- * $Id: i18n.h,v 1.2 2004/11/23 21:42:55 schmitzj Exp $
- *
  */
 
 #ifndef _I18N__H
