@@ -258,7 +258,7 @@ void magazine::printLogo(const cSchedule *s,int p)
         // logo: 64x48px
 
         const char *ConfigDirectory=cPlugin::ConfigDirectory("logos");
-        if (tvonscreenCfg.logos)
+        if (tvonscreenCfg.logos && strlen(tvonscreenCfg.logos)>0)
             ConfigDirectory=tvonscreenCfg.logos;
         char *fname=new char[strlen(ConfigDirectory) + 1 + strlen(txt) + strlen(".xpm") + 1];
         sprintf(fname,"%s/%s.xpm",ConfigDirectory,txt);
