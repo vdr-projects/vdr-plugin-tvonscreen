@@ -92,6 +92,7 @@ private:
     void calcSched(const cSchedule *s,cEvent **ev);
     void calcScheds(void);
 
+    void colorworkaround(cBitmap *b);
     void output(void);
     void outputLR(void);
 
@@ -99,6 +100,12 @@ private:
     void showHelp(void);
 
     void autoTimer(const class cEvent *EventInfo);
+
+    void setTransparency(int *color);
+    int clrSched1;
+    int clrSched2;
+    int clrTimeline1;
+    int clrTimeline2;
 
 public:
     magazine(class cPlugin *);

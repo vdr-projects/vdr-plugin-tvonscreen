@@ -31,6 +31,8 @@ public:
     int usertime3;
     int thenshownextday;
     int showsearchinitiator;
+    int fontdsize;
+    int transparency;
 
     char logos[PATH_MAX];
     char vdradminfile[PATH_MAX];

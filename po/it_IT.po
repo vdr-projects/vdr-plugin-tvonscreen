@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.6.0\n"
 "Report-Msgid-Bugs-To: <see README>\n"
-"POT-Creation-Date: 2010-08-02 15:03+0200\n"
+"POT-Creation-Date: 2010-11-09 20:45+0100\n"
 "PO-Revision-Date: 2010-08-09 19:08+0100\n"
 "Last-Translator: Diego Pierotto <vdr-italian@tiscali.it>\n"
 "Language-Team:  <vdr@linuxtv.org>\n"
@@ -19,6 +19,12 @@ msgstr ""
 "X-Poedit-Language: Italian\n"
 "X-Poedit-Country: ITALY\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+msgid "font size"
+msgstr ""
+
+msgid "transparency"
+msgstr ""
 
 msgid "show channel logos"
 msgstr "Mostra loghi canali"
@@ -201,4 +207,3 @@ msgstr "Mostra informazioni EPG in forma di un tipico magazine TV"
 
 msgid "TV-OnScreen"
 msgstr "TV OnScreen"
-

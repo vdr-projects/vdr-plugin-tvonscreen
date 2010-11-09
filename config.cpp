@@ -30,6 +30,8 @@ tvonscreenConfig::tvonscreenConfig(void)
     usertime3=2015;
     thenshownextday=true;
     showsearchinitiator=true;
+    fontdsize=0;
+    transparency=100;
 
     memset(logos,0,sizeof(logos));
     memset(vdradminfile,0,sizeof(vdradminfile));
@@ -48,6 +50,8 @@ bool tvonscreenConfig::SetupParse(const char *Name, const char *Value)
     else if (strcmp(Name,"usertime3")==0) usertime3 = atoi(Value);
     else if (strcmp(Name,"thenshownextday")==0) thenshownextday = atoi(Value);
     else if (strcmp(Name,"showsearchinitiator")==0) showsearchinitiator = atoi(Value);
+    else if (strcmp(Name,"fontdsize")==0) fontdsize = atoi(Value);
+    else if (strcmp(Name,"transparency")==0) transparency = atoi(Value);
     else
         return false;
 
@@ -97,6 +101,12 @@ bool tvonscreenConfig::ProcessArgs(int argc, char *argv[])
 tvonscreenConfigPage::tvonscreenConfigPage(void) : cMenuSetupPage()
 {
     m_NewConfig = tvonscreenCfg;
+
+    Add(new cMenuEditIntItem(tr("font size"),
+                             &m_NewConfig.fontdsize,-5,5));
+    Add(new cMenuEditIntItem(tr("transparency"),
+                             &m_NewConfig.transparency,0,100));
+
     if (getTL_YSTART()>24)
     {
         Add(new cMenuEditBoolItem(tr("show channel logos"),
@@ -125,8 +135,6 @@ tvonscreenConfigPage::tvonscreenConfigPage(void) : cMenuSetupPage()
 
     Add(new cMenuEditBoolItem(tr("Show search item itself"),
                               &m_NewConfig.showsearchinitiator));
-
-
 }
 
 tvonscreenConfigPage::~tvonscreenConfigPage()
@@ -146,6 +154,8 @@ void tvonscreenConfigPage::Store(void)
     SetupStore("usertime3", m_NewConfig.usertime3);
     SetupStore("thenshownextday", m_NewConfig.thenshownextday);
     SetupStore("showsearchinitiator", m_NewConfig.showsearchinitiator);
+    SetupStore("fontdsize", m_NewConfig.fontdsize);
+    SetupStore("transparency", m_NewConfig.transparency);
 
     tvonscreenCfg = m_NewConfig;
 }

@@ -10,7 +10,7 @@
 #include "config.h"
 #include "i18n.h"
 
-static const char *VERSION        = "1.1.141";
+static const char *VERSION        = "1.1.142";
 static const char *DESCRIPTION    = trNOOP("Shows the EPG info in form of a typical TV magazine");
 static const char *MAINMENUENTRY  = trNOOP("TV-OnScreen");
 

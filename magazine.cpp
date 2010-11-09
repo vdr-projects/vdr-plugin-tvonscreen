@@ -11,8 +11,8 @@
 #include <vdr/osd.h>
 #include <vdr/device.h>
 
-#define clrGrey       0xFF5F5F5F
-#define clrBackground clrGray50 // this should be tied somehow into current theme
+#define clrGray75     0xBF000000
+#define clrBackground 0x7F000000 // this should be tied somehow into current theme
 
 void GetOsdSize(int &Width, int &Height, double &Aspect)
 {
@@ -112,6 +112,23 @@ static int CompareSchedules(const void *p1, const void *p2)
     return c1nr - c2nr;
 }
 
+void magazine::setTransparency(int *color)
+{
+    if (!color) return;
+    if (tvonscreenCfg.transparency==100) return;
+
+    int alpha,delta,value;
+
+    alpha=(*color & 0xFF000000)>>24;
+    delta=255-alpha;
+    value=100-tvonscreenCfg.transparency;
+    value*=delta;
+    value/=100;
+    value+=alpha;
+    value<<=24;
+    *color=(*color & 0x00FFFFFF) | value;
+}
+
 magazine::magazine(class cPlugin *p)
 {
     parent=p;
@@ -119,6 +136,16 @@ magazine::magazine(class cPlugin *p)
 
     curmode=SHOW;
     EDIT_curEvent=0;
+
+
+    clrSched1=clrGray75;
+    clrSched2=clrGray50;
+
+    setTransparency(&clrSched1);
+    setTransparency(&clrSched2);
+
+    clrTimeline1=clrBlue;
+    clrTimeline2=clrBlack;
 
     f1=NULL;
     f2=NULL;
@@ -302,21 +329,21 @@ void magazine::printHead(const cSchedule *s,int p)
 
         yoff=28;
         osd->DrawRectangle(x+Areas[a].x1+getScheduleWidth()-4,0+Areas[a].y1+28,x+Areas[a].x1+
-                           getScheduleWidth()-2,Areas[a].y1+28+20,clrGrey);
+                           getScheduleWidth()-2,Areas[a].y1+28+20,clrGray75);
         // nie zu sehen, ausser wenn kein Logo gefunden wird
         osd->DrawRectangle(x+Areas[a].x1,0+Areas[a].y1+28,x+
-                           Areas[a].x1+2,Areas[a].y1+28+20,clrGrey);
+                           Areas[a].x1+2,Areas[a].y1+28+20,clrGray75);
 
         if (p==2) DrawXpm(TVonscreen,osd,x+Areas[a].x1+getScheduleWidth()-112,0+Areas[a].y1);
 
         if (tvonscreenCfg.showChannels || !tvonscreenCfg.showLogos)
             osd->DrawRectangle(x+Areas[a].x1,yoff+Areas[a].y1,x+Areas[a].x1+getScheduleWidth()-2,
-                               Areas[a].y1+gTL_YSTART-1,clrBlue);
+                               Areas[a].y1+gTL_YSTART-1,clrTimeline1);
     }
     else
     {
         osd->DrawRectangle(x+Areas[a].x1,yoff+Areas[a].y1,x+Areas[a].x1+getScheduleWidth()-2,
-                           Areas[a].y1+gTL_YSTART-1,clrBlue);
+                           Areas[a].y1+gTL_YSTART-1,clrTimeline1);
     }
 
     if (tvonscreenCfg.showChannels || !tvonscreenCfg.showLogos)
@@ -335,10 +362,10 @@ void magazine::printHead(const cSchedule *s,int p)
 
             if (!tvonscreenCfg.XLfonts || f3->LargeWidth(txt)>=getScheduleWidth()-wmin)
                 f3->Text(wmin+x+Areas[a].x1+(getScheduleWidth()-wmin-f3->Width(txt))/2,
-                         Areas[a].y1+yoff-1,txt,col,clrBlue);
+                         Areas[a].y1+yoff-1,txt,col,clrTimeline1);
             else
                 f3->LargeText(wmin+x+Areas[a].x1+(getScheduleWidth()-wmin-f3->LargeWidth(txt))/2,
-                              Areas[a].y1+yoff-1,txt,col,clrBlue);
+                              Areas[a].y1+yoff-1,txt,col,clrTimeline1);
         }
     }
 }
@@ -390,10 +417,12 @@ void magazine::showTimeline(void)
 {
     int lh=-1;
     int lhc=0;
-    tColor hgr[]={clrBlue,clrBlack};
     char dtxt[50];
     time_t t1;
     struct tm tm_r1;
+    tColor hgr[2]; // {clrBlue,clrBlack}
+    hgr[0]=clrTimeline1;
+    hgr[1]=clrTimeline2;
 
     t1=currentFirstTime;
     localtime_r(&t1,&tm_r1);
@@ -471,7 +500,10 @@ void magazine::showSched(cEvent **ev,tMagazineArea area)
     int lh=-1;
     int lhc=0;
 
-    tColor hgr[]={clrGrey,clrBackground};
+    tColor hgr[2];  //{clrGray,clrBackground};
+    hgr[0]=clrSched1;
+    hgr[1]=clrSched2;
+
     tColor col=clrWhite;
 
     osd->DrawRectangle(Areas[area].x1, Areas[area].y1, Areas[area].x2+1, Areas[area].y2+1, clrGray50);
@@ -743,28 +775,36 @@ void magazine::calcScheds()
     }
 }
 
+void magazine::colorworkaround(cBitmap *b)
+{
+    // This is an ugly work around for color problems with
+    //  DVB driver or hardware or vdr handling, who knows
+    b->SetColor(0,clrTransparent);
+    b->SetColor(2,clrBlack);
+    b->SetColor(2,clrWhite);
+    b->SetColor(3,clrGray50);
+    b->SetColor(4,clrGray75);
+    b->SetColor(5,clrCyan);
+
+    b->SetColor(6,clrSched1);
+    b->SetColor(7,clrSched2);
+    b->SetColor(8,clrTimeline1);
+    b->SetColor(9,clrTimeline2);
+
+    for (int i=10;i<128;i++)
+    {
+        b->SetColor(i,0x01000000|i);
+    }
+    // End work around
+}
+
 void magazine::output(void)
 {
     cBitmap *b=osd->GetBitmap(NAMES_AREA);
     if (b)
     {
         b->Reset();
-        if (tvonscreenCfg.colorworkaround)
-        {
-            // This is an ugly work around for color problems with
-            //  DVB driver or hardware or vdr handling, who knows
-            b->SetColor(0,clrTransparent);
-            b->SetColor(1,clrBlue);
-            b->SetColor(2,clrWhite);
-            b->SetColor(3,clrGrey);
-            b->SetColor(4,0xffff0000);
-            b->SetColor(5,clrCyan);
-            for (int i=6;i<128;i++)
-            {
-                b->SetColor(i,0x01000000|i);
-            }
-            // End work around
-        }
+        if (tvonscreenCfg.colorworkaround) colorworkaround(b);
     }
 
     showHeads();
@@ -782,22 +822,7 @@ void magazine::outputLR(void)
     if (b)
     {
         b->Reset();
-        if (tvonscreenCfg.colorworkaround)
-        {
-            // This is an ugly work around for color problems with
-            // DVB driver or hardware or vdr handling, who knows
-            b->SetColor(0,clrTransparent);
-            b->SetColor(1,clrBlue);
-            b->SetColor(2,clrWhite);
-            b->SetColor(3,clrGrey);
-            b->SetColor(4,0xffff0000);
-            b->SetColor(5,clrCyan);
-            for (int i=6;i<128;i++)
-            {
-                b->SetColor(i,0x01000000|i);
-            }
-            // End work around
-        }
+        if (tvonscreenCfg.colorworkaround) colorworkaround(b);
     }
 
     showHeads();
@@ -860,18 +885,18 @@ void magazine::showHelp()
     int gTL_YSTART = getTL_YSTART();
 
     osd->DrawRectangle(Areas[SCHED1_AREA].x1, Areas[SCHED1_AREA].y1+1,
-                       Areas[SCHED1_AREA].x2+1, Areas[SCHED1_AREA].y2+1, clrGrey);
+                       Areas[SCHED1_AREA].x2+1, Areas[SCHED1_AREA].y2+1, clrSched1);
     osd->DrawRectangle(Areas[SCHED2_AREA].x1, Areas[SCHED2_AREA].y1+1,
-                       Areas[SCHED2_AREA].x2+1, Areas[SCHED2_AREA].y2+1, clrGrey);
+                       Areas[SCHED2_AREA].x2+1, Areas[SCHED2_AREA].y2+1, clrSched1);
     osd->DrawRectangle(Areas[SCHED3_AREA].x1, Areas[SCHED3_AREA].y1+1,
-                       Areas[SCHED3_AREA].x2+1, Areas[SCHED3_AREA].y2+1, clrGrey);
+                       Areas[SCHED3_AREA].x2+1, Areas[SCHED3_AREA].y2+1, clrSched1);
 
     osd->DrawRectangle(Areas[SCHED1_AREA].x1+2, Areas[SCHED1_AREA].y1,
-                       Areas[SCHED1_AREA].x2+1-3, Areas[SCHED1_AREA].y2+1-3, clrGray50);
+                       Areas[SCHED1_AREA].x2+1-3, Areas[SCHED1_AREA].y2+1-3, clrSched2);
     osd->DrawRectangle(Areas[SCHED2_AREA].x1+2, Areas[SCHED2_AREA].y1,
-                       Areas[SCHED2_AREA].x2+1-3, Areas[SCHED2_AREA].y2+1-3, clrGray50);
+                       Areas[SCHED2_AREA].x2+1-3, Areas[SCHED2_AREA].y2+1-3, clrSched2);
     osd->DrawRectangle(Areas[SCHED3_AREA].x1+2, Areas[SCHED3_AREA].y1,
-                       Areas[SCHED3_AREA].x2+1-3, Areas[SCHED3_AREA].y2+1-3, clrGray50);
+                       Areas[SCHED3_AREA].x2+1-3, Areas[SCHED3_AREA].y2+1-3, clrSched2);
 
     osd->DrawRectangle(0+Areas[TIMELINE_AREA].x1,0+Areas[TIMELINE_AREA].y1+gTL_YSTART,
                        Areas[TIMELINE_AREA].x1+getTimelineWidth(),
@@ -1009,11 +1034,16 @@ void magazine::Show(void)
         delete f4;
         delete f5;
 
-        f1=new anyFont(osd,(round(12*Width) / Height),1);	// Sendung
-        f2=new anyFont(osd,(round(11*Width) / Height),1);	// Extra-Info
-        f3=new anyFont(osd,(round(12*Width) / Height),1);	// Sender
-        f4=new anyFont(osd,(round(11*Width) / Height));	// Tasten
-        f5=new anyFont(osd,(round(11*Width) / Height));	// Datum
+        int h1=(int) round(Height/35);
+        int h2=h1-2;
+        h1+=tvonscreenCfg.fontdsize;
+        h2+=tvonscreenCfg.fontdsize;
+
+        f1=new anyFont(osd,h1,1); // Sendung
+        f2=new anyFont(osd,h2,1); // Extra-Info
+        f3=new anyFont(osd,h1,1); // Sender
+        f4=new anyFont(osd,h2);   // Tasten
+        f5=new anyFont(osd,h2);   // Datum
 
         for (int i=0; i < (int)(sizeof(Areas)/sizeof(tArea)); i++)
         {
