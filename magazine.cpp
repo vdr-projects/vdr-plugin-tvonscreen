@@ -112,12 +112,12 @@ static int CompareSchedules(const void *p1, const void *p2)
     return c1nr - c2nr;
 }
 
-void magazine::setTransparency(int *color)
+void magazine::setTransparency(unsigned int *color)
 {
     if (!color) return;
     if (tvonscreenCfg.transparency==100) return;
 
-    int alpha,delta,value;
+    unsigned int alpha,delta,value;
 
     alpha=(*color & 0xFF000000)>>24;
     delta=255-alpha;
@@ -255,7 +255,6 @@ void magazine::printLogo(const cSchedule *s,int p)
 {
     cChannel* channel;
     const char *txt;
-    int x=getScheduleWidth()*p+p*4;
     int currentChannel;
 
 #ifdef MULTINAMES
@@ -273,9 +272,10 @@ void magazine::printLogo(const cSchedule *s,int p)
         a=NAME3_AREA;
         break;
     }
-    x=0;
+    int x=0;
 #else
     int a=NAMES_AREA;
+    int x=getScheduleWidth()*p+p*4;
 #endif
     if (s!=NULL)
     {
@@ -290,6 +290,7 @@ void magazine::printLogo(const cSchedule *s,int p)
         char *fname=new char[strlen(ConfigDirectory) + 1 + strlen(txt) + strlen(".xpm") + 1];
         sprintf(fname,"%s/%s.xpm",ConfigDirectory,txt);
         DrawXpm(fname,osd,x+Areas[a].x1,Areas[a].y1,0,tvonscreenCfg.bwlogos);
+        delete fname;
     }
 }
 void magazine::printHead(const cSchedule *s,int p)
@@ -360,12 +361,8 @@ void magazine::printHead(const cSchedule *s,int p)
             }
             txt=channel->ShortName(true);
 
-            if (!tvonscreenCfg.XLfonts || f3->LargeWidth(txt)>=getScheduleWidth()-wmin)
-                f3->Text(wmin+x+Areas[a].x1+(getScheduleWidth()-wmin-f3->Width(txt))/2,
-                         Areas[a].y1+yoff-1,txt,col,clrTimeline1);
-            else
-                f3->LargeText(wmin+x+Areas[a].x1+(getScheduleWidth()-wmin-f3->LargeWidth(txt))/2,
-                              Areas[a].y1+yoff-1,txt,col,clrTimeline1);
+            f3->Text(wmin+x+Areas[a].x1+(getScheduleWidth()-wmin-f3->Width(txt))/2,
+                     Areas[a].y1+yoff-1,txt,col,clrTimeline1);
         }
     }
 }

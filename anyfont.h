@@ -20,11 +20,8 @@ public:
     anyFont(cOsd *o,int fheight,int transparent=0);
     int Height(void);
     int Width(const char *txt);
-    int LargeWidth(const char *txt);
     int Width(char c);
-    int LargeWidth(char c);
     int Text(int x, int y, const char *txt, tColor fg, tColor bg);
-    int LargeText(int x, int y, const char *txt, tColor fg, tColor bg);
     int Text(int x, int y, int w, int h, const char *txt, tColor fg, tColor bg);
     int TextHeight(int w, const char *txt);
 };

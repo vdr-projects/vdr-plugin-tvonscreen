@@ -19,7 +19,6 @@ tvonscreenConfig tvonscreenCfg;
 tvonscreenConfig::tvonscreenConfig(void)
 {
     showLogos=false;
-    XLfonts=true;
     noInfoLine=false;
     showChannels=true;
     bwlogos=false;
@@ -40,7 +39,6 @@ tvonscreenConfig::tvonscreenConfig(void)
 bool tvonscreenConfig::SetupParse(const char *Name, const char *Value)
 {
     if      (strcmp(Name,"showLogos")==0) showLogos = atoi(Value);
-    else if (strcmp(Name,"XLfonts")==0) XLfonts = atoi(Value);
     else if (strcmp(Name,"noInfoLine")==0) noInfoLine = atoi(Value);
     else if (strcmp(Name,"showChannels")==0) showChannels = atoi(Value);
     else if (strcmp(Name,"bwlogos")==0) bwlogos = atoi(Value);
@@ -118,8 +116,6 @@ tvonscreenConfigPage::tvonscreenConfigPage(void) : cMenuSetupPage()
         Add(new cMenuEditBoolItem(tr("enable color problem work around"),
                                   &m_NewConfig.colorworkaround));
     }
-    Add(new cMenuEditBoolItem(tr("use XL fonts"),
-                              &m_NewConfig.XLfonts));
     Add(new cMenuEditBoolItem(tr("hide info line"),
                               &m_NewConfig.noInfoLine));
 
@@ -144,7 +140,6 @@ tvonscreenConfigPage::~tvonscreenConfigPage()
 void tvonscreenConfigPage::Store(void)
 {
     SetupStore("showLogos", m_NewConfig.showLogos);
-    SetupStore("XLfonts", m_NewConfig.XLfonts);
     SetupStore("noInfoLine", m_NewConfig.noInfoLine);
     SetupStore("showChannels", m_NewConfig.showChannels);
     SetupStore("bwlogos", m_NewConfig.bwlogos);

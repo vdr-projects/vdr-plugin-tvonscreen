@@ -21,7 +21,6 @@ public:
     const char *CommandLineHelp(void);
 
     int showLogos;
-    int XLfonts;
     int noInfoLine;
     int showChannels;
     int bwlogos;

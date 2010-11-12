@@ -105,4 +105,4 @@ bool cPluginTvOnscreen::SetupParse(const char *Name, const char *Value)
     return tvonscreenCfg.SetupParse(Name,Value);
 }
 
-VDRPLUGINCREATOR(cPluginTvOnscreen); // Don't touch this!
+VDRPLUGINCREATOR(cPluginTvOnscreen) // Don't touch this!

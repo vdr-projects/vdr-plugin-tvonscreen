@@ -97,7 +97,8 @@ bool DrawXpm(char *Xpm[], areaT *drawable,int x0,int y0,winhandleT winhand,bool 
     }
 
     int NoneColorIndex = MAXNUMCOLORS;
-    tColor cols[n];
+    tColor *cols = new tColor[n];
+    if (!cols) return false;
 
     for (int i = 0; i < n; i++)
     {
@@ -105,12 +106,14 @@ bool DrawXpm(char *Xpm[], areaT *drawable,int x0,int y0,winhandleT winhand,bool 
         if (int(strlen(s)) < c)
         {
             esyslog("ERROR: faulty 'colors' line in XPM: '%s'", s);
+            delete [] cols;
             return false;
         }
         s = skipspace(s + c);
         if (*s != 'c')
         {
             esyslog("ERROR: unknown color key in XPM: '%c'", *s);
+            delete [] cols;
             return false;
         }
         s = skipspace(s + 1);
@@ -122,6 +125,7 @@ bool DrawXpm(char *Xpm[], areaT *drawable,int x0,int y0,winhandleT winhand,bool 
         if (*s != '#')
         {
             esyslog("ERROR: unknown color code in XPM: '%c'", *s);
+            delete [] cols;
             return false;
         }
         unsigned int col=strtoul(++s, NULL, 16);
@@ -143,6 +147,7 @@ bool DrawXpm(char *Xpm[], areaT *drawable,int x0,int y0,winhandleT winhand,bool 
         if (int(strlen(s)) != w * c)
         {
             esyslog("ERROR: faulty pixel line in XPM: %d '%s'", y, s);
+            delete [] cols;
             return false;
         }
         for (int x = 0; x < w; x++)
@@ -161,5 +166,6 @@ bool DrawXpm(char *Xpm[], areaT *drawable,int x0,int y0,winhandleT winhand,bool 
             s += c;
         }
     }
+    delete [] cols;
     return true;
 }

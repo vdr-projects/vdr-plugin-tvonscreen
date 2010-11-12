@@ -21,6 +21,7 @@ void mzlog(int level, const char *fmt, ...);
 typedef enum
 {
 #ifdef MULTINAMES
+    NAMES_AREA = 0,
     NAME1_AREA = 0,
     NAME2_AREA,
     NAME3_AREA,
@@ -32,7 +33,7 @@ typedef enum
     SCHED2_AREA,
     SCHED3_AREA,
     CONTROL_AREA,
-    NUMBER_OF_AREAS,
+    NUMBER_OF_AREAS
 } tMagazineArea;
 
 class magazine : public cOsdObject
@@ -101,11 +102,11 @@ private:
 
     void autoTimer(const class cEvent *EventInfo);
 
-    void setTransparency(int *color);
-    int clrSched1;
-    int clrSched2;
-    int clrTimeline1;
-    int clrTimeline2;
+    void setTransparency(unsigned int *color);
+    unsigned int clrSched1;
+    unsigned int clrSched2;
+    unsigned int clrTimeline1;
+    unsigned int clrTimeline2;
 
 public:
     magazine(class cPlugin *);

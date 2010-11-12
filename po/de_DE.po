@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.6.0\n"
 "Report-Msgid-Bugs-To: <see README>\n"
-"POT-Creation-Date: 2010-11-09 20:45+0100\n"
+"POT-Creation-Date: 2010-11-12 09:41+0100\n"
 "PO-Revision-Date: 2008-12-22 18:10+0000\n"
 "Last-Translator: Klaus Schmidinger <kls@cadsoft.de>\n"
 "Language-Team: <vdr@linuxtv.org>\n"
@@ -32,9 +32,6 @@ msgstr "zeige Kanal-Logos in Schwarz/Weiﬂ"
 
 msgid "enable color problem work around"
 msgstr "Farbproblem Umgehung aktivieren"
-
-msgid "use XL fonts"
-msgstr "benutze XL Schrift"
 
 msgid "hide info line"
 msgstr "verstecke Info Zeile"
@@ -202,3 +199,4 @@ msgstr "Zeigt EPG als TV-Magazin"
 
 msgid "TV-OnScreen"
 msgstr "TV Magazin"
+

@@ -27,17 +27,7 @@ int anyFont::Width(const char *txt)
     while (txt && *txt) w += Width(*txt++);
     return w;
 }
-int anyFont::LargeWidth(const char *txt)
-{
-    int w = 0;
-    while (txt && *txt) w += Width(*txt++);
-    return w*2;
-}
 int anyFont::Width(char c)
-{
-    return Font->Width(c);
-}
-int anyFont::LargeWidth(char c)
 {
     return Font->Width(c);
 }
@@ -45,11 +35,6 @@ int anyFont::Text(int x, int y, const char *txt, tColor fg, tColor bg)
 {
     osd->DrawText(x, y, txt, fg, trans ? clrTransparent : bg, Font);
     return x += Font->Width(txt);
-}
-int anyFont::LargeText(int x, int y, const char *txt, tColor fg, tColor bg)
-{
-    osd->DrawText(x, y, txt, fg, trans ? clrTransparent : bg, Font);
-    return x + Font->Width(txt);
 }
 int anyFont::Text(int x, int y, int w, int h, const char *txt, tColor fg, tColor bg)
 {
