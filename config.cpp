@@ -12,8 +12,6 @@
 #include <unistd.h>
 #include <vdr/menuitems.h>
 
-extern int getTL_YSTART();
-
 tvonscreenConfig tvonscreenCfg;
 
 tvonscreenConfig::tvonscreenConfig(void)
@@ -104,31 +102,24 @@ tvonscreenConfigPage::tvonscreenConfigPage(void) : cMenuSetupPage()
                              &m_NewConfig.fontdsize,-5,5));
     Add(new cMenuEditIntItem(tr("transparency"),
                              &m_NewConfig.transparency,0,100));
-
-    if (getTL_YSTART()>24)
-    {
-        Add(new cMenuEditBoolItem(tr("show channel logos"),
-                                  &m_NewConfig.showLogos));
-        Add(new cMenuEditBoolItem(tr("show channel names"),
-                                  &m_NewConfig.showChannels));
-        Add(new cMenuEditBoolItem(tr("show logos in black&white"),
-                                  &m_NewConfig.bwlogos));
-        Add(new cMenuEditBoolItem(tr("enable color problem work around"),
-                                  &m_NewConfig.colorworkaround));
-    }
+    Add(new cMenuEditBoolItem(tr("show channel logos"),
+                              &m_NewConfig.showLogos));
+    Add(new cMenuEditBoolItem(tr("show channel names"),
+                              &m_NewConfig.showChannels));
+    Add(new cMenuEditBoolItem(tr("show logos in black&white"),
+                              &m_NewConfig.bwlogos));
+    Add(new cMenuEditBoolItem(tr("enable color problem work around"),
+                              &m_NewConfig.colorworkaround));
     Add(new cMenuEditBoolItem(tr("hide info line"),
                               &m_NewConfig.noInfoLine));
-
     Add(new cMenuEditTimeItem(tr("user point in time 1 (Key 4)"),
                               &m_NewConfig.usertime1));
     Add(new cMenuEditTimeItem(tr("user point in time 2 (Key 5)"),
                               &m_NewConfig.usertime2));
     Add(new cMenuEditTimeItem(tr("user point in time 3 (Key 6)"),
                               &m_NewConfig.usertime3));
-
     Add(new cMenuEditBoolItem(tr("jump to next day point if ago"),
                               &m_NewConfig.thenshownextday));
-
     Add(new cMenuEditBoolItem(tr("Show search item itself"),
                               &m_NewConfig.showsearchinitiator));
 }

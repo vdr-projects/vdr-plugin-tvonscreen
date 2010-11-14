@@ -21,8 +21,8 @@ public:
     int Height(void);
     int Width(const char *txt);
     int Width(char c);
-    int Text(int x, int y, const char *txt, tColor fg, tColor bg);
-    int Text(int x, int y, int w, int h, const char *txt, tColor fg, tColor bg);
+    int Text(int x, int y, const char *txt, tColor fg, tColor bg=clrTransparent);
+    int Text(int x, int y, int w, int h, const char *txt, tColor fg, tColor bg=clrTransparent);
     int TextHeight(int w, const char *txt);
 };
 

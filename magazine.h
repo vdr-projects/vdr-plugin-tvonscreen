@@ -20,14 +20,10 @@ void mzlog(int level, const char *fmt, ...);
 
 typedef enum
 {
-#ifdef MULTINAMES
-    NAMES_AREA = 0,
     NAME1_AREA = 0,
     NAME2_AREA,
     NAME3_AREA,
-#else
-    NAMES_AREA = 0,
-#endif
+    DATETIME_AREA,
     TIMELINE_AREA,
     SCHED1_AREA,
     SCHED2_AREA,
@@ -72,6 +68,10 @@ class magazine : public cOsdObject
     bool timeline_tested;
     bool timeline_found_conflict;
 
+    int YSTART;
+    int TimelineWidth;
+    int ScheduleWidth;
+    int ScheduleHeight;
     int Width;
     int Height;
     double Aspect;
@@ -86,6 +86,7 @@ private:
     void printLogo(const cSchedule *s,int p);
     void printHead(const cSchedule *s,int p);
     void showKeys(void);
+    void showDatetime(void);
     void showTimeline(void);
     void showHeads(bool onlyBG=false);
     void showScheds(void);
@@ -107,6 +108,7 @@ private:
     unsigned int clrSched2;
     unsigned int clrTimeline1;
     unsigned int clrTimeline2;
+    unsigned int clrNames;
 
 public:
     magazine(class cPlugin *);

@@ -9,7 +9,6 @@
 #include "magazine.h"
 
 anyFont::anyFont(cOsd *_osd,int fheight,int transparent)
-
 {
     osd=_osd;
     Font = cFont::CreateFont(Setup.FontOsd, fheight);
@@ -17,25 +16,28 @@ anyFont::anyFont(cOsd *_osd,int fheight,int transparent)
         Font = cFont::GetFont(fontSml);
     trans=transparent;
 }
+
 int anyFont::Height(void)
 {
     return Font->Height();
 }
+
 int anyFont::Width(const char *txt)
 {
-    int w = 0;
-    while (txt && *txt) w += Width(*txt++);
-    return w;
+    return Font->Width(txt);
 }
+
 int anyFont::Width(char c)
 {
     return Font->Width(c);
 }
+
 int anyFont::Text(int x, int y, const char *txt, tColor fg, tColor bg)
 {
     osd->DrawText(x, y, txt, fg, trans ? clrTransparent : bg, Font);
     return x += Font->Width(txt);
 }
+
 int anyFont::Text(int x, int y, int w, int h, const char *txt, tColor fg, tColor bg)
 {
     if (txt==NULL)
@@ -111,6 +113,7 @@ int anyFont::Text(int x, int y, int w, int h, const char *txt, tColor fg, tColor
     free(memtxt);
     return y0/Height()+1;
 }
+
 int anyFont::TextHeight(int w, const char *txt)
 {
     if (txt==NULL)

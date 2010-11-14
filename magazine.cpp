@@ -11,9 +11,6 @@
 #include <vdr/osd.h>
 #include <vdr/device.h>
 
-#define clrGray75     0xBF000000
-#define clrBackground 0x7F000000 // this should be tied somehow into current theme
-
 void GetOsdSize(int &Width, int &Height, double &Aspect)
 {
 #if (APIVERSNUM>10707)
@@ -32,66 +29,16 @@ void GetOsdSize(int &Width, int &Height, double &Aspect)
 #endif
 }
 
-int getTimelineWidth()
-{
-    int Width;
-    int Height;
-    int tWidth;
-    double Aspect;
-    GetOsdSize(Width, Height, Aspect);
-    tWidth = floor((((Width * 90) / 100) * 7) / 100);
-    return tWidth;
-}
-
-int getScheduleWidth()
-{
-    int Width;
-    int Height;
-    int sWidth;
-    double Aspect;
-    GetOsdSize(Width, Height, Aspect);
-    sWidth = floor((((Width * 90) / 100) * 31) / 100);
-    return sWidth;
-}
-
-int getScheduleHeight()
-{
-    int Width;
-    int Height;
-    int sHeight;
-    double Aspect;
-    GetOsdSize(Width, Height, Aspect);
-    sHeight = floor((((Height * 90) / 100) * 85) / 100);
-    return sHeight;
-}
-
-int getTL_YSTART()
-{
-    int Width;
-    int Height;
-    int TL_START;
-    double Aspect;
-    GetOsdSize(Width, Height, Aspect);
-//	TL_START = 1 + (47 * round(Height / 480));
-//	TL_START = round( 48 *(( Height / 480)*( Height / 480)));
-    TL_START = 37+((Height/480)*13.33333);
-    return TL_START;
-}
-
 static tArea Areas[NUMBER_OF_AREAS] =
 {
-#ifndef MULTINAMES
-    { 0,0,0,0,8 }, // NAMES_AREA
-#else
     { 0,0,0,0,8 }, // NAME1_AREA
     { 0,0,0,0,8 }, // NAME2_AREA
     { 0,0,0,0,8 }, // NAME3_AREA
-#endif
+    { 0,0,0,0,8 }, // DATETIME_AREA
     { 0,0,0,0,8 }, // TIMELINE_AREA
     { 0,0,0,0,8 }, // SCHED1_AREA
     { 0,0,0,0,8 }, // SCHED2_AREA
     { 0,0,0,0,8 }, // SCHED3_AREA
-
     { 0,0,0,0,4 }, // CONTROL_AREA
 };
 
@@ -115,12 +62,11 @@ static int CompareSchedules(const void *p1, const void *p2)
 void magazine::setTransparency(unsigned int *color)
 {
     if (!color) return;
-    if (tvonscreenCfg.transparency==100) return;
 
     unsigned int alpha,delta,value;
 
-    alpha=(*color & 0xFF000000)>>24;
-    delta=255-alpha;
+    alpha=47;
+    delta=208;
     value=100-tvonscreenCfg.transparency;
     value*=delta;
     value/=100;
@@ -137,15 +83,21 @@ magazine::magazine(class cPlugin *p)
     curmode=SHOW;
     EDIT_curEvent=0;
 
+    /* please edit only these colors.
+        use colors with NO ALPHA
+        (0xFF......), e.g. clrGreen */
+    clrTimeline1=clrBlue;
+    clrTimeline2=clrBlack;
+    /* ---------------------------- */
 
-    clrSched1=clrGray75;
-    clrSched2=clrGray50;
+    clrSched1=clrTimeline1;
+    clrSched2=clrTimeline2;
+    clrNames=clrTimeline1;
 
     setTransparency(&clrSched1);
     setTransparency(&clrSched2);
-
-    clrTimeline1=clrBlue;
-    clrTimeline2=clrBlack;
+    setTransparency(&clrTimeline1);
+    setTransparency(&clrTimeline2);
 
     f1=NULL;
     f2=NULL;
@@ -155,6 +107,13 @@ magazine::magazine(class cPlugin *p)
     me=NULL;
     met=NULL;
     mes=NULL;
+    ev1=NULL;
+    ev2=NULL;
+    ev3=NULL;
+    fullHours=NULL;
+    fullHours_tmp1=NULL;
+    fullHours_tmp2=NULL;
+    fullHours_tmp3=NULL;
 
     timeline_tested=false;
     timeline_found_conflict=false;
@@ -205,50 +164,27 @@ magazine::magazine(class cPlugin *p)
         }
     }
 
-    ev1=NULL;
-    ev2=NULL;
-    ev3=NULL;
-    fullHours=NULL;
-    fullHours_tmp1=NULL;
-    fullHours_tmp2=NULL;
-    fullHours_tmp3=NULL;
-
     currentFirstTime=time(NULL);
 }
 magazine::~magazine(void)
 {
-    if (me)
-    {
-        delete me;
-        me=NULL;
-    }
-    if (met)
-    {
-        delete met;
-        met=NULL;
-    }
-    if (mes)
-    {
-        delete mes;
-        mes=NULL;
-    }
-
-    delete [] fullHours_tmp3;
-    delete [] fullHours_tmp2;
-    delete [] fullHours_tmp1;
-    delete [] fullHours;
-    delete [] ev1;
-    delete [] ev2;
-    delete [] ev3;
-
-    delete f1;
-    delete f2;
-    delete f3;
-    delete f4;
-    delete f5;
-
-    free(schedArray);
-    delete osd;
+    if (me) delete me;
+    if (met) delete met;
+    if (mes) delete mes;
+    if (fullHours_tmp3) delete [] fullHours_tmp3;
+    if (fullHours_tmp2) delete [] fullHours_tmp2;
+    if (fullHours_tmp1) delete [] fullHours_tmp1;
+    if (fullHours) delete [] fullHours;
+    if (ev1) delete [] ev1;
+    if (ev2) delete [] ev2;
+    if (ev3) delete [] ev3;
+    if (f1) delete f1;
+    if (f2) delete f2;
+    if (f3) delete f3;
+    if (f4) delete f4;
+    if (f5) delete f5;
+    if (schedArray) free(schedArray);
+    if (osd) delete osd;
 }
 
 void magazine::printLogo(const cSchedule *s,int p)
@@ -257,7 +193,6 @@ void magazine::printLogo(const cSchedule *s,int p)
     const char *txt;
     int currentChannel;
 
-#ifdef MULTINAMES
     int a=0;
     switch (p)
     {
@@ -272,11 +207,6 @@ void magazine::printLogo(const cSchedule *s,int p)
         a=NAME3_AREA;
         break;
     }
-    int x=0;
-#else
-    int a=NAMES_AREA;
-    int x=getScheduleWidth()*p+p*4;
-#endif
     if (s!=NULL)
     {
         currentChannel = Channels.GetByNumber(cDevice::CurrentChannel())->Number();
@@ -289,7 +219,7 @@ void magazine::printLogo(const cSchedule *s,int p)
             ConfigDirectory=tvonscreenCfg.logos;
         char *fname=new char[strlen(ConfigDirectory) + 1 + strlen(txt) + strlen(".xpm") + 1];
         sprintf(fname,"%s/%s.xpm",ConfigDirectory,txt);
-        DrawXpm(fname,osd,x+Areas[a].x1,Areas[a].y1,0,tvonscreenCfg.bwlogos);
+        DrawXpm(fname,osd,Areas[a].x1,Areas[a].y1,0,tvonscreenCfg.bwlogos);
         delete fname;
     }
 }
@@ -297,16 +227,8 @@ void magazine::printHead(const cSchedule *s,int p)
 {
     cChannel* channel;
     const char *txt;
-    int x=getScheduleWidth()*p+p*4;
     int currentChannel;
-    int wmin=0,yoff=0;
 
-    if (tvonscreenCfg.showLogos)
-        wmin=64;
-
-    int gTL_YSTART = getTL_YSTART();
-
-#ifdef MULTINAMES
     int a;
     switch (p)
     {
@@ -321,35 +243,13 @@ void magazine::printHead(const cSchedule *s,int p)
         a=NAME3_AREA;
         break;
     }
-    x=0;
-#else
-    int a=NAMES_AREA;
-#endif
-    if (gTL_YSTART>24)
-    {
 
-        yoff=28;
-        osd->DrawRectangle(x+Areas[a].x1+getScheduleWidth()-4,0+Areas[a].y1+28,x+Areas[a].x1+
-                           getScheduleWidth()-2,Areas[a].y1+28+20,clrGray75);
-        // nie zu sehen, ausser wenn kein Logo gefunden wird
-        osd->DrawRectangle(x+Areas[a].x1,0+Areas[a].y1+28,x+
-                           Areas[a].x1+2,Areas[a].y1+28+20,clrGray75);
-
-        if (p==2) DrawXpm(TVonscreen,osd,x+Areas[a].x1+getScheduleWidth()-112,0+Areas[a].y1);
-
-        if (tvonscreenCfg.showChannels || !tvonscreenCfg.showLogos)
-            osd->DrawRectangle(x+Areas[a].x1,yoff+Areas[a].y1,x+Areas[a].x1+getScheduleWidth()-2,
-                               Areas[a].y1+gTL_YSTART-1,clrTimeline1);
-    }
-    else
-    {
-        osd->DrawRectangle(x+Areas[a].x1,yoff+Areas[a].y1,x+Areas[a].x1+getScheduleWidth()-2,
-                           Areas[a].y1+gTL_YSTART-1,clrTimeline1);
-    }
+    osd->DrawRectangle(Areas[a].x1,Areas[a].y1,Areas[a].x2,Areas[a].y2,clrTransparent);
 
     if (tvonscreenCfg.showChannels || !tvonscreenCfg.showLogos)
     {
-        if (s!=NULL)
+        osd->DrawRectangle(Areas[a].x1,Areas[a].y2-f3->Height(),Areas[a].x2,Areas[a].y2,clrNames);
+        if (s)
         {
             tColor col=clrWhite;
 
@@ -360,11 +260,12 @@ void magazine::printHead(const cSchedule *s,int p)
                 col=clrCyan;
             }
             txt=channel->ShortName(true);
-
-            f3->Text(wmin+x+Areas[a].x1+(getScheduleWidth()-wmin-f3->Width(txt))/2,
-                     Areas[a].y1+yoff-1,txt,col,clrTimeline1);
+            int middlepos=(Areas[a].Width()-f3->Width(txt))/2;
+            if ((middlepos<70) && (tvonscreenCfg.showLogos)) middlepos=70; // prevent overlap with icon
+            f3->Text(Areas[a].x1+middlepos,Areas[a].y2-f3->Height(),txt,col,clrNames);
         }
     }
+    if (p==2) DrawXpm(TVonscreen,osd,Areas[a].x1+ScheduleWidth-112,Areas[a].y1);
 }
 
 void magazine::showHeads(bool onlyBG)
@@ -394,94 +295,77 @@ void magazine::showKeys(void)
 {
     char txt[100];
 
-    osd->DrawRectangle(Areas[CONTROL_AREA].x1, Areas[CONTROL_AREA].y1, Areas[CONTROL_AREA].x2+1,
-                       Areas[CONTROL_AREA].y2+1, clrTransparent);
+    osd->DrawRectangle(Areas[CONTROL_AREA].x1, Areas[CONTROL_AREA].y1, Areas[CONTROL_AREA].x2,
+                       Areas[CONTROL_AREA].y2, clrTransparent);
     if (tvonscreenCfg.noInfoLine)
         return;
 
     txt[0]=0;
-    if (curmode==SHOW)
-    {
-        sprintf(txt,"%s",tr("Press 1 for help"));
-    }
-    f4->Text(Areas[CONTROL_AREA].x1+(8+getTimelineWidth()+(getScheduleWidth()+4)*2+
-                                     getScheduleWidth()-101-f4->Width(txt))/2,
-             Areas[CONTROL_AREA].y1,txt,
-             clrWhite,clrBackground);
+    if (curmode==SHOW) sprintf(txt,"%s",tr("Press 1 for help"));
+    f4->Text(Areas[CONTROL_AREA].x1,Areas[CONTROL_AREA].y1,txt,
+             clrWhite,clrTransparent);
+}
+
+void magazine::showDatetime(void)
+{
+
+    time_t t1=currentFirstTime;
+    struct tm tm_r1;
+    localtime_r(&t1,&tm_r1);
+    char dtxt[50];
+
+    strcpy(dtxt,WeekDayName(tm_r1.tm_wday));
+    osd->DrawRectangle(Areas[DATETIME_AREA].x1,Areas[DATETIME_AREA].y1,
+                       Areas[DATETIME_AREA].x1+TimelineWidth,
+                       Areas[DATETIME_AREA].y1+f5->Height()*2,clrWhite);
+
+    osd->DrawRectangle(2+Areas[DATETIME_AREA].x1,2+Areas[DATETIME_AREA].y1,
+                       Areas[DATETIME_AREA].x1+TimelineWidth-2,
+                       Areas[DATETIME_AREA].y1+f5->Height(),clrBlack);
+
+    f5->Text((TimelineWidth-f5->Width(dtxt))/2+Areas[DATETIME_AREA].x1,
+             Areas[DATETIME_AREA].y1+2,dtxt,clrWhite,clrBlack);
+
+    strftime(dtxt,sizeof(dtxt),tr("%d-%m"),&tm_r1);
+
+    f5->Text((TimelineWidth-f5->Width(dtxt))/2+Areas[DATETIME_AREA].x1,
+             Areas[DATETIME_AREA].y1+f5->Height()+1,dtxt,clrBlack,clrWhite);
 }
 
 void magazine::showTimeline(void)
 {
     int lh=-1;
     int lhc=0;
-    char dtxt[50];
-    time_t t1;
-    struct tm tm_r1;
-    tColor hgr[2]; // {clrBlue,clrBlack}
+    tColor hgr[2];
     hgr[0]=clrTimeline1;
     hgr[1]=clrTimeline2;
 
-    t1=currentFirstTime;
-    localtime_r(&t1,&tm_r1);
-
-    int gTL_YSTART = getTL_YSTART();
-
-    osd->DrawRectangle(0+Areas[TIMELINE_AREA].x1,0+Areas[TIMELINE_AREA].y1,getTimelineWidth(),
-                       getScheduleHeight()+gTL_YSTART,clrBlack);
     for (int i=0;i<evnum;i++)
     {
-        int y=i*f1->Height()+gTL_YSTART;
+        int y=i*f1->Height();
         if (lh!=fullHours[i] && fullHours[i]>=0)
         {
             lh=fullHours[i];
             lhc=lh&1;
         }
-        osd->DrawRectangle(0+Areas[TIMELINE_AREA].x1,y+Areas[TIMELINE_AREA].y1,
-                           getTimelineWidth(),y+f1->Height(),hgr[lhc]);
+        osd->DrawRectangle(Areas[TIMELINE_AREA].x1,Areas[TIMELINE_AREA].y1+y,
+                           TimelineWidth,Areas[TIMELINE_AREA].y1+y+f1->Height(),hgr[lhc]);
     }
-
-    if (gTL_YSTART<=24)
-    {
-        strftime(dtxt,sizeof(dtxt),tr("%d-%m"),&tm_r1);
-        f5->Text((getTimelineWidth()-f5->Width(dtxt))/2+Areas[TIMELINE_AREA].x1,
-                 0+Areas[TIMELINE_AREA].y1,dtxt,clrWhite,clrBlack);
-    }
-    else
-    {
-
-        strcpy(dtxt,WeekDayName(tm_r1.tm_wday));
-        osd->DrawRectangle(0+Areas[TIMELINE_AREA].x1,0+Areas[TIMELINE_AREA].y1,
-                           Areas[TIMELINE_AREA].x1+getTimelineWidth(),
-                           Areas[TIMELINE_AREA].y1+f5->Height()*2,clrWhite);
-
-        osd->DrawRectangle(2+Areas[TIMELINE_AREA].x1,2+Areas[TIMELINE_AREA].y1,
-                           Areas[TIMELINE_AREA].x1+getTimelineWidth()-2,
-                           Areas[TIMELINE_AREA].y1+f5->Height(),clrBlack);
-
-        f5->Text((getTimelineWidth()-f5->Width(dtxt))/2+Areas[TIMELINE_AREA].x1,
-                 0+Areas[TIMELINE_AREA].y1+2,dtxt,clrWhite,clrBlack);
-
-        strftime(dtxt,sizeof(dtxt),tr("%d-%m"),&tm_r1);
-
-        f5->Text((getTimelineWidth()-f5->Width(dtxt))/2+Areas[TIMELINE_AREA].x1,
-                 0+Areas[TIMELINE_AREA].y1+f5->Height()+1,dtxt,clrBlack,clrWhite);
-    }
-
     for (int i=0;i<evnum;i++)
     {
-        int y=i*f1->Height()+gTL_YSTART;
+        int y=i*f1->Height();
         if (fullHours[i]>=0 && lh!=fullHours[i])
         {
             char txt[50];
             sprintf(txt,"%02d",fullHours[i]);
             lh=fullHours[i];
-            f1->Text((getTimelineWidth()-f1->Width(txt))/2+Areas[TIMELINE_AREA].x1,
-                     y+Areas[TIMELINE_AREA].y1,txt,clrWhite,clrBlack);
+            f1->Text((TimelineWidth-f1->Width(txt))/2+Areas[TIMELINE_AREA].x1,
+                     Areas[TIMELINE_AREA].y1+y,txt,clrWhite);
             if (i+1<evnum && (fullHours[i+1]==lh || fullHours[i+1]==-1))
             {
                 strcpy(txt,tr("o'clock"));
-                f2->Text((getTimelineWidth()-f2->Width(txt))/2+Areas[TIMELINE_AREA].x1,
-                         y+f1->Height()+Areas[TIMELINE_AREA].y1,txt,clrWhite,clrBlack);
+                f2->Text((TimelineWidth-f2->Width(txt))/2+Areas[TIMELINE_AREA].x1,
+                         Areas[TIMELINE_AREA].y1+y+f1->Height(),txt,clrWhite);
             }
         }
     }
@@ -497,28 +381,26 @@ void magazine::showSched(cEvent **ev,tMagazineArea area)
     int lh=-1;
     int lhc=0;
 
-    tColor hgr[2];  //{clrGray,clrBackground};
+    tColor hgr[2];
     hgr[0]=clrSched1;
     hgr[1]=clrSched2;
 
     tColor col=clrWhite;
 
-    osd->DrawRectangle(Areas[area].x1, Areas[area].y1, Areas[area].x2+1, Areas[area].y2+1, clrGray50);
-
     for (int i=0;i<evnum;i++)
     {
-        int y=i*f1->Height(); //+24;
+        int y=i*f1->Height();
         if (lh!=fullHours[i] && fullHours[i]>=0)
         {
             lh=fullHours[i];
             lhc=lh&1;
         }
-        osd->DrawRectangle(Areas[area].x1,Areas[area].y1+y,Areas[area].x1+getScheduleWidth(),
+        osd->DrawRectangle(Areas[area].x1,Areas[area].y1+y,Areas[area].x1+ScheduleWidth,
                            Areas[area].y1+y+f1->Height(),hgr[lhc]);
     }
     for (int i=0;i<evnum;i++)
     {
-        int y=i*f1->Height(); //+24;
+        int y=i*f1->Height();
         cev=ev[i];
         if (cev!=NULL)
         {
@@ -527,11 +409,11 @@ void magazine::showSched(cEvent **ev,tMagazineArea area)
                 if (oldev)
                 {
                     txt=oldev->ShortText();
-                    int cc=f2->TextHeight(getScheduleWidth()-f1->Width("00:0"),txt);
+                    int cc=f2->TextHeight(ScheduleWidth-f1->Width("00:00 "),txt);
                     if (cc<=i-j)
                     {
-                        f2->Text(f1->Width("00:0")+Areas[area].x1,(j)*f1->Height()+Areas[area].y1,
-                                 getScheduleWidth()-f1->Width("00:0"),i-j,txt,col,clrBackground);
+                        f2->Text(f1->Width("00:00 ")+Areas[area].x1,(j)*f1->Height()+Areas[area].y1,
+                                 ScheduleWidth-f1->Width("00:00 "),i-j,txt,col);
                     }
                 }
                 col=clrWhite;
@@ -544,10 +426,10 @@ void magazine::showSched(cEvent **ev,tMagazineArea area)
                 txt=cev->Title();
                 if (i+f1->TextHeight(f1->Width("00:00 ")+Areas[area].x1,txt)>=evnum)
                     break;
-                f1->Text(Areas[area].x1,y+Areas[area].y1,timetxt,col,clrBackground);
+                f1->Text(Areas[area].x1,y+Areas[area].y1,timetxt,col);
                 j=i+f1->Text(f1->Width("00:00 ")+Areas[area].x1,
-                             y+Areas[area].y1,getScheduleWidth()-f1->Width("00:00 "),
-                             20,txt,col,clrBackground);
+                             y+Areas[area].y1,ScheduleWidth-f1->Width("00:00 "),
+                             20,txt,col);
                 oldev=cev;
             }
         }
@@ -555,9 +437,9 @@ void magazine::showSched(cEvent **ev,tMagazineArea area)
     if (oldev)
     {
         txt=oldev->ShortText();
-        if (j+f2->TextHeight(f1->Width("00:00")+Areas[area].x1,txt)>=evnum)
-            f2->Text(f1->Width("00:0")+Areas[area].x1,j*f1->Height()+Areas[area].y1,
-                     getScheduleWidth()-f1->Width("00:0"),evnum-j,txt,col,clrBackground);
+        if (j+f2->TextHeight(f1->Width("00:00 ")+Areas[area].x1,txt)>=evnum)
+            f2->Text(f1->Width("00:00 ")+Areas[area].x1,j*f1->Height()+Areas[area].y1,
+                     ScheduleWidth-f1->Width("00:00 "),evnum-j,txt,col);
     }
     if (!EDIT_curEvent)
     {
@@ -574,12 +456,12 @@ void magazine::showSched(cEvent **ev,tMagazineArea area)
         if (timeline_found_conflict)
         {
             osd->DrawRectangle(Areas[area].x1,Areas[area].y2-f2->Height()-6,
-                               Areas[area].x1+getScheduleWidth(),Areas[area].y2+1,clrWhite);
+                               Areas[area].x1+ScheduleWidth,Areas[area].y2+1,clrWhite);
             osd->DrawRectangle(Areas[area].x1,Areas[area].y2-f2->Height()-4,
-                               Areas[area].x1+getScheduleWidth(),Areas[area].y2+1,clrYellow);
+                               Areas[area].x1+ScheduleWidth,Areas[area].y2+1,clrYellow);
             const char *txt=tr("Timer conflict!");
-            int x=(getScheduleWidth()-f2->Width(txt))/2;
-            f2->Text(x+Areas[area].x1,Areas[area].y2-f2->Height()-4,txt,clrBackground,clrYellow);
+            int x=(ScheduleWidth-f2->Width(txt))/2;
+            f2->Text(x+Areas[area].x1,Areas[area].y2-f2->Height()-4,txt,clrGreen,clrYellow);
         }
     }
 }
@@ -590,20 +472,9 @@ void magazine::showScheds()
     const cSchedule *s2=schedArrayNum>currentFirst+1?schedArray[currentFirst+1]:NULL;
     const cSchedule *s3=schedArrayNum>currentFirst+2?schedArray[currentFirst+2]:NULL;
 
-    if (s1)
-    {
-        showSched(ev1,SCHED1_AREA);
-    }
-
-    if (s2)
-    {
-        showSched(ev2,SCHED2_AREA);
-    }
-
-    if (s3)
-    {
-        showSched(ev3,SCHED3_AREA);
-    }
+    if (s1) showSched(ev1,SCHED1_AREA);
+    if (s2) showSched(ev2,SCHED2_AREA);
+    if (s3) showSched(ev3,SCHED3_AREA);
 }
 
 const cEvent *magazine::getNext(const cSchedule *s,const cEvent *e)
@@ -675,7 +546,7 @@ void magazine::calcSched(const cSchedule *s,cEvent **ev)
             cev2=NULL;
             if (cev)
             {
-                cc=f1->TextHeight(getScheduleWidth()-f1->Width("00:00 "),cev->Title());
+                cc=f1->TextHeight(ScheduleWidth-f1->Width("00:00 "),cev->Title());
                 time_t t=cev->StartTime();
                 struct tm tm_r;
                 localtime_r(&t,&tm_r);
@@ -694,7 +565,7 @@ void magazine::calcSched(const cSchedule *s,cEvent **ev)
                     cev=cev2;
                     cev2=NULL;
 
-                    cc=f1->TextHeight(getScheduleWidth()-f1->Width("00:00 "),cev->Title());
+                    cc=f1->TextHeight(ScheduleWidth-f1->Width("00:00 "),cev->Title());
                     time_t t=cev->StartTime();
 
                     struct tm tm_r;
@@ -774,21 +645,21 @@ void magazine::calcScheds()
 
 void magazine::colorworkaround(cBitmap *b)
 {
+    b->Reset();
     // This is an ugly work around for color problems with
     //  DVB driver or hardware or vdr handling, who knows
-    b->SetColor(0,clrTransparent);
-    b->SetColor(2,clrBlack);
-    b->SetColor(2,clrWhite);
-    b->SetColor(3,clrGray50);
-    b->SetColor(4,clrGray75);
-    b->SetColor(5,clrCyan);
+    int c=0;
+    b->SetColor(c++,clrTransparent);
+    b->SetColor(c++,clrBlack);
+    b->SetColor(c++,clrWhite);
+    b->SetColor(c++,clrCyan);
 
-    b->SetColor(6,clrSched1);
-    b->SetColor(7,clrSched2);
-    b->SetColor(8,clrTimeline1);
-    b->SetColor(9,clrTimeline2);
+    b->SetColor(c++,clrSched1);
+    b->SetColor(c++,clrSched2);
+    b->SetColor(c++,clrTimeline1);
+    b->SetColor(c++,clrTimeline2);
 
-    for (int i=10;i<128;i++)
+    for (int i=c;i<128;i++)
     {
         b->SetColor(i,0x01000000|i);
     }
@@ -797,17 +668,11 @@ void magazine::colorworkaround(cBitmap *b)
 
 void magazine::output(void)
 {
-    cBitmap *b=osd->GetBitmap(NAMES_AREA);
-    if (b)
-    {
-        b->Reset();
-        if (tvonscreenCfg.colorworkaround) colorworkaround(b);
-    }
-
     showHeads();
     showKeys();
     calcScheds();
     showScheds();
+    showDatetime();
     showTimeline();
 
     osd->Flush();
@@ -815,17 +680,11 @@ void magazine::output(void)
 
 void magazine::outputLR(void)
 {
-    cBitmap *b=osd->GetBitmap(NAMES_AREA);
-    if (b)
-    {
-        b->Reset();
-        if (tvonscreenCfg.colorworkaround) colorworkaround(b);
-    }
-
     showHeads();
     calcScheds();
     searchcEvt();
     showScheds();
+    showDatetime();
     showTimeline();
 
     osd->Flush();
@@ -853,8 +712,8 @@ void magazine::showHelp()
     anyFont *usef=f2;
     int j=0;
     const char *txt;
-    int lines=getScheduleHeight()/usef->Height();
-    int width=getScheduleWidth();
+    int lines=ScheduleHeight/usef->Height();
+    int width=ScheduleWidth;
 
     char *helptext[]=
     {
@@ -879,8 +738,6 @@ void magazine::showHelp()
 
     int area=SCHED1_AREA;
 
-    int gTL_YSTART = getTL_YSTART();
-
     osd->DrawRectangle(Areas[SCHED1_AREA].x1, Areas[SCHED1_AREA].y1+1,
                        Areas[SCHED1_AREA].x2+1, Areas[SCHED1_AREA].y2+1, clrSched1);
     osd->DrawRectangle(Areas[SCHED2_AREA].x1, Areas[SCHED2_AREA].y1+1,
@@ -895,11 +752,10 @@ void magazine::showHelp()
     osd->DrawRectangle(Areas[SCHED3_AREA].x1+2, Areas[SCHED3_AREA].y1,
                        Areas[SCHED3_AREA].x2+1-3, Areas[SCHED3_AREA].y2+1-3, clrSched2);
 
-    osd->DrawRectangle(0+Areas[TIMELINE_AREA].x1,0+Areas[TIMELINE_AREA].y1+gTL_YSTART,
-                       Areas[TIMELINE_AREA].x1+getTimelineWidth(),
-                       Areas[TIMELINE_AREA].y1+getScheduleHeight()+gTL_YSTART,clrBlack);
+    osd->DrawRectangle(Areas[TIMELINE_AREA].x1,Areas[TIMELINE_AREA].y1+YSTART,
+                       Areas[TIMELINE_AREA].x1+TimelineWidth,
+                       Areas[TIMELINE_AREA].y1+ScheduleHeight+YSTART,clrBlack);
     showHeads(true);
-//	osd->Flush();
 
     do
     {
@@ -916,7 +772,7 @@ void magazine::showHelp()
             if (i+usef->TextHeight(width,txt)>=lines)
                 break;
 
-            i+=usef->Text(Areas[area].x1+4,y+Areas[area].y1,width-8,lines-i,txt,clrWhite,clrBackground);
+            i+=usef->Text(Areas[area].x1+4,y+Areas[area].y1,width-8,lines-i,txt,clrWhite);
             j++;
         }
         if (area==SCHED1_AREA)
@@ -967,70 +823,67 @@ void magazine::Show(void)
         mes=NULL;
     }
     GetOsdSize(Width, Height, Aspect);
-    osd = cOsdProvider::NewOsd(((Width-((Width * 90) / 100)) / 2), ((Height-((Height * 90) / 100)) / 2));
 
-    int gTL_YSTART = getTL_YSTART();
+    int Left=Width/20;
+    int Top=Height/20;
+    Width-=(2*Left);
+    Height-=(2*Top);
 
-    Areas[TIMELINE_AREA].x1 = 0;
-    Areas[TIMELINE_AREA].x2 = (2+getTimelineWidth());
-    Areas[TIMELINE_AREA].y1 = 0;
-    Areas[TIMELINE_AREA].y2 = (gTL_YSTART+getScheduleHeight()-1);
+    YSTART=48;
+    TimelineWidth=Width/14;
+    ScheduleHeight=Height-YSTART;
+    ScheduleWidth=(Width-TimelineWidth)/3;
 
-    Areas[SCHED1_AREA].x1 = (8+getTimelineWidth());
-    Areas[SCHED1_AREA].x2 = (7+getTimelineWidth()+getScheduleWidth());
-    Areas[SCHED1_AREA].y1 = gTL_YSTART;
-    Areas[SCHED1_AREA].y2 = (gTL_YSTART+getScheduleHeight()-1);
-
-    Areas[SCHED2_AREA].x1 = (12+getTimelineWidth()+getScheduleWidth());
-    Areas[SCHED2_AREA].x2 = (11+getTimelineWidth()+(2*getScheduleWidth()));
-    Areas[SCHED2_AREA].y1 = gTL_YSTART;
-    Areas[SCHED2_AREA].y2 = (gTL_YSTART+getScheduleHeight()-1);
-
-    Areas[SCHED3_AREA].x1 = (16+getTimelineWidth()+(2*getScheduleWidth()));
-    Areas[SCHED3_AREA].x2 = (15+getTimelineWidth()+(3*getScheduleWidth()));
-    Areas[SCHED3_AREA].y1 = gTL_YSTART;
-    Areas[SCHED3_AREA].y2 = (gTL_YSTART+getScheduleHeight()-1);
-
-    Areas[CONTROL_AREA].x1 = 50;
-    Areas[CONTROL_AREA].x2 = (getTimelineWidth()+(2*(4+getScheduleWidth()))+getScheduleWidth()-43);
-    Areas[CONTROL_AREA].y1 = (8+gTL_YSTART+getScheduleHeight());
-    Areas[CONTROL_AREA].y2 = (27+gTL_YSTART+getScheduleHeight()-1);
-
-#ifndef MULTINAMES
-    Areas[NAMES_AREA].x1 = (8+getTimelineWidth());
-    Areas[NAMES_AREA].x2 = (7+getTimelineWidth()+((4+getScheduleWidth())*2)+getScheduleWidth());
-    Areas[NAMES_AREA].y1 = 0;
-    Areas[NAMES_AREA].y2 = (gTL_YSTART-1);
-#else
-    Areas[NAME1_AREA].x1 = (8+getTimelineWidth());
-    Areas[NAME1_AREA].x2 = (7+getTimelineWidth()+getScheduleWidth());
-    Areas[NAME1_AREA].y1 = 0;
-    Areas[NAME1_AREA].y2 = (gTL_YSTART-1);
-
-    Areas[NAME2_AREA].x1 = (12+getTimelineWidth()+getScheduleWidth());
-    Areas[NAME2_AREA].x2 = (11+getTimelineWidth()+(2*getScheduleWidth()));
-    Areas[NAME2_AREA].y1 = 0;
-    Areas[NAME2_AREA].y2 = (gTL_YSTART-1);
-
-    Areas[NAME3_AREA].x1 = (8+getTimelineWidth()+(2*(getScheduleWidth()+4)));
-    Areas[NAME3_AREA].x2 = (7+getTimelineWidth()+((4+getScheduleWidth())*2)+getScheduleWidth());
-    Areas[NAME3_AREA].y1 = 0;
-    Areas[NAME3_AREA].y2 = (gTL_YSTART-1);
-#endif
-
-    if (osd && !osd->SetAreas(Areas, sizeof(Areas)/sizeof(tArea)))
+    if (fullHours)
     {
         delete [] fullHours;
+        fullHours=NULL;
+    }
+    if (ev1)
+    {
         delete [] ev1;
+        ev1=NULL;
+    }
+    if (ev2)
+    {
         delete [] ev2;
+        ev2=NULL;
+    }
+    if (ev3)
+    {
         delete [] ev3;
+        ev3=NULL;
+    }
 
+    if (f1)
+    {
         delete f1;
+        f1=NULL;
+    }
+    if (f2)
+    {
         delete f2;
+        f2=NULL;
+    }
+    if (f3)
+    {
         delete f3;
+        f3=NULL;
+    }
+    if (f4)
+    {
         delete f4;
+        f4=NULL;
+    }
+    if (f5)
+    {
         delete f5;
+        f5=NULL;
+    }
 
+    osd = cOsdProvider::NewOsd(Left,Top);
+    if (osd)
+    {
         int h1=(int) round(Height/35);
         int h2=h1-2;
         h1+=tvonscreenCfg.fontdsize;
@@ -1042,11 +895,55 @@ void magazine::Show(void)
         f4=new anyFont(osd,h2);   // Tasten
         f5=new anyFont(osd,h2);   // Datum
 
-        for (int i=0; i < (int)(sizeof(Areas)/sizeof(tArea)); i++)
-        {
-            osd->DrawRectangle(Areas[i].x1, Areas[i].y1, Areas[i].x2+1, Areas[i].y2+1, clrGray50);
-        }
-        evnum=(Areas[SCHED1_AREA].y2-Areas[SCHED1_AREA].y1)/f1->Height();
+        evnum=((YSTART+ScheduleHeight-1)-YSTART)/f1->Height();
+        ScheduleHeight=evnum*f1->Height();
+
+        Areas[DATETIME_AREA].x1 = 0;
+        Areas[DATETIME_AREA].x2 = TimelineWidth;
+        Areas[DATETIME_AREA].y1 = 0;
+        Areas[DATETIME_AREA].y2 = YSTART;
+
+        Areas[TIMELINE_AREA].x1 = 0;
+        Areas[TIMELINE_AREA].x2 = TimelineWidth;
+        Areas[TIMELINE_AREA].y1 = YSTART+5;
+        Areas[TIMELINE_AREA].y2 = YSTART+ScheduleHeight;
+
+        Areas[SCHED1_AREA].x1 = 8+TimelineWidth;
+        Areas[SCHED1_AREA].x2 = 8+TimelineWidth+ScheduleWidth;
+        Areas[SCHED1_AREA].y1 = YSTART+5;
+        Areas[SCHED1_AREA].y2 = YSTART+ScheduleHeight;
+
+        Areas[SCHED2_AREA].x1 = 12+TimelineWidth+ScheduleWidth;
+        Areas[SCHED2_AREA].x2 = 12+TimelineWidth+(2*ScheduleWidth);
+        Areas[SCHED2_AREA].y1 = YSTART+5;
+        Areas[SCHED2_AREA].y2 = YSTART+ScheduleHeight;
+
+        Areas[SCHED3_AREA].x1 = 16+TimelineWidth+(2*ScheduleWidth);
+        Areas[SCHED3_AREA].x2 = 16+TimelineWidth+(3*ScheduleWidth);
+        Areas[SCHED3_AREA].y1 = YSTART+5;
+        Areas[SCHED3_AREA].y2 = YSTART+ScheduleHeight;
+
+        Areas[CONTROL_AREA].x1 = 12+TimelineWidth+ScheduleWidth;
+        Areas[CONTROL_AREA].x2 = 12+TimelineWidth+(2*ScheduleWidth);
+        Areas[CONTROL_AREA].y1 = YSTART+ScheduleHeight+5;
+        Areas[CONTROL_AREA].y2 = YSTART+ScheduleHeight+5+f5->Height();
+
+        Areas[NAME1_AREA].x1 = 8+TimelineWidth;
+        Areas[NAME1_AREA].x2 = 8+TimelineWidth+ScheduleWidth;
+        Areas[NAME1_AREA].y1 = 0;
+        Areas[NAME1_AREA].y2 = YSTART;
+
+        Areas[NAME2_AREA].x1 = 12+TimelineWidth+ScheduleWidth;
+        Areas[NAME2_AREA].x2 = 12+TimelineWidth+(2*ScheduleWidth);
+        Areas[NAME2_AREA].y1 = 0;
+        Areas[NAME2_AREA].y2 = YSTART;
+
+        Areas[NAME3_AREA].x1 = 16+TimelineWidth+(2*ScheduleWidth);
+        Areas[NAME3_AREA].x2 = 16+TimelineWidth+(3*ScheduleWidth);
+        Areas[NAME3_AREA].y1 = 0;
+        Areas[NAME3_AREA].y2 = YSTART;
+
+        if (osd->SetAreas(Areas, sizeof(Areas)/sizeof(tArea))) return;
 
         ev1=new cEvent*[evnum];
         ev2=new cEvent*[evnum];
@@ -1126,7 +1023,7 @@ eOSState magazine::ProcessKey(eKeys Key)
             break;
             case kGreen: // Suchen
             {
-//						mzlog(10," Search");
+                // mzlog(10," Search");
                 delete me;
                 me=NULL;
                 cEvent **ev=ev4ch(EDIT_curChannel);
@@ -1136,7 +1033,7 @@ eOSState magazine::ProcessKey(eKeys Key)
             break;
             case kYellow: // add AutoTimer
             {
-//						mzlog(10," AutoTimer");
+                // mzlog(10," AutoTimer");
                 if (tvonscreenCfg.vdradminfile)
                 {
                     me->helpLine(false);
