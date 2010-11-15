@@ -34,6 +34,7 @@ typedef enum
 
 class magazine : public cOsdObject
 {
+private:
     cPlugin *parent;
     cOsd *osd;
 
@@ -47,16 +48,12 @@ class magazine : public cOsdObject
     const cSchedule** schedArray;
     int schedArrayNum;
     int currentFirst;
-    time_t currentFirstTime;
 
     int evnum;
     class cEvent **ev1;
     class cEvent **ev2;
     class cEvent **ev3;
     int *fullHours;
-    int *fullHours_tmp1;
-    int *fullHours_tmp2;
-    int *fullHours_tmp3;
 
     enum modes {SHOW,EDIT};
     enum modes curmode;
@@ -76,10 +73,6 @@ class magazine : public cOsdObject
     int Height;
     double Aspect;
 
-public:
-    static const class cEvent *getNext(const cSchedule *s,const cEvent *e);
-    static const class cEvent *getPrev(const cSchedule *s,const cEvent *e);
-private:
     cEvent **ev4ch(int);
     void searchcEvt();
 
@@ -110,7 +103,15 @@ private:
     unsigned int clrTimeline2;
     unsigned int clrNames;
 
+    const cEvent *GetEventAfter(const cSchedule *s, time_t StartTime, time_t EndTime) const;
+
+    time_t currentFirstTime;
+    void setcurrentFirstTime(time_t now);
+
 public:
+    static const class cEvent *getNext(const cSchedule *s,const cEvent *e);
+    static const class cEvent *getPrev(const cSchedule *s,const cEvent *e);
+
     magazine(class cPlugin *);
     virtual ~magazine();
     virtual void Show(void);

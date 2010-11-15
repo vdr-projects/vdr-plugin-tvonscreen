@@ -75,6 +75,15 @@ void magazine::setTransparency(unsigned int *color)
     *color=(*color & 0x00FFFFFF) | value;
 }
 
+void magazine::setcurrentFirstTime(time_t now)
+{
+    struct tm tm_r;
+    localtime_r(&now,&tm_r);
+    tm_r.tm_min=0;
+    tm_r.tm_sec=0;
+    currentFirstTime=mktime(&tm_r);
+}
+
 magazine::magazine(class cPlugin *p)
 {
     parent=p;
@@ -99,21 +108,12 @@ magazine::magazine(class cPlugin *p)
     setTransparency(&clrTimeline1);
     setTransparency(&clrTimeline2);
 
-    f1=NULL;
-    f2=NULL;
-    f3=NULL;
-    f4=NULL;
-    f5=NULL;
+    f1=f2=f3=f4=f5=NULL;
     me=NULL;
     met=NULL;
     mes=NULL;
-    ev1=NULL;
-    ev2=NULL;
-    ev3=NULL;
+    ev1=ev2=ev3=NULL;
     fullHours=NULL;
-    fullHours_tmp1=NULL;
-    fullHours_tmp2=NULL;
-    fullHours_tmp3=NULL;
 
     timeline_tested=false;
     timeline_found_conflict=false;
@@ -164,16 +164,13 @@ magazine::magazine(class cPlugin *p)
         }
     }
 
-    currentFirstTime=time(NULL);
+    setcurrentFirstTime(time(NULL));
 }
 magazine::~magazine(void)
 {
     if (me) delete me;
     if (met) delete met;
     if (mes) delete mes;
-    if (fullHours_tmp3) delete [] fullHours_tmp3;
-    if (fullHours_tmp2) delete [] fullHours_tmp2;
-    if (fullHours_tmp1) delete [] fullHours_tmp1;
     if (fullHours) delete [] fullHours;
     if (ev1) delete [] ev1;
     if (ev2) delete [] ev2;
@@ -185,6 +182,15 @@ magazine::~magazine(void)
     if (f5) delete f5;
     if (schedArray) free(schedArray);
     if (osd) delete osd;
+
+    me=NULL;
+    met=NULL;
+    mes=NULL;
+    fullHours=NULL;
+    ev1=ev2=ev3=NULL;
+    f1=f2=f3=f4=f5=NULL;
+    schedArray=NULL;
+    osd=NULL;
 }
 
 void magazine::printLogo(const cSchedule *s,int p)
@@ -220,7 +226,7 @@ void magazine::printLogo(const cSchedule *s,int p)
         char *fname=new char[strlen(ConfigDirectory) + 1 + strlen(txt) + strlen(".xpm") + 1];
         sprintf(fname,"%s/%s.xpm",ConfigDirectory,txt);
         DrawXpm(fname,osd,Areas[a].x1,Areas[a].y1,0,tvonscreenCfg.bwlogos);
-        delete fname;
+        delete [] fname;
     }
 }
 void magazine::printHead(const cSchedule *s,int p)
@@ -308,16 +314,13 @@ void magazine::showKeys(void)
 
 void magazine::showDatetime(void)
 {
-
-    time_t t1=currentFirstTime;
     struct tm tm_r1;
-    localtime_r(&t1,&tm_r1);
+    localtime_r(&currentFirstTime,&tm_r1);
     char dtxt[50];
 
     strcpy(dtxt,WeekDayName(tm_r1.tm_wday));
     osd->DrawRectangle(Areas[DATETIME_AREA].x1,Areas[DATETIME_AREA].y1,
-                       Areas[DATETIME_AREA].x1+TimelineWidth,
-                       Areas[DATETIME_AREA].y1+f5->Height()*2,clrWhite);
+                       Areas[DATETIME_AREA].x2,Areas[DATETIME_AREA].y2,clrWhite);
 
     osd->DrawRectangle(2+Areas[DATETIME_AREA].x1,2+Areas[DATETIME_AREA].y1,
                        Areas[DATETIME_AREA].x1+TimelineWidth-2,
@@ -398,6 +401,26 @@ void magazine::showSched(cEvent **ev,tMagazineArea area)
         osd->DrawRectangle(Areas[area].x1,Areas[area].y1+y,Areas[area].x1+ScheduleWidth,
                            Areas[area].y1+y+f1->Height(),hgr[lhc]);
     }
+    /*
+        for (int i=0;i<evnum;i++)
+        {
+            int y=i*f1->Height();
+
+            if (ev[i])
+            {
+                timetxt=ev[i]->GetTimeString();
+                txt=ev[i]->Title();
+
+                f1->Text(Areas[area].x1,y+Areas[area].y1,*timetxt,col);
+                f1->Text(f1->Width("00:00 ")+Areas[area].x1,
+                         y+Areas[area].y1,ScheduleWidth-f1->Width("00:00 "),
+                         20,txt,col);
+                mzlog(0," out ev[%d]=%s '%s'",i,*timetxt,txt);
+            }
+
+        }
+        mzlog(0," ***");
+    */
     for (int i=0;i<evnum;i++)
     {
         int y=i*f1->Height();
@@ -531,115 +554,71 @@ const cEvent *magazine::getPrev(const cSchedule *s,const cEvent *e)
     return pe;
 }
 
-void magazine::calcSched(const cSchedule *s,cEvent **ev)
-{
-    const cEvent *cev=NULL;
-    const cEvent *cev2=NULL;
-    int cc=0;
-
-    for (int i=0;i<evnum;i++)
-    {
-        ev[i]=NULL;
-        if (cev==NULL)
-        {
-            cev=s->GetEventAround(currentFirstTime);
-            cev2=NULL;
-            if (cev)
-            {
-                cc=f1->TextHeight(ScheduleWidth-f1->Width("00:00 "),cev->Title());
-                time_t t=cev->StartTime();
-                struct tm tm_r;
-                localtime_r(&t,&tm_r);
-                fullHours[i]=tm_r.tm_hour; //mzlog(0," fH[%d]=%d '%s'",i,tm_r.tm_hour,cev->Title());
-            }
-        }
-        else
-        {
-            if (!cev2)
-                cev2=getNext(s,cev);
-            if (cev2 && cc--<=1)
-            {
-                int z=(cev2->StartTime()-currentFirstTime)*6/60/60;
-                if (z<i)
-                {
-                    cev=cev2;
-                    cev2=NULL;
-
-                    cc=f1->TextHeight(ScheduleWidth-f1->Width("00:00 "),cev->Title());
-                    time_t t=cev->StartTime();
-
-                    struct tm tm_r;
-                    localtime_r(&t,&tm_r);
-                    fullHours[i]=tm_r.tm_hour; //mzlog(0," fH[%d]=%d '%s'",i,tm_r.tm_hour,cev->Title());
-                }
-            }
-        }
-        ev[i]=(cEvent *)cev;
-    }
-}
-
 void magazine::calcScheds()
 {
     const cSchedule *s1=schedArrayNum>currentFirst?schedArray[currentFirst]:NULL;
     const cSchedule *s2=schedArrayNum>currentFirst+1?schedArray[currentFirst+1]:NULL;
     const cSchedule *s3=schedArrayNum>currentFirst+2?schedArray[currentFirst+2]:NULL;
 
+    struct tm tm_r;
+    localtime_r(&currentFirstTime,&tm_r);
+    int hour=tm_r.tm_hour;
+    int fh=0;
     for (int i=0;i<evnum;i++)
     {
-        fullHours[i]=-1;
-        fullHours_tmp1[i]=-1;
-        fullHours_tmp2[i]=-1;
-        fullHours_tmp3[i]=-1;
-    }
-
-    if (s1!=NULL)
-    {
-        calcSched(s1,ev1);
-        for (int i=0;i<evnum;i++)
+        ev1[i]=NULL;
+        ev2[i]=NULL;
+        ev3[i]=NULL;
+        if (fh==i)
         {
-            fullHours_tmp1[i]=fullHours[i];
+            fullHours[i]=hour;
+            fh+=8;
+            hour++;
+            if (hour==24) hour=0;
+        }
+        else
+        {
             fullHours[i]=-1;
         }
     }
 
-    if (s2!=NULL)
-    {
-        calcSched(s2,ev2);
-        for (int i=0;i<evnum;i++)
-        {
-            fullHours_tmp2[i]=fullHours[i];
-            fullHours[i]=-1;
-        }
-    }
+    if (s1) calcSched(s1,ev1);
+    if (s2) calcSched(s2,ev2);
+    if (s3) calcSched(s3,ev3);
+}
 
-    if (s3!=NULL)
+const cEvent *magazine::GetEventAfter(const cSchedule *s, time_t StartTime, time_t EndTime) const
+{
+    const cEvent *p = NULL;
+    for (p = s->Events()->First(); p; p = s->Events()->Next(p))
     {
-        calcSched(s3,ev3);
-        for (int i=0;i<evnum;i++)
-        {
-            fullHours_tmp3[i]=fullHours[i];
-            fullHours[i]=-1;
-        }
+        if ((p->StartTime()>=StartTime) && (p->StartTime()<=EndTime)) break;
     }
-    int lfh1,lfh2,lfh3;
-    lfh1=lfh2=lfh3=-1;
-    for (int i=0;i<evnum;i++)
+    return p;
+}
+
+void magazine::calcSched(const cSchedule *s,cEvent **ev)
+{
+    const cEvent *cev=s->GetEventAround(currentFirstTime);
+    if (!cev) return;
+    for (;;)
     {
-        if (fullHours_tmp1[i]>=0)
-            lfh1=fullHours_tmp1[i];
-        fullHours_tmp1[i]=lfh1;
-        if (fullHours_tmp2[i]>=0)
-            lfh2=fullHours_tmp2[i];
-        fullHours_tmp2[i]=lfh2;
-        if (fullHours_tmp3[i]>=0)
-            lfh3=fullHours_tmp3[i];
-        fullHours_tmp3[i]=lfh3;
-        if (fullHours_tmp1[i]>fullHours[i])
-            fullHours[i]=fullHours_tmp1[i];
-        if (fullHours_tmp2[i]>fullHours[i])
-            fullHours[i]=fullHours_tmp2[i];
-        if (fullHours_tmp3[i]>fullHours[i])
-            fullHours[i]=fullHours_tmp3[i];
+        time_t t=cev->StartTime();
+        if (t>=currentFirstTime)
+        {
+            struct tm tm_r;
+            localtime_r(&t,&tm_r);
+            int i=(tm_r.tm_hour-fullHours[0])*8;
+            if (i<0) return;
+            int offs=(tm_r.tm_min*8)/60;
+            if (i+offs>=evnum) return;
+            if (ev[i+offs]) offs++;
+            if (i+offs>=evnum) return;
+            ev[i+offs]=(cEvent *)cev;
+            //mzlog(0," ev[%d]=%d:%d '%s'",i+offs,tm_r.tm_hour,tm_r.tm_min,cev->Title());
+        }
+        cev=s->Events()->Next(cev);
+        if (!cev) return;
     }
 }
 
@@ -694,15 +673,15 @@ void magazine::gotoUsertime(int u)
     struct tm tm_r;
     localtime_r(&currentFirstTime,&tm_r);
     tm_r.tm_hour=u/100;
-    tm_r.tm_min=u%100;
+    tm_r.tm_min=0;
     tm_r.tm_sec=0;
-    currentFirstTime=mktime(&tm_r);
+    setcurrentFirstTime(mktime(&tm_r));
     if (currentFirstTime<time(NULL))
     {
         if (tvonscreenCfg.thenshownextday)
-            currentFirstTime+=(60*60*24);
+            setcurrentFirstTime(currentFirstTime+60*60*24);
         else
-            currentFirstTime=time(NULL);
+            setcurrentFirstTime(time(NULL));
     }
     output();
 }
@@ -829,11 +808,6 @@ void magazine::Show(void)
     Width-=(2*Left);
     Height-=(2*Top);
 
-    YSTART=48;
-    TimelineWidth=Width/14;
-    ScheduleHeight=Height-YSTART;
-    ScheduleWidth=(Width-TimelineWidth)/3;
-
     if (fullHours)
     {
         delete [] fullHours;
@@ -895,6 +869,19 @@ void magazine::Show(void)
         f4=new anyFont(osd,h2);   // Tasten
         f5=new anyFont(osd,h2);   // Datum
 
+        YSTART=2*f5->Height();
+        if (YSTART<48) YSTART=48;
+
+        struct tm tm_r1;
+        localtime_r(&currentFirstTime,&tm_r1);
+        char dtxt[50];
+        strftime(dtxt,sizeof(dtxt),tr("%d-%m"),&tm_r1);
+        TimelineWidth=f5->Width(dtxt)+10;
+        if (TimelineWidth<(Width/14))
+            TimelineWidth=Width/14;
+        ScheduleHeight=Height-YSTART;
+        ScheduleWidth=(Width-TimelineWidth)/3;
+
         evnum=((YSTART+ScheduleHeight-1)-YSTART)/f1->Height();
         ScheduleHeight=evnum*f1->Height();
 
@@ -945,15 +932,11 @@ void magazine::Show(void)
 
         if (osd->SetAreas(Areas, sizeof(Areas)/sizeof(tArea))) return;
 
-        ev1=new cEvent*[evnum];
-        ev2=new cEvent*[evnum];
-        ev3=new cEvent*[evnum];
+        ev1=new cEvent*[evnum+1];
+        ev2=new cEvent*[evnum+1];
+        ev3=new cEvent*[evnum+1];
 
-        fullHours=new int[evnum];
-        fullHours_tmp1=new int[evnum];
-        fullHours_tmp2=new int[evnum];
-        fullHours_tmp3=new int[evnum];
-
+        fullHours=new int[evnum+1];
         output();
     }
 }
@@ -1201,23 +1184,23 @@ eOSState magazine::ProcessKey(eKeys Key)
                     output();
                     break;
                 case kUp:
-                    currentFirstTime-=60*30;
+                    setcurrentFirstTime(currentFirstTime-3600);
                     if (currentFirstTime<time(NULL))
-                        currentFirstTime=time(NULL);
+                        setcurrentFirstTime(time(NULL));
                     output();
                     break;
                 case kDown:
-                    currentFirstTime+=60*30;
+                    setcurrentFirstTime(currentFirstTime+3600);
                     output();
                     break;
                 case kRed: // -1 Tag
-                    currentFirstTime-=24*60*60;
+                    setcurrentFirstTime(currentFirstTime-86400);
                     if (currentFirstTime<time(NULL))
-                        currentFirstTime=time(NULL);
+                        setcurrentFirstTime(time(NULL));
                     output();
                     break;
                 case kBlue: // +1 Tag
-                    currentFirstTime+=24*60*60;
+                    setcurrentFirstTime(currentFirstTime+86400);
                     output();
                     break;
                 case k7: // -1 Seite (3 Sender)
@@ -1254,7 +1237,7 @@ eOSState magazine::ProcessKey(eKeys Key)
                 }
                 break;
                 case k0: // jetzt
-                    currentFirstTime=time(NULL);
+                    setcurrentFirstTime(time(NULL));
                     output();
                     break;
                 case k1:
@@ -1348,10 +1331,10 @@ eOSState magazine::ProcessKey(eKeys Key)
                             }
                             if (!found)
                             {
-                                currentFirstTime-=60*30;
+                                setcurrentFirstTime(currentFirstTime-3600);
                                 if (currentFirstTime<time(NULL))
                                 {
-                                    currentFirstTime=time(NULL);
+                                    setcurrentFirstTime(time(NULL));
                                     found=1;
                                 }
                                 calcScheds();
@@ -1384,7 +1367,7 @@ eOSState magazine::ProcessKey(eKeys Key)
                             }
                             if (!found)
                             {
-                                currentFirstTime+=60*30;
+                                setcurrentFirstTime(currentFirstTime+3600);
                                 calcScheds();
                             }
                         }
