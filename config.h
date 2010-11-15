@@ -24,7 +24,6 @@ public:
     int noInfoLine;
     int showChannels;
     int bwlogos;
-    int colorworkaround;
     int usertime1;
     int usertime2;
     int usertime3;

@@ -688,10 +688,9 @@ void magazine::gotoUsertime(int u)
 
 void magazine::showHelp()
 {
-    anyFont *usef=f2;
     int j=0;
     const char *txt;
-    int lines=ScheduleHeight/usef->Height();
+    int lines=ScheduleHeight/f2->Height();
     int width=ScheduleWidth;
 
     char *helptext[]=
@@ -706,52 +705,48 @@ void magazine::showHelp()
         trNOOP((char *) "0\n\tgoto now"),
         trNOOP((char *) "4/5/6\n\tgoto configured time"),
         trNOOP((char *) "ok\n\tswitch to edit mode\n"),
+        (char *) "|",
         trNOOP((char *) "EDIT MODE:"),
         trNOOP((char *) "back\n\tback to normal mode"),
         trNOOP((char *) "arrows\n\tmove selected schedule"),
         trNOOP((char *) "record\n\tcreate timer"),
         trNOOP((char *) "ok\n\tshow details"),
-        (char *) "|\n(c) 2004 Juergen Schmitz\n\thttp://www.js-home.org/vdr",
+        (char *) "|",
+        (char *) "\nhttp://projects.vdr-developer.org/projects/plg-tvonscreen",
         NULL
     };
 
-    int area=SCHED1_AREA;
+    osd->DrawRectangle(Areas[SCHED1_AREA].x1, Areas[SCHED1_AREA].y1,
+                       Areas[SCHED1_AREA].x2, Areas[SCHED1_AREA].y2, clrSched2);
+    osd->DrawRectangle(Areas[SCHED2_AREA].x1, Areas[SCHED2_AREA].y1,
+                       Areas[SCHED2_AREA].x2, Areas[SCHED2_AREA].y2, clrSched2);
+    osd->DrawRectangle(Areas[SCHED3_AREA].x1, Areas[SCHED3_AREA].y1,
+                       Areas[SCHED3_AREA].x2, Areas[SCHED3_AREA].y2, clrSched2);
 
-    osd->DrawRectangle(Areas[SCHED1_AREA].x1, Areas[SCHED1_AREA].y1+1,
-                       Areas[SCHED1_AREA].x2+1, Areas[SCHED1_AREA].y2+1, clrSched1);
-    osd->DrawRectangle(Areas[SCHED2_AREA].x1, Areas[SCHED2_AREA].y1+1,
-                       Areas[SCHED2_AREA].x2+1, Areas[SCHED2_AREA].y2+1, clrSched1);
-    osd->DrawRectangle(Areas[SCHED3_AREA].x1, Areas[SCHED3_AREA].y1+1,
-                       Areas[SCHED3_AREA].x2+1, Areas[SCHED3_AREA].y2+1, clrSched1);
-
-    osd->DrawRectangle(Areas[SCHED1_AREA].x1+2, Areas[SCHED1_AREA].y1,
-                       Areas[SCHED1_AREA].x2+1-3, Areas[SCHED1_AREA].y2+1-3, clrSched2);
-    osd->DrawRectangle(Areas[SCHED2_AREA].x1+2, Areas[SCHED2_AREA].y1,
-                       Areas[SCHED2_AREA].x2+1-3, Areas[SCHED2_AREA].y2+1-3, clrSched2);
-    osd->DrawRectangle(Areas[SCHED3_AREA].x1+2, Areas[SCHED3_AREA].y1,
-                       Areas[SCHED3_AREA].x2+1-3, Areas[SCHED3_AREA].y2+1-3, clrSched2);
-
-    osd->DrawRectangle(Areas[TIMELINE_AREA].x1,Areas[TIMELINE_AREA].y1+YSTART,
-                       Areas[TIMELINE_AREA].x1+TimelineWidth,
-                       Areas[TIMELINE_AREA].y1+ScheduleHeight+YSTART,clrBlack);
+    osd->DrawRectangle(Areas[TIMELINE_AREA].x1,Areas[TIMELINE_AREA].y1,
+                       Areas[TIMELINE_AREA].x2,Areas[TIMELINE_AREA].y2,clrSched2);
     showHeads(true);
 
+    int area=SCHED1_AREA;
     do
     {
         for (int i=0;i<lines;)
         {
-            int y=i*usef->Height();
+            int y=i*f2->Height();
             if (helptext[j]==NULL)
                 break;
             if (helptext[j][0]=='|')
-                txt=helptext[j]+1;
+            {
+                j++;
+                break;
+            }
             else
                 txt=tr(helptext[j]);
 
-            if (i+usef->TextHeight(width,txt)>=lines)
+            if (i+f2->TextHeight(width,txt)>=lines)
                 break;
 
-            i+=usef->Text(Areas[area].x1+4,y+Areas[area].y1,width-8,lines-i,txt,clrWhite);
+            i+=f2->Text(Areas[area].x1+4,y+Areas[area].y1,width-8,lines-i,txt,clrWhite);
             j++;
         }
         if (area==SCHED1_AREA)
@@ -1369,6 +1364,7 @@ eOSState magazine::ProcessKey(eKeys Key)
                             {
                                 setcurrentFirstTime(currentFirstTime+3600);
                                 calcScheds();
+                                found=1;
                             }
                         }
                         while (!found && cc<48);

@@ -20,11 +20,10 @@ tvonscreenConfig::tvonscreenConfig(void)
     noInfoLine=false;
     showChannels=true;
     bwlogos=false;
-    colorworkaround=true;
 
-    usertime1=1200;
-    usertime2=1800;
-    usertime3=2015;
+    usertime1=1700;
+    usertime2=2000;
+    usertime3=2300;
     thenshownextday=true;
     showsearchinitiator=true;
     fontdsize=0;
@@ -40,7 +39,6 @@ bool tvonscreenConfig::SetupParse(const char *Name, const char *Value)
     else if (strcmp(Name,"noInfoLine")==0) noInfoLine = atoi(Value);
     else if (strcmp(Name,"showChannels")==0) showChannels = atoi(Value);
     else if (strcmp(Name,"bwlogos")==0) bwlogos = atoi(Value);
-    else if (strcmp(Name,"colorworkaround")==0) colorworkaround = atoi(Value);
     else if (strcmp(Name,"usertime1")==0) usertime1 = atoi(Value);
     else if (strcmp(Name,"usertime2")==0) usertime2 = atoi(Value);
     else if (strcmp(Name,"usertime3")==0) usertime3 = atoi(Value);
@@ -108,8 +106,6 @@ tvonscreenConfigPage::tvonscreenConfigPage(void) : cMenuSetupPage()
                               &m_NewConfig.showChannels));
     Add(new cMenuEditBoolItem(tr("show logos in black&white"),
                               &m_NewConfig.bwlogos));
-    Add(new cMenuEditBoolItem(tr("enable color problem work around"),
-                              &m_NewConfig.colorworkaround));
     Add(new cMenuEditBoolItem(tr("hide info line"),
                               &m_NewConfig.noInfoLine));
     Add(new cMenuEditTimeItem(tr("user point in time 1 (Key 4)"),
@@ -134,7 +130,6 @@ void tvonscreenConfigPage::Store(void)
     SetupStore("noInfoLine", m_NewConfig.noInfoLine);
     SetupStore("showChannels", m_NewConfig.showChannels);
     SetupStore("bwlogos", m_NewConfig.bwlogos);
-    SetupStore("colorworkaround", m_NewConfig.colorworkaround);
     SetupStore("usertime1", m_NewConfig.usertime1);
     SetupStore("usertime2", m_NewConfig.usertime2);
     SetupStore("usertime3", m_NewConfig.usertime3);
