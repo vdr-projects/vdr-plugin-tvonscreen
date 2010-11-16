@@ -95,6 +95,7 @@ magazine::magazine(class cPlugin *p)
     /* please edit only these colors.
         use colors with NO ALPHA
         (0xFF......), e.g. clrGreen */
+    clrText=clrWhite;
     clrTimeline1=clrBlue;
     clrTimeline2=clrBlack;
     /* ---------------------------- */
@@ -257,13 +258,13 @@ void magazine::printHead(const cSchedule *s,int p)
         osd->DrawRectangle(Areas[a].x1,Areas[a].y2-f3->Height(),Areas[a].x2,Areas[a].y2,clrNames);
         if (s)
         {
-            tColor col=clrWhite;
+            tColor col=clrText;
 
             currentChannel = Channels.GetByNumber(cDevice::CurrentChannel())->Number();
             channel = Channels.GetByChannelID(s->ChannelID(), true);
             if (currentChannel==channel->Number())
             {
-                col=clrCyan;
+                col=clrCyan; // TODO: define this color
             }
             txt=channel->ShortName(true);
             int middlepos=(Areas[a].Width()-f3->Width(txt))/2;
@@ -309,7 +310,7 @@ void magazine::showKeys(void)
     txt[0]=0;
     if (curmode==SHOW) sprintf(txt,"%s",tr("Press 1 for help"));
     f4->Text(Areas[CONTROL_AREA].x1,Areas[CONTROL_AREA].y1,txt,
-             clrWhite,clrTransparent);
+             clrText,clrTransparent);
 }
 
 void magazine::showDatetime(void)
@@ -320,19 +321,19 @@ void magazine::showDatetime(void)
 
     strcpy(dtxt,WeekDayName(tm_r1.tm_wday));
     osd->DrawRectangle(Areas[DATETIME_AREA].x1,Areas[DATETIME_AREA].y1,
-                       Areas[DATETIME_AREA].x2,Areas[DATETIME_AREA].y2,clrWhite);
+                       Areas[DATETIME_AREA].x2,Areas[DATETIME_AREA].y2,clrText);
 
     osd->DrawRectangle(2+Areas[DATETIME_AREA].x1,2+Areas[DATETIME_AREA].y1,
                        Areas[DATETIME_AREA].x1+TimelineWidth-2,
                        Areas[DATETIME_AREA].y1+f5->Height(),clrBlack);
 
     f5->Text((TimelineWidth-f5->Width(dtxt))/2+Areas[DATETIME_AREA].x1,
-             Areas[DATETIME_AREA].y1+2,dtxt,clrWhite,clrBlack);
+             Areas[DATETIME_AREA].y1+2,dtxt,clrText,clrBlack);
 
     strftime(dtxt,sizeof(dtxt),tr("%d-%m"),&tm_r1);
 
     f5->Text((TimelineWidth-f5->Width(dtxt))/2+Areas[DATETIME_AREA].x1,
-             Areas[DATETIME_AREA].y1+f5->Height()+1,dtxt,clrBlack,clrWhite);
+             Areas[DATETIME_AREA].y1+f5->Height()+1,dtxt,clrBlack,clrText);
 }
 
 void magazine::showTimeline(void)
@@ -363,12 +364,12 @@ void magazine::showTimeline(void)
             sprintf(txt,"%02d",fullHours[i]);
             lh=fullHours[i];
             f1->Text((TimelineWidth-f1->Width(txt))/2+Areas[TIMELINE_AREA].x1,
-                     Areas[TIMELINE_AREA].y1+y,txt,clrWhite);
+                     Areas[TIMELINE_AREA].y1+y,txt,clrText);
             if (i+1<evnum && (fullHours[i+1]==lh || fullHours[i+1]==-1))
             {
                 strcpy(txt,tr("o'clock"));
                 f2->Text((TimelineWidth-f2->Width(txt))/2+Areas[TIMELINE_AREA].x1,
-                         Areas[TIMELINE_AREA].y1+y+f1->Height(),txt,clrWhite);
+                         Areas[TIMELINE_AREA].y1+y+f1->Height(),txt,clrText);
             }
         }
     }
@@ -388,7 +389,7 @@ void magazine::showSched(cEvent **ev,tMagazineArea area)
     hgr[0]=clrSched1;
     hgr[1]=clrSched2;
 
-    tColor col=clrWhite;
+    tColor col=clrText;
 
     for (int i=0;i<evnum;i++)
     {
@@ -439,10 +440,10 @@ void magazine::showSched(cEvent **ev,tMagazineArea area)
                                  ScheduleWidth-f1->Width("00:00 "),i-j,txt,col);
                     }
                 }
-                col=clrWhite;
+                col=clrText;
                 if (EDIT_curEvent==cev->EventID())
                 {
-                    col=clrYellow;
+                    col=clrYellow; // TODO: define this color!
                     EDIT_curEVI=i;
                 }
                 timetxt=cev->GetTimeString();
@@ -479,7 +480,7 @@ void magazine::showSched(cEvent **ev,tMagazineArea area)
         if (timeline_found_conflict)
         {
             osd->DrawRectangle(Areas[area].x1,Areas[area].y2-f2->Height()-6,
-                               Areas[area].x1+ScheduleWidth,Areas[area].y2+1,clrWhite);
+                               Areas[area].x1+ScheduleWidth,Areas[area].y2+1,clrText);
             osd->DrawRectangle(Areas[area].x1,Areas[area].y2-f2->Height()-4,
                                Areas[area].x1+ScheduleWidth,Areas[area].y2+1,clrYellow);
             const char *txt=tr("Timer conflict!");
@@ -630,9 +631,9 @@ void magazine::colorworkaround(cBitmap *b)
     int c=0;
     b->SetColor(c++,clrTransparent);
     b->SetColor(c++,clrBlack);
-    b->SetColor(c++,clrWhite);
     b->SetColor(c++,clrCyan);
 
+    b->SetColor(c++,clrText);
     b->SetColor(c++,clrSched1);
     b->SetColor(c++,clrSched2);
     b->SetColor(c++,clrTimeline1);
@@ -746,7 +747,7 @@ void magazine::showHelp()
             if (i+f2->TextHeight(width,txt)>=lines)
                 break;
 
-            i+=f2->Text(Areas[area].x1+4,y+Areas[area].y1,width-8,lines-i,txt,clrWhite);
+            i+=f2->Text(Areas[area].x1+4,y+Areas[area].y1,width-8,lines-i,txt,clrText);
             j++;
         }
         if (area==SCHED1_AREA)

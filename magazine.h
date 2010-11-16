@@ -102,6 +102,7 @@ private:
     unsigned int clrTimeline1;
     unsigned int clrTimeline2;
     unsigned int clrNames;
+    unsigned int clrText;
 
     const cEvent *GetEventAfter(const cSchedule *s, time_t StartTime, time_t EndTime) const;
 
