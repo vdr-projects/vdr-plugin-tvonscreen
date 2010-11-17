@@ -10,6 +10,11 @@
 #include "config.h"
 #include "i18n.h"
 
+#if defined(MAINMENUHOOKSVERSNUM) & !defined(MAINMENUHOOKSVERSION)
+#undef  MAINMENUHOOKSVERSNUM
+#define MAINMENUHOOKSVERSNUM 10000
+#endif
+
 static const char *VERSION        = "1.1.142";
 static const char *DESCRIPTION    = trNOOP("Shows the EPG info in form of a typical TV magazine");
 static const char *MAINMENUENTRY  = trNOOP("TV-OnScreen");
@@ -34,13 +39,13 @@ public:
     virtual bool Initialize(void);
     virtual bool Start(void);
     virtual void Housekeeping(void);
-    virtual const char *MainMenuEntry(void)
-    {
-        return tr(MAINMENUENTRY);
-    }
+    virtual const char *MainMenuEntry(void);
     virtual cOsdObject *MainMenuAction(void);
     virtual cMenuSetupPage *SetupMenu(void);
     virtual bool SetupParse(const char *Name, const char *Value);
+#if MAINMENUHOOKSVERSNUM == 10001
+    virtual bool Service(const char *Id, void *Data);
+#endif
 };
 
 cPluginTvOnscreen::cPluginTvOnscreen(void)
@@ -86,6 +91,14 @@ void cPluginTvOnscreen::Housekeeping(void)
     // Perform any cleanup or other regular tasks.
 }
 
+const char *cPluginTvOnscreen::MainMenuEntry(void)
+{
+#if MAINMENUHOOKSVERSNUM == 10001
+    if (tvonscreenCfg.replaceorgschedule) return NULL;
+#endif
+    return tr(MAINMENUENTRY);
+}
+
 cOsdObject *cPluginTvOnscreen::MainMenuAction(void)
 {
     // Perform the action when selected from the main VDR menu.
@@ -104,5 +117,21 @@ bool cPluginTvOnscreen::SetupParse(const char *Name, const char *Value)
     // Parse your own setup parameters and store their values.
     return tvonscreenCfg.SetupParse(Name,Value);
 }
+
+#if MAINMENUHOOKSVERSNUM == 10001
+bool cPluginTvOnscreen::Service(const char *Id, void *Data)
+{
+    if (tvonscreenCfg.replaceorgschedule &&
+            strcmp(Id, "MainMenuHooksPatch-v1.0::osSchedule")==0)
+    {
+        if (!Data) return true;
+        cOsdObject **osd = (cOsdObject **) Data;
+        if (osd)
+            *osd = (cOsdObject*) MainMenuAction();
+        return true;
+    }
+    return false;
+}
+#endif
 
 VDRPLUGINCREATOR(cPluginTvOnscreen) // Don't touch this!

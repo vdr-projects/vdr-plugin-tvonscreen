@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VDR 1.6.0\n"
 "Report-Msgid-Bugs-To: <see README>\n"
-"POT-Creation-Date: 2010-11-15 18:35+0100\n"
+"POT-Creation-Date: 2010-11-17 19:24+0100\n"
 "PO-Revision-Date: 2010-08-09 19:08+0100\n"
 "Last-Translator: Diego Pierotto <vdr-italian@tiscali.it>\n"
 "Language-Team:  <vdr@linuxtv.org>\n"
@@ -25,6 +25,13 @@ msgstr ""
 
 msgid "transparency"
 msgstr ""
+
+msgid "replace original schedule"
+msgstr ""
+
+#, fuzzy
+msgid "show only minutes"
+msgstr "Mostra nomi canali"
 
 msgid "show channel logos"
 msgstr "Mostra loghi canali"
@@ -50,7 +57,7 @@ msgstr "Punto utente ora 3 (tasto 6)"
 msgid "jump to next day point if ago"
 msgstr "Vai al giorno succ. se scaduto"
 
-msgid "Show search item itself"
+msgid "show search item itself"
 msgstr "Mostra termini di ricerca"
 
 msgid "Press 1 for help"
@@ -62,9 +69,6 @@ msgstr "%d-%m"
 
 msgid "o'clock"
 msgstr "in punto"
-
-msgid "Timer conflict!"
-msgstr "Timer in conflitto!"
 
 msgid "NORMAL MODE:"
 msgstr "MODALITA' NORMALE:"

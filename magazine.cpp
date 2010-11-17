@@ -377,20 +377,11 @@ void magazine::showTimeline(void)
 
 void magazine::showSched(cEvent **ev,tMagazineArea area)
 {
-    cEvent *oldev=NULL,*cev=NULL;
-
-    int j=0;
-    const char *txt;
-    cString timetxt;
-    int lh=-1;
-    int lhc=0;
-
     tColor hgr[2];
     hgr[0]=clrSched1;
     hgr[1]=clrSched2;
-
-    tColor col=clrText;
-
+    int lh=-1;
+    int lhc=0;
     for (int i=0;i<evnum;i++)
     {
         int y=i*f1->Height();
@@ -402,90 +393,154 @@ void magazine::showSched(cEvent **ev,tMagazineArea area)
         osd->DrawRectangle(Areas[area].x1,Areas[area].y1+y,Areas[area].x1+ScheduleWidth,
                            Areas[area].y1+y+f1->Height(),hgr[lhc]);
     }
-    /*
-        for (int i=0;i<evnum;i++)
+
+    cEvent *cev=NULL;
+    tColor col=clrText;
+
+    int timetxtwidth;
+    int timetxtoffs;
+    if (tvonscreenCfg.onlyminutes)
+    {
+        timetxtwidth=f1->Width("00 ");
+        timetxtoffs=3;
+    }
+    else
+    {
+        timetxtwidth=f1->Width("00:00 ");
+        timetxtoffs=0;
+    }
+    int i=0;
+    while (i<evnum)
+    {
+        cev=ev[i];
+        if (cev)
         {
-            int y=i*f1->Height();
+            cString timetxt=cev->GetTimeString();
+            const char *txt=cev->Title();
 
-            if (ev[i])
+            col=clrText;
+            if (EDIT_curEvent==cev->EventID())
             {
-                timetxt=ev[i]->GetTimeString();
-                txt=ev[i]->Title();
-
-                f1->Text(Areas[area].x1,y+Areas[area].y1,*timetxt,col);
-                f1->Text(f1->Width("00:00 ")+Areas[area].x1,
-                         y+Areas[area].y1,ScheduleWidth-f1->Width("00:00 "),
-                         20,txt,col);
-                mzlog(0," out ev[%d]=%s '%s'",i,*timetxt,txt);
+                col=clrYellow; // TODO: define this color!
+                EDIT_curEVI=i;
+            }
+            else
+            {
+                if ((time(NULL)>=cev->StartTime()) && (time(NULL)<cev->EndTime()))
+                {
+                    col=clrCyan; // TODO: define this color! (and use better ones!)
+                }
+            }
+            if (cev->HasTimer())
+            {
+                col=clrRed; // TODO: define this color! (and use better ones!)
             }
 
-        }
-        mzlog(0," ***");
-    */
-    for (int i=0;i<evnum;i++)
-    {
-        int y=i*f1->Height();
-        cev=ev[i];
-        if (cev!=NULL)
-        {
-            if (oldev!=cev)
+            int y=i*f1->Height();
+            // output timestr
+            f1->Text(Areas[area].x1,Areas[area].y1+y,*timetxt+timetxtoffs,col);
+
+            // output title
+            int lines=f1->TextHeight(ScheduleWidth-timetxtwidth,txt);
+            //mzlog(0," lines=%i for '%s'",lines,txt);
+            if (lines>1)
             {
-                if (oldev)
+                bool cut_title=false;
+                if (i+lines<evnum)
                 {
-                    txt=oldev->ShortText();
-                    int cc=f2->TextHeight(ScheduleWidth-f1->Width("00:00 "),txt);
-                    if (cc<=i-j)
+                    for (int x=i+1;x<i+lines;x++)
                     {
-                        f2->Text(f1->Width("00:00 ")+Areas[area].x1,(j)*f1->Height()+Areas[area].y1,
-                                 ScheduleWidth-f1->Width("00:00 "),i-j,txt,col);
+                        if (ev[x])
+                        {
+                            cut_title=true;
+                            break;
+                        }
+                    }
+                    if (!cut_title)
+                    {
+                        f1->Text(Areas[area].x1+timetxtwidth,Areas[area].y1+y,
+                                 ScheduleWidth-timetxtwidth,20,txt,col);
                     }
                 }
-                col=clrText;
-                if (EDIT_curEvent==cev->EventID())
+                else
                 {
-                    col=clrYellow; // TODO: define this color!
-                    EDIT_curEVI=i;
+                    cut_title=true;
                 }
-                timetxt=cev->GetTimeString();
-                txt=cev->Title();
-                if (i+f1->TextHeight(f1->Width("00:00 ")+Areas[area].x1,txt)>=evnum)
-                    break;
-                f1->Text(Areas[area].x1,y+Areas[area].y1,timetxt,col);
-                j=i+f1->Text(f1->Width("00:00 ")+Areas[area].x1,
-                             y+Areas[area].y1,ScheduleWidth-f1->Width("00:00 "),
-                             20,txt,col);
-                oldev=cev;
+                if (cut_title)
+                {
+                    lines=1;
+                    if (i<evnum)
+                    {
+                        char *ntxt=strdup(txt);
+                        if (ntxt)
+                        {
+                            while (f1->Width(ntxt)>ScheduleWidth-timetxtwidth)
+                            {
+                                ntxt[strlen(ntxt)-1]=0;
+                            }
+                            ntxt[strlen(ntxt)-1]='.';
+                            ntxt[strlen(ntxt)-2]='.';
+                            ntxt[strlen(ntxt)-3]='.';
+                            f1->Text(timetxtwidth+Areas[area].x1,Areas[area].y1+y,ntxt,col);
+                            free(ntxt);
+                        }
+                    }
+                }
+                i+=lines;
             }
-        }
-    }
-    if (oldev)
-    {
-        txt=oldev->ShortText();
-        if (j+f2->TextHeight(f1->Width("00:00 ")+Areas[area].x1,txt)>=evnum)
-            f2->Text(f1->Width("00:00 ")+Areas[area].x1,j*f1->Height()+Areas[area].y1,
-                     ScheduleWidth-f1->Width("00:00 "),evnum-j,txt,col);
-    }
-    if (!EDIT_curEvent)
-    {
-        if (!timeline_tested)
-        {
-            timeline_tested=true;
-            cPlugin *p = cPluginManager::GetPlugin("timeline");
-            if (p)
+            else
             {
-                char *args[]={(char *) "timeline_command_interface",(char *) "conflicts"};
-                timeline_found_conflict=p->ProcessArgs(1,args);
+                f1->Text(timetxtwidth+Areas[area].x1,Areas[area].y1+y,txt,col);
+                i++;
+            }
+            y=i*f1->Height();
+
+            // output shorttext, if any
+            if ((txt=cev->ShortText()))
+            {
+                int lines=f2->TextHeight(ScheduleWidth-timetxtwidth,txt);
+                bool enough_space=true;
+                for (int x=i;x<i+lines;x++)
+                {
+                    if (ev[x])
+                    {
+                        enough_space=false;
+                        break;
+                    }
+                }
+                if (enough_space)
+                {
+                    f2->Text(Areas[area].x1+timetxtwidth,Areas[area].y1+y,
+                             ScheduleWidth-timetxtwidth,20,txt,col);
+                    i+=lines;
+                }
+            }
+            y=i*f1->Height();
+
+            // output description, if possible
+            if ((txt=cev->Description()))
+            {
+                int lines=f2->TextHeight(ScheduleWidth-timetxtwidth,txt);
+                bool enough_space=true;
+                for (int x=i;x<i+lines;x++)
+                {
+                    if (ev[x])
+                    {
+                        enough_space=false;
+                        break;
+                    }
+                }
+                if (enough_space)
+                {
+                    f2->Text(Areas[area].x1+timetxtwidth,Areas[area].y1+y,
+                             ScheduleWidth-timetxtwidth,lines,txt,col);
+                    i+=lines;
+                }
             }
         }
-        if (timeline_found_conflict)
+        else
         {
-            osd->DrawRectangle(Areas[area].x1,Areas[area].y2-f2->Height()-6,
-                               Areas[area].x1+ScheduleWidth,Areas[area].y2+1,clrText);
-            osd->DrawRectangle(Areas[area].x1,Areas[area].y2-f2->Height()-4,
-                               Areas[area].x1+ScheduleWidth,Areas[area].y2+1,clrYellow);
-            const char *txt=tr("Timer conflict!");
-            int x=(ScheduleWidth-f2->Width(txt))/2;
-            f2->Text(x+Areas[area].x1,Areas[area].y2-f2->Height()-4,txt,clrGreen,clrYellow);
+            i++;
         }
     }
 }
@@ -607,16 +662,14 @@ void magazine::calcSched(const cSchedule *s,cEvent **ev)
         time_t t=cev->StartTime();
         if (t>=currentFirstTime)
         {
-            struct tm tm_r;
-            localtime_r(&t,&tm_r);
-            int i=(tm_r.tm_hour-fullHours[0])*8;
-            if (i<0) return;
-            int offs=(tm_r.tm_min*8)/60;
-            if (i+offs>=evnum) return;
+            //mzlog(0," %i",t-currentFirstTime);
+            int i=(t-currentFirstTime)/450;
+            int offs=0;
+            if (i>=evnum) return;
             if (ev[i+offs]) offs++;
             if (i+offs>=evnum) return;
             ev[i+offs]=(cEvent *)cev;
-            //mzlog(0," ev[%d]=%d:%d '%s'",i+offs,tm_r.tm_hour,tm_r.tm_min,cev->Title());
+            //mzlog(0," ev[%d+%d] '%s'",i,offs,cev->Title());
         }
         cev=s->Events()->Next(cev);
         if (!cev) return;

@@ -11,6 +11,11 @@
 #include <vdr/config.h>
 #include <vdr/menuitems.h>
 
+#if defined(MAINMENUHOOKSVERSNUM) & !defined(MAINMENUHOOKSVERSION)
+#undef  MAINMENUHOOKSVERSNUM
+#define MAINMENUHOOKSVERSNUM 10000
+#endif
+
 class tvonscreenConfig
 {
 public:
@@ -31,6 +36,10 @@ public:
     int showsearchinitiator;
     int fontdsize;
     int transparency;
+#if MAINMENUHOOKSVERSNUM == 10001
+    int replaceorgschedule;
+#endif
+    int onlyminutes;
 
     char logos[PATH_MAX];
     char vdradminfile[PATH_MAX];
