@@ -437,8 +437,11 @@ void magazine::showSched(cEvent **ev,tMagazineArea area)
             }
 
             int y=i*f1->Height();
-            // output timestr
-            f1->Text(Areas[area].x1,Areas[area].y1+y,*timetxt+timetxtoffs,col);
+            if (cev->StartTime()>=currentFirstTime)
+            {
+                // output timestr
+                f1->Text(Areas[area].x1,Areas[area].y1+y,*timetxt+timetxtoffs,col);
+            }
 
             // output title
             int lines=f1->TextHeight(ScheduleWidth-timetxtwidth,txt);
@@ -660,10 +663,11 @@ void magazine::calcSched(const cSchedule *s,cEvent **ev)
     for (;;)
     {
         time_t t=cev->StartTime();
-        if (t>=currentFirstTime)
+        if (cev->EndTime()>time(NULL))
         {
             //mzlog(0," %i",t-currentFirstTime);
             int i=(t-currentFirstTime)/450;
+            if (i<0) i=0;
             int offs=0;
             if (i>=evnum) return;
             if (ev[i+offs]) offs++;
